@@ -1,0 +1,16 @@
+{
+  "name": "theme",
+  "type": "theme",
+  "registryDependencies": [],
+  "files": [
+    { "from": "theme/colors.ts",          "to": "colors.ts" },
+    { "from": "theme/spacing.ts",         "to": "spacing.ts" },
+    { "from": "theme/radius.ts",          "to": "radius.ts" },
+    { "from": "theme/typography.ts",      "to": "typography.ts" },
+    { "from": "theme/shadows.ts",         "to": "shadows.ts" },
+    { "from": "theme/tokens.ts",          "to": "tokens.ts" },
+    { "from": "theme/theme-provider.tsx", "to": "theme-provider.tsx" },
+    { "from": "theme/use-theme.ts",       "to": "use-theme.ts" },
+    { "from": "theme/index.ts",           "to": "index.ts" }
+  ]
+}

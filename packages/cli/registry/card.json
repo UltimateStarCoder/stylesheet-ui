@@ -1,0 +1,8 @@
+{
+  "name": "card",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/card.tsx", "to": "card.tsx" }
+  ]
+}

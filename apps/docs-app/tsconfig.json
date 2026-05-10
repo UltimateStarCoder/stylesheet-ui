@@ -2,13 +2,12 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/assets/*": [
-        "./assets/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/assets/*": ["./assets/*"],
+      "@stylesheet-ui/ui": ["../../packages/ui/src"],
+      "@stylesheet-ui/ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": [

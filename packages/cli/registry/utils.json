@@ -1,0 +1,8 @@
+{
+  "name": "utils",
+  "type": "util",
+  "registryDependencies": ["theme"],
+  "files": [
+    { "from": "utils/cn.ts", "to": "cn.ts" }
+  ]
+}
