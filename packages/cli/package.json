@@ -14,6 +14,7 @@
     "build": "tsup src/index.ts --format cjs --target node18 --clean --shims --no-splitting",
     "dev": "tsup src/index.ts --format cjs --target node18 --watch --shims --no-splitting",
     "sync": "tsx scripts/sync-registry.ts",
+    "prepare": "npm run sync && npm run build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
