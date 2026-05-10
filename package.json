@@ -15,6 +15,12 @@
     "registry:sync": "npm run sync --workspace stylesheet-ui",
     "typecheck": "npm run typecheck --workspaces --if-present"
   },
+  "overrides": {
+    "postcss": "8.5.14",
+    "@expo/metro-config": {
+      "postcss": "8.5.14"
+    }
+  },
   "devDependencies": {
     "typescript": "~5.9.2"
   }
