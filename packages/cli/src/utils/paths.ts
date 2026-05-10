@@ -7,12 +7,12 @@ const CONFIG_FILE = "stylesheet-ui.json";
 
 export const DEFAULT_CONFIG: StylesheetUiConfig = {
   aliases: {
-    components: "@/components",
+    components: "@/components/ui",
     theme: "@/theme",
     utils: "@/utils",
   },
   paths: {
-    components: "src/components",
+    components: "src/components/ui",
     theme: "src/theme",
     utils: "src/utils",
   },

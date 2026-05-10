@@ -7,8 +7,8 @@ import {
   type TextInputProps,
   type ViewStyle,
 } from "react-native";
-import { useTheme } from "../theme/use-theme";
-import { useStyles } from "../utils/cn";
+import { useTheme } from "../../theme/use-theme";
+import { useStyles } from "../../utils/cn";
 
 export type InputProps = Omit<TextInputProps, "style"> & {
   error?: string;

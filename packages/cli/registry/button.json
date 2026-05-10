@@ -3,6 +3,6 @@
   "type": "component",
   "registryDependencies": ["theme", "utils"],
   "files": [
-    { "from": "components/button.tsx", "to": "button.tsx" }
+    { "from": "components/ui/button.tsx", "to": "button.tsx" }
   ]
 }

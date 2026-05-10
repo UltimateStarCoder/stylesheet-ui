@@ -3,6 +3,6 @@
   "type": "component",
   "registryDependencies": ["theme", "utils"],
   "files": [
-    { "from": "components/input.tsx", "to": "input.tsx" }
+    { "from": "components/ui/input.tsx", "to": "input.tsx" }
   ]
 }

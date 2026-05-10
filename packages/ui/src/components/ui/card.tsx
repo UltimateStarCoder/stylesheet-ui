@@ -6,7 +6,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../utils/cn";
+import { useStyles } from "../../utils/cn";
 
 export type CardSurface = "default" | "muted" | "outline";
 export type CardPadding = "none" | "sm" | "md" | "lg";

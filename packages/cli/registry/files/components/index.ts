@@ -1,3 +1,3 @@
-export * from "./button";
-export * from "./input";
-export * from "./card";
+export * from "./ui/button";
+export * from "./ui/input";
+export * from "./ui/card";

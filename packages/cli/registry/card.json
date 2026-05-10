@@ -3,6 +3,6 @@
   "type": "component",
   "registryDependencies": ["theme", "utils"],
   "files": [
-    { "from": "components/card.tsx", "to": "card.tsx" }
+    { "from": "components/ui/card.tsx", "to": "card.tsx" }
   ]
 }

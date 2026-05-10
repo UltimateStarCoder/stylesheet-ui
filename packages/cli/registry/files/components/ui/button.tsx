@@ -8,8 +8,8 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useTheme } from "../theme/use-theme";
-import { useStyles } from "../utils/cn";
+import { useTheme } from "../../theme/use-theme";
+import { useStyles } from "../../utils/cn";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "destructive";
 export type ButtonSize = "sm" | "md" | "lg";
