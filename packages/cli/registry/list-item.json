@@ -1,0 +1,8 @@
+{
+  "name": "list-item",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/list-item.tsx", "to": "list-item.tsx" }
+  ]
+}

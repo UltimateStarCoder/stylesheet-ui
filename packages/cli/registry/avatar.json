@@ -1,0 +1,8 @@
+{
+  "name": "avatar",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/avatar.tsx", "to": "avatar.tsx" }
+  ]
+}

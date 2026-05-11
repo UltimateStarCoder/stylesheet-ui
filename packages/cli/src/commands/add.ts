@@ -2,6 +2,7 @@ import path from "node:path";
 import { logger } from "../utils/logger";
 import { copyFileSafely } from "../utils/fs";
 import { destinationRoot, readConfig } from "../utils/paths";
+import { rewriteImports, shouldRewrite } from "../utils/rewrite";
 import { getRegistryFilesRoot, resolveInstallPlan } from "../registry";
 import type { RegistryEntry, StylesheetUiConfig } from "../registry/schema";
 
@@ -69,7 +70,10 @@ export async function applyRegistryEntries(
     for (const file of entry.files) {
       const from = path.join(filesRoot, file.from);
       const to = path.join(destRoot, file.to);
-      await copyFileSafely(from, to, fileOpts);
+      const transform = shouldRewrite(file.to)
+        ? (content: string) => rewriteImports(content, config.aliases)
+        : undefined;
+      await copyFileSafely(from, to, { ...fileOpts, transform });
     }
   }
 }

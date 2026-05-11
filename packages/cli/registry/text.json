@@ -1,0 +1,8 @@
+{
+  "name": "text",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/text.tsx", "to": "text.tsx" }
+  ]
+}

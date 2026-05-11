@@ -1,0 +1,8 @@
+{
+  "name": "modal",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/modal.tsx", "to": "modal.tsx" }
+  ]
+}

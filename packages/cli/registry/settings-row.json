@@ -1,0 +1,8 @@
+{
+  "name": "settings-row",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/settings-row.tsx", "to": "settings-row.tsx" }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "tabs",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/tabs.tsx", "to": "tabs.tsx" }
+  ]
+}

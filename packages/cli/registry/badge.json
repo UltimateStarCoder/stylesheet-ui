@@ -1,0 +1,8 @@
+{
+  "name": "badge",
+  "type": "component",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/badge.tsx", "to": "badge.tsx" }
+  ]
+}
