@@ -1,0 +1,35 @@
+---
+title: Badge
+description: Pill-shaped label for statuses, counts, and short labels.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A small pill for labels, statuses, and counts. Six variants, two sizes.
+
+<ComponentPreview slug="components/badge" />
+
+## Install
+
+```sh
+npx stylesheet-ui add badge
+```
+
+## Usage
+
+```tsx
+import { Badge } from "@/components/ui/badge";
+
+<Badge>Default</Badge>
+<Badge variant="success">Active</Badge>
+<Badge variant="destructive" size="sm">3 errors</Badge>
+<Badge variant="outline">Beta</Badge>
+```
+
+## Props
+
+| Prop      | Type                                                                          | Default     |
+|-----------|-------------------------------------------------------------------------------|-------------|
+| `variant` | `"primary" \| "secondary" \| "success" \| "warning" \| "destructive" \| "outline"` | `"primary"` |
+| `size`    | `"sm" \| "md"`                                                                 | `"md"`      |
+| `children`| `ReactNode`                                                                   | —           |

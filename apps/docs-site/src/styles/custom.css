@@ -1,0 +1,33 @@
+/* stylesheet-ui docs site theme overrides. Starlight ships with sensible
+   defaults; we just nudge the brand color and the live-demo iframe styling. */
+
+:root {
+  --sl-color-accent-low: #11163f;
+  --sl-color-accent: #4a5bf5;
+  --sl-color-accent-high: #94a1ff;
+}
+
+:root[data-theme="light"] {
+  --sl-color-accent-low: #dde2ff;
+  --sl-color-accent: #4a5bf5;
+  --sl-color-accent-high: #2e38ab;
+}
+
+.demo-iframe {
+  display: block;
+  width: 100%;
+  height: 520px;
+  max-width: 400px;
+  margin: 0 auto;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 1rem;
+  background: var(--sl-color-bg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.demo-frame-wrapper {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--sl-color-gray-7);
+}

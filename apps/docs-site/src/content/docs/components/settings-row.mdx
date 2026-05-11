@@ -1,0 +1,55 @@
+---
+title: SettingsRow
+description: Specialized row for settings screens — icon tile, title, optional description, right element (Switch / value / chevron).
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A specialized row for settings screens. Renders an icon in a colored tile, title + optional description, and a `right` slot for switches, values, or chevrons. Use the `destructive` prop for sign-out / delete affordances.
+
+<ComponentPreview slug="components/settings-row" />
+
+## Install
+
+```sh
+npx stylesheet-ui add settings-row
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Switch } from "react-native";
+import { Bell, ChevronRight, LogOut } from "lucide-react-native";
+import { SettingsRow } from "@/components/ui/settings-row";
+import { useTheme } from "@/theme";
+
+const theme = useTheme();
+const [push, setPush] = useState(true);
+
+<SettingsRow
+  title="Push notifications"
+  description="Get notified about account activity"
+  icon={<Bell size={18} color={theme.colors.primary} />}
+  right={<Switch value={push} onValueChange={setPush} />}
+/>
+
+<SettingsRow
+  title="Sign out"
+  icon={<LogOut size={18} color={theme.colors.destructive} />}
+  destructive
+  onPress={() => signOut()}
+/>
+```
+
+## Props
+
+| Prop          | Type                                | Default | Description |
+|---------------|-------------------------------------|---------|-------------|
+| `title`       | `string`                            | —       | Primary label |
+| `description` | `string`                            | —       | Secondary line below the title |
+| `icon`        | `ReactNode`                         | —       | Rendered inside a colored tile on the left |
+| `right`       | `ReactNode`                         | —       | Trailing element (`Switch`, value text, chevron) |
+| `onPress`     | `PressableProps["onPress"]`         | —       | Makes the row pressable |
+| `disabled`    | `boolean`                           | `false` | Mutes opacity; disables press |
+| `destructive` | `boolean`                           | `false` | Renders the title in destructive color |

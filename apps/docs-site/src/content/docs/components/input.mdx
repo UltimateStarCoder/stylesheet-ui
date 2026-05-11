@@ -1,0 +1,46 @@
+---
+title: Input
+description: Single-line text input with focus ring, error state, and optional leading icon.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A `TextInput` wrapped in a styled container. Tracks focus locally and renders an error state below the field when `error` is set.
+
+<ComponentPreview slug="components/input" />
+
+## Install
+
+```sh
+npx stylesheet-ui add input
+```
+
+## Usage
+
+```tsx
+import { Input } from "@/components/ui/input";
+
+const [value, setValue] = useState("");
+
+<Input placeholder="Email" value={value} onChangeText={setValue} />
+
+<Input
+  placeholder="Email"
+  value={value}
+  onChangeText={setValue}
+  error="Enter a valid email address"
+  autoCapitalize="none"
+  keyboardType="email-address"
+/>
+```
+
+## Props
+
+| Prop             | Type                                | Default     | Description |
+|------------------|-------------------------------------|-------------|-------------|
+| `error`          | `string`                            | —           | Renders an error message below; switches border to destructive |
+| `leftIcon`       | `ReactNode`                         | —           | Element rendered before the input |
+| `containerStyle` | `StyleProp<ViewStyle>`              | —           | Style applied to the outer wrapper |
+| `editable`       | `boolean`                           | `true`      | When `false`, the input is disabled and visually muted |
+
+All other [`TextInputProps`](https://reactnative.dev/docs/textinput#props) are forwarded.

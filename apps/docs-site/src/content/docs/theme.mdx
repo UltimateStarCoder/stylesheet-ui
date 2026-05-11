@@ -1,0 +1,91 @@
+---
+title: Theme
+description: Design tokens for stylesheet-ui — colors, spacing, radius, typography, shadows. Light and dark.
+---
+
+import ComponentPreview from '../../components/ComponentPreview.astro';
+
+Tokens live in `src/theme/`. They're plain TypeScript — no runtime, no parser. Components read them through `useTheme()`.
+
+<ComponentPreview slug="theme" height={720} />
+
+## Colors
+
+Each token has light and dark values keyed by the same semantic name. Components read tokens, not raw hex values, so dark mode is automatic.
+
+```ts title="src/theme/colors.ts"
+export type ColorTokens = {
+  background: string;
+  surface: string;
+  surfaceMuted: string;
+  border: string;
+  borderStrong: string;
+  foreground: string;
+  foregroundMuted: string;
+  foregroundSubtle: string;
+  primary: string;
+  primaryForeground: string;
+  primaryMuted: string;
+  destructive: string;
+  destructiveForeground: string;
+  success: string;
+  warning: string;
+  ring: string;
+  overlay: string;
+};
+```
+
+## Spacing
+
+4px-scale T-shirt sizes:
+
+| Key   | Value |
+|-------|-------|
+| `none`| 0 |
+| `xs`  | 4 |
+| `sm`  | 8 |
+| `md`  | 12 |
+| `lg`  | 16 |
+| `xl`  | 24 |
+| `2xl` | 32 |
+| `3xl` | 48 |
+| `4xl` | 64 |
+
+## Radius
+
+| Key  | Value |
+|------|-------|
+| `none`| 0 |
+| `sm` | 4 |
+| `md` | 8 |
+| `lg` | 12 |
+| `xl` | 16 |
+| `full`| 9999 |
+
+## Typography
+
+`fontSize`, `lineHeight`, and `fontWeight` keyed by xs–4xl.
+
+## Shadows
+
+`Platform.select` picks iOS `shadow*` values, Android `elevation`, and falls back to iOS for web. Three steps: `sm`, `md`, `lg`.
+
+## Consuming tokens
+
+Use the `useStyles` hook, not module-level `StyleSheet.create` — it memoizes the StyleSheet against theme identity and rebuilds only when the scheme flips:
+
+```tsx
+import { useStyles } from "@/utils/cn";
+
+function Card() {
+  const styles = useStyles((t) => ({
+    base: {
+      backgroundColor: t.colors.surface,
+      borderColor: t.colors.border,
+      borderRadius: t.radius.lg,
+      padding: t.spacing.lg,
+    },
+  }));
+  return <View style={styles.base} />;
+}
+```

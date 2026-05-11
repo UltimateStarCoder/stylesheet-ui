@@ -1,0 +1,31 @@
+---
+// Embeds the docs-app Expo web export as an iframe so readers see the
+// component running with real React Native (via react-native-web) and full
+// dark-mode support. The Expo export is copied into public/expo/ by
+// `npm run build:expo` before the Astro build.
+
+interface Props {
+  /** Route slug inside the docs-app, e.g. "components/button" */
+  slug: string;
+  /** Optional accessible label for the iframe */
+  title?: string;
+  /** Optional height override (default 520) */
+  height?: number;
+}
+
+const { slug, title, height = 520 } = Astro.props;
+// Expo's web export emits foo.html (not foo/index.html), so we point at the
+// .html path explicitly so this works on any static host, not just Vercel's
+// clean-URL handling.
+const src = `/expo/${slug}.html`;
+---
+
+<div class="demo-frame-wrapper">
+  <iframe
+    class="demo-iframe"
+    src={src}
+    title={title ?? `Live demo: ${slug}`}
+    loading="lazy"
+    style={`height: ${height}px`}
+  ></iframe>
+</div>

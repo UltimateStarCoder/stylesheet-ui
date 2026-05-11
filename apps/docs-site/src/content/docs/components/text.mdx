@@ -1,0 +1,36 @@
+---
+title: Text
+description: Typography primitive with size, weight, and semantic intent variants.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+Wraps React Native's `Text` with three orthogonal variants: `size`, `weight`, and `intent`. Built on the typography and color tokens.
+
+<ComponentPreview slug="components/text" />
+
+## Install
+
+```sh
+npx stylesheet-ui add text
+```
+
+## Usage
+
+```tsx
+import { Text } from "@/components/ui/text";
+
+<Text size="xl" weight="bold">Heading</Text>
+<Text intent="muted">Secondary body copy</Text>
+<Text intent="destructive">Validation error</Text>
+```
+
+## Props
+
+| Prop      | Type                                                                                  | Default     |
+|-----------|---------------------------------------------------------------------------------------|-------------|
+| `size`    | `"xs" \| "sm" \| "md" \| "lg" \| "xl" \| "2xl" \| "3xl" \| "4xl"`                       | `"md"`      |
+| `weight`  | `"regular" \| "medium" \| "semibold" \| "bold"`                                         | `"regular"` |
+| `intent`  | `"default" \| "muted" \| "subtle" \| "primary" \| "destructive" \| "success" \| "warning"` | `"default"` |
+
+All other [`TextProps`](https://reactnative.dev/docs/text#props) are forwarded.

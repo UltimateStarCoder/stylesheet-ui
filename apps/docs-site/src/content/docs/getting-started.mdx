@@ -1,0 +1,108 @@
+---
+title: Getting started
+description: Install stylesheet-ui in an Expo / React Native project, wire the ThemeProvider, and add your first component.
+---
+
+stylesheet-ui has no runtime package to install. The `stylesheet-ui` CLI copies component source into your project, and you take ownership from there.
+
+## 1. Initialize
+
+In the root of an existing Expo or React Native project:
+
+```sh
+npx stylesheet-ui init
+```
+
+The init command will:
+
+- Prompt for component, theme, and utils destinations (defaults shown below).
+- Write a `stylesheet-ui.json` config file.
+- Copy the theme tokens and the `useStyles` helper into your project.
+
+```json title="stylesheet-ui.json"
+{
+  "aliases": {
+    "components": "@/components/ui",
+    "theme": "@/theme",
+    "utils": "@/utils"
+  },
+  "paths": {
+    "components": "src/components/ui",
+    "theme": "src/theme",
+    "utils": "src/utils"
+  }
+}
+```
+
+:::tip
+The `@/` alias assumes a `tsconfig.json` path mapping. If you don't have one, add:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] }
+  }
+}
+```
+:::
+
+## 2. Wrap your app
+
+Add `ThemeProvider` once at the root of your app. It reads `useColorScheme()` from React Native and flips light/dark with the system.
+
+```tsx title="app/_layout.tsx"
+import { Stack } from "expo-router";
+import { ThemeProvider } from "@/theme";
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <Stack />
+    </ThemeProvider>
+  );
+}
+```
+
+If you want a manual override (light/dark/system switcher), `ThemeProvider` accepts a `forceScheme` prop:
+
+```tsx
+<ThemeProvider forceScheme={userPreference}>...</ThemeProvider>
+```
+
+## 3. Add components
+
+```sh
+npx stylesheet-ui add button
+npx stylesheet-ui add input card avatar
+```
+
+Each invocation:
+
+- Resolves the component's registry dependencies (theme, utils — usually already installed).
+- Copies the component file into `paths.components` (default `src/components/ui/`).
+- Rewrites cross-section imports to use your configured aliases.
+
+The copied file is yours. Edit colors, change the API, rename props. There's no upstream contract.
+
+## 4. Use it
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+export default function Screen() {
+  return (
+    <Button variant="primary" onPress={() => {}}>
+      Hello world
+    </Button>
+  );
+}
+```
+
+## What you get
+
+A foundation of 10 components and a complete token system:
+
+- **Components**: Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow
+- **Theme**: colors (light + dark), spacing, radius, typography, shadows
+
+Browse the [Components](/components/button/) section to see every variant rendered live.

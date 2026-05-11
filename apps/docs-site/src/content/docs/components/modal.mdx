@@ -1,0 +1,55 @@
+---
+title: Modal
+description: Centered dialog with backdrop, title, description, body, and footer actions.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A centered dialog over a dimmed backdrop. Tap the backdrop or press the system back button to dismiss.
+
+<ComponentPreview slug="components/modal" />
+
+## Install
+
+```sh
+npx stylesheet-ui add modal
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Modal } from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
+
+const [open, setOpen] = useState(false);
+
+<Button variant="destructive" onPress={() => setOpen(true)}>
+  Delete account
+</Button>
+
+<Modal
+  visible={open}
+  onClose={() => setOpen(false)}
+  title="Delete account?"
+  description="This will permanently remove your account and all associated data."
+  footer={
+    <>
+      <Button variant="ghost" onPress={() => setOpen(false)}>Cancel</Button>
+      <Button variant="destructive" onPress={() => setOpen(false)}>Delete</Button>
+    </>
+  }
+/>
+```
+
+## Props
+
+| Prop                | Type            | Default | Description |
+|---------------------|-----------------|---------|-------------|
+| `visible`           | `boolean`       | —       | Controlled open state |
+| `onClose`           | `() => void`    | —       | Called on backdrop tap or system back |
+| `title`             | `string`        | —       | Optional heading |
+| `description`       | `string`        | —       | Optional sub-heading |
+| `children`          | `ReactNode`     | —       | Modal body content |
+| `footer`            | `ReactNode`     | —       | Action row at the bottom (typically Buttons) |
+| `dismissOnBackdrop` | `boolean`       | `true`  | Tap backdrop to close |

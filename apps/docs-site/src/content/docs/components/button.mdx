@@ -1,0 +1,40 @@
+---
+title: Button
+description: Pressable action with variants, sizes, loading and disabled states, and optional icon slots.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A pressable action. Four variants, three sizes, loading and disabled states. Leading or trailing icon slots accept any `ReactNode`.
+
+<ComponentPreview slug="components/button" />
+
+## Install
+
+```sh
+npx stylesheet-ui add button
+```
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button onPress={() => {}}>Primary</Button>
+<Button variant="secondary" size="lg">Secondary</Button>
+<Button variant="destructive" loading>Deleting…</Button>
+```
+
+## Props
+
+| Prop        | Type                                                       | Default     | Description |
+|-------------|------------------------------------------------------------|-------------|-------------|
+| `variant`   | `"primary" \| "secondary" \| "ghost" \| "destructive"`      | `"primary"` | Visual style |
+| `size`      | `"sm" \| "md" \| "lg"`                                     | `"md"`      | Height + padding scale |
+| `loading`   | `boolean`                                                  | `false`     | Replaces label with a spinner; disables press |
+| `disabled`  | `boolean`                                                  | `false`     | Disables press, mutes opacity |
+| `leftIcon`  | `ReactNode`                                                | —           | Element rendered before the label |
+| `rightIcon` | `ReactNode`                                                | —           | Element rendered after the label |
+| `onPress`   | `PressableProps["onPress"]`                                | —           | Press handler (inherits `PressableProps`) |
+
+All other [`PressableProps`](https://reactnative.dev/docs/pressable#props) are forwarded.

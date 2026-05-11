@@ -1,0 +1,63 @@
+---
+title: stylesheet-ui
+description: shadcn-style copy-paste components for Expo / React Native. Plain StyleSheet, no DSL.
+template: splash
+hero:
+  tagline: shadcn for React Native. Plain StyleSheet. You own the code.
+  actions:
+    - text: Get started
+      link: /getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: GitHub
+      link: https://github.com/UltimateStarCoder/stylesheet-ui
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why stylesheet-ui
+
+<CardGrid stagger>
+  <Card title="You own the code" icon="document">
+    The CLI copies real source into your project. Edit freely — no upstream API to break against.
+  </Card>
+  <Card title="Plain StyleSheet" icon="rocket">
+    No Tailwind compiler. No CSS-in-JS runtime. No styling DSL. What you read is what runs.
+  </Card>
+  <Card title="Dark mode out of the box" icon="moon">
+    Light and dark themes wired through `useColorScheme`. Components flip with the system.
+  </Card>
+  <Card title="AI-friendly" icon="puzzle">
+    Plain React Native is what code generators produce best. Components feel native to copilots.
+  </Card>
+</CardGrid>
+
+## Quick start
+
+```sh
+# Inside any Expo / React Native project:
+npx stylesheet-ui init
+npx stylesheet-ui add button
+```
+
+Wrap your app once:
+
+```tsx
+import { ThemeProvider } from "@/theme";
+
+export default function RootLayout() {
+  return <ThemeProvider>{/* your app */}</ThemeProvider>;
+}
+```
+
+Use what you copied:
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button onPress={() => {}}>Click me</Button>
+```
+
+That's it.
