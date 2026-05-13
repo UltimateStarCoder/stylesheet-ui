@@ -1,6 +1,6 @@
 {
   "name": "stylesheet-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "shadcn-style copy-paste components for Expo / React Native. Plain StyleSheet, no DSL. Run `npx stylesheet-ui add <name>` to drop a component into your project.",
   "keywords": [
     "expo",
