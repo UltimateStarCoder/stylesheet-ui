@@ -2,11 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ESNext"],
-    "module": "CommonJS",
-    "moduleResolution": "Node",
     "jsx": "preserve",
-    "types": ["node"],
-    "resolveJsonModule": true
+    "types": ["node"]
   },
   "include": ["src/**/*", "scripts/**/*"]
 }
