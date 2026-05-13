@@ -1,56 +1,59 @@
-# Welcome to your Expo app 👋
+# stylesheet-ui
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+shadcn-style copy-paste components for Expo / React Native.
 
-## Get started
+Plain `StyleSheet.create`. No DSL. No runtime. You own the source.
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+npx stylesheet-ui init
+npx stylesheet-ui add button
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+See the [CLI README](packages/cli/README.md) for usage details.
 
-### Other setup steps
+## What's included
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow, plus theme tokens (colors light + dark, spacing, radius, typography, shadows).
 
-## Learn more
+## Repository layout
 
-To learn more about developing your project with Expo, look at the following resources:
+This is a monorepo. The published package lives in `packages/cli`; everything else exists to develop, document, and showcase it.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+| Path | Description |
+| --- | --- |
+| [packages/cli](packages/cli) | The `stylesheet-ui` CLI published to npm. Owns the component registry. |
+| [packages/ui](packages/ui) | Source of truth for component code and theme tokens. Synced into the CLI registry at build time. |
+| [apps/docs-app](apps/docs-app) | Expo Router showcase app that consumes `@stylesheet-ui/ui` directly. |
+| [apps/docs-site](apps/docs-site) | Astro + Starlight documentation site. Embeds the exported docs-app web build. |
 
-## Join the community
+Component sources live in `packages/ui/src`. Running `npm run registry:sync` copies them into `packages/cli/registry/files` and rebuilds each `<name>.json` manifest so the CLI ships the latest code.
 
-Join our community of developers creating universal apps.
+## Development
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```sh
+npm install            # install workspace deps
+npm run dev            # start the Expo docs app
+npm run cli:dev        # watch-build the CLI
+npm run registry:sync  # sync ui/ -> cli/registry
+npm run typecheck      # typecheck all workspaces
+```
+
+To preview a CLI change end-to-end:
+
+```sh
+npm run cli:build
+node packages/cli/dist/index.js add button   # run against a test project
+```
+
+## Publishing
+
+The `prepublishOnly` hook in `packages/cli` runs `sync` then `build`, so publishing always ships a fresh registry:
+
+```sh
+cd packages/cli
+npm publish
+```
+
+## License
+
+MIT — see [packages/cli/LICENSE](packages/cli/LICENSE).
