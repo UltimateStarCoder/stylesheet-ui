@@ -1,0 +1,9 @@
+{
+  "name": "bottom-sheet",
+  "type": "component",
+  "description": "Drag-to-dismiss sheet with auto-fit / fixed / snap-point modes.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/bottom-sheet.tsx", "to": "bottom-sheet.tsx" }
+  ]
+}

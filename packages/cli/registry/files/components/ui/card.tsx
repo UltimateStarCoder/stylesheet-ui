@@ -6,7 +6,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type CardSurface = "default" | "muted" | "outline";
 export type CardPadding = "none" | "sm" | "md" | "lg";
@@ -20,6 +20,28 @@ export type CardProps = {
   style?: StyleProp<ViewStyle>;
 };
 
+const useStyles = createStyles((t) => ({
+  base: {
+    borderRadius: t.radius.lg,
+    borderWidth: 1,
+    borderColor: "transparent",
+  },
+  default: {
+    backgroundColor: t.colors.surface,
+    borderColor: t.colors.border,
+    ...t.shadows.sm,
+  },
+  muted:   { backgroundColor: t.colors.surfaceMuted, borderColor: t.colors.border },
+  outline: { backgroundColor: "transparent",         borderColor: t.colors.borderStrong },
+
+  padNone: { padding: 0 },
+  padSm:   { padding: t.spacing.md },
+  padMd:   { padding: t.spacing.lg },
+  padLg:   { padding: t.spacing.xl },
+
+  pressed: { opacity: 0.85 },
+}));
+
 export const Card = forwardRef<View, CardProps>(function Card(
   {
     children,
@@ -31,27 +53,7 @@ export const Card = forwardRef<View, CardProps>(function Card(
   },
   ref,
 ) {
-  const styles = useStyles((t) => ({
-    base: {
-      borderRadius: t.radius.lg,
-      borderWidth: 1,
-      borderColor: "transparent",
-    },
-    default: {
-      backgroundColor: t.colors.surface,
-      borderColor: t.colors.border,
-      ...t.shadows.sm,
-    },
-    muted:   { backgroundColor: t.colors.surfaceMuted, borderColor: t.colors.border },
-    outline: { backgroundColor: "transparent",         borderColor: t.colors.borderStrong },
-
-    padNone: { padding: 0 },
-    padSm:   { padding: t.spacing.md },
-    padMd:   { padding: t.spacing.lg },
-    padLg:   { padding: t.spacing.xl },
-
-    pressed: { opacity: 0.85 },
-  }));
+  const styles = useStyles();
 
   const surfaceStyle = styles[surface];
   const padStyle = {

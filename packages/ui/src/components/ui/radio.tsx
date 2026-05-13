@@ -11,7 +11,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type RadioSize = "sm" | "md" | "lg";
 
@@ -31,6 +31,34 @@ function useRadioGroup(): RadioGroupContextValue {
   return ctx;
 }
 
+const useGroupStyles = createStyles((t) => ({
+  group: { gap: t.spacing.sm },
+}));
+
+const useRadioStyles = createStyles((t) => ({
+  // Size-dependent width/height/borderRadius applied inline.
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.sm,
+  },
+  outer: {
+    borderWidth: 1.5,
+    borderColor: t.colors.borderStrong,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: t.colors.surface,
+  },
+  outerChecked: { borderColor: t.colors.primary },
+  inner: { backgroundColor: t.colors.primary },
+  disabled: { opacity: 0.5 },
+  label: {
+    fontSize: t.typography.fontSize.md,
+    lineHeight: t.typography.lineHeight.md,
+    color: t.colors.foreground,
+  },
+}));
+
 export type RadioGroupProps = {
   value: string | null;
   onValueChange: (next: string) => void;
@@ -46,15 +74,13 @@ export function RadioGroup({
   children,
   style,
 }: RadioGroupProps) {
-  const styles = useStyles((t) => ({
-    group: { gap: t.spacing.sm },
-  }));
+  const styles = useGroupStyles();
   return (
-    <RadioGroupContext.Provider value={{ value, onValueChange, disabled }}>
+    <RadioGroupContext value={{ value, onValueChange, disabled }}>
       <View accessibilityRole="radiogroup" style={[styles.group, style]}>
         {children}
       </View>
-    </RadioGroupContext.Provider>
+    </RadioGroupContext>
   );
 }
 
@@ -72,41 +98,11 @@ export const Radio = forwardRef<View, RadioProps>(function Radio(
   { value, label, size = "md", disabled, style },
   ref,
 ) {
+  const styles = useRadioStyles();
   const group = useRadioGroup();
   const px = SIZE_PX[size];
   const isChecked = group.value === value;
   const isDisabled = disabled || group.disabled;
-
-  const styles = useStyles((t) => ({
-    row: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.sm,
-    },
-    outer: {
-      width: px,
-      height: px,
-      borderRadius: px / 2,
-      borderWidth: 1.5,
-      borderColor: t.colors.borderStrong,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: t.colors.surface,
-    },
-    outerChecked: { borderColor: t.colors.primary },
-    inner: {
-      width: px * 0.5,
-      height: px * 0.5,
-      borderRadius: px * 0.25,
-      backgroundColor: t.colors.primary,
-    },
-    disabled: { opacity: 0.5 },
-    label: {
-      fontSize: t.typography.fontSize.md,
-      lineHeight: t.typography.lineHeight.md,
-      color: t.colors.foreground,
-    },
-  }));
 
   return (
     <Pressable
@@ -117,8 +113,21 @@ export const Radio = forwardRef<View, RadioProps>(function Radio(
       accessibilityState={{ checked: isChecked, disabled: isDisabled }}
       style={[styles.row, isDisabled && styles.disabled, style]}
     >
-      <View style={[styles.outer, isChecked && styles.outerChecked]}>
-        {isChecked && <View style={styles.inner} />}
+      <View
+        style={[
+          styles.outer,
+          { width: px, height: px, borderRadius: px / 2 },
+          isChecked && styles.outerChecked,
+        ]}
+      >
+        {isChecked && (
+          <View
+            style={[
+              styles.inner,
+              { width: px * 0.5, height: px * 0.5, borderRadius: px * 0.25 },
+            ]}
+          />
+        )}
       </View>
       {!!label &&
         (typeof label === "string" ? (

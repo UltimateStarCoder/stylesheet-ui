@@ -1,0 +1,84 @@
+---
+title: Toast
+description: Ephemeral feedback after an action. Imperative singleton `toast.show(...)` + `<Toaster />` mounted at root.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+Fire-and-forget feedback after an action. Imperative singleton + a `<Toaster />` component you mount once at the app root.
+
+<ComponentPreview slug="components/toast" />
+
+## Install
+
+```sh
+npx stylesheet-ui add toast
+```
+
+## Setup
+
+Mount `<Toaster />` once at the app root, inside your `<ThemeProvider>`:
+
+```tsx title="app/_layout.tsx"
+import { ThemeProvider, Toaster } from "@/components/ui/toast";
+// or wherever the file lives in your project
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <Stack />
+      <Toaster />
+    </ThemeProvider>
+  );
+}
+```
+
+## Usage
+
+The `toast` singleton can be called from anywhere — components, callbacks, service files, async functions:
+
+```tsx
+import { toast } from "@/components/ui/toast";
+
+toast.show("Saved to drafts");
+toast.success("Payment confirmed");
+toast.warning({ title: "Slow connection", description: "We'll keep trying." });
+toast.error({ title: "Couldn't sync", description: "Check your network." });
+
+// Dismiss a specific toast
+const id = toast.show("Loading…");
+later(() => toast.dismiss(id));
+```
+
+Each call returns an `id` you can use to dismiss the toast before its duration elapses.
+
+## Toast API
+
+| Method             | Input                                  | Description |
+|--------------------|----------------------------------------|-------------|
+| `toast.show(...)`  | `string \| ToastInput`                  | Generic toast |
+| `toast.success(...)`| `string \| Omit<ToastInput, "variant">` | Success variant |
+| `toast.warning(...)`| `string \| Omit<ToastInput, "variant">` | Warning variant |
+| `toast.error(...)`  | `string \| Omit<ToastInput, "variant">` | Destructive variant |
+| `toast.dismiss(id)`| `string`                               | Remove a specific toast |
+
+`ToastInput`:
+
+```ts
+type ToastInput =
+  | string  // shorthand for { description: "..." }
+  | {
+      title?: string;
+      description?: string;
+      variant?: "default" | "success" | "warning" | "destructive";
+      duration?: number;  // ms; default 3000
+    };
+```
+
+## Toaster Props
+
+| Prop       | Type                | Default | Description |
+|------------|---------------------|---------|-------------|
+| `position` | `"top" \| "bottom"`  | `"top"` | Where toasts appear |
+| `max`      | `number`            | `3`     | Max simultaneous toasts; older ones evict |
+| `style`    | `StyleProp<ViewStyle>` | —    | Style override for the container |

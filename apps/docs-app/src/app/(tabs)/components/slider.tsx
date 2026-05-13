@@ -1,28 +1,29 @@
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { Slider, Text, useStyles } from "@stylesheet-ui/ui";
+import { Slider, Text, createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  value: { color: t.colors.foreground, fontSize: t.typography.fontSize.sm },
+}));
 
 export default function SliderDemo() {
+  const styles = useStyles();
   const [volume, setVolume] = useState(40);
   const [stepped, setStepped] = useState(3);
-
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    value: { color: t.colors.foreground, fontSize: t.typography.fontSize.sm },
-  }));
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

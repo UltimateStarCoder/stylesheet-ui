@@ -1,35 +1,36 @@
 import { ScrollView, Text } from "react-native";
-import { useStyles } from "@stylesheet-ui/ui";
+import { createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.md,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: t.typography.fontSize["2xl"],
+    lineHeight: t.typography.lineHeight["2xl"],
+    fontWeight: "700",
+    color: t.colors.foreground,
+  },
+  body: {
+    fontSize: t.typography.fontSize.md,
+    lineHeight: t.typography.lineHeight.md,
+    color: t.colors.foregroundMuted,
+  },
+  sectionTitle: {
+    marginTop: t.spacing.lg,
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+}));
 
 export default function AboutScreen() {
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.md,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    title: {
-      fontSize: t.typography.fontSize["2xl"],
-      lineHeight: t.typography.lineHeight["2xl"],
-      fontWeight: "700",
-      color: t.colors.foreground,
-    },
-    body: {
-      fontSize: t.typography.fontSize.md,
-      lineHeight: t.typography.lineHeight.md,
-      color: t.colors.foregroundMuted,
-    },
-    sectionTitle: {
-      marginTop: t.spacing.lg,
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-  }));
-
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>stylesheet-ui</Text>

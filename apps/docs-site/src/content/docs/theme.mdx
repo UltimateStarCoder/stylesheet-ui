@@ -72,20 +72,43 @@ export type ColorTokens = {
 
 ## Consuming tokens
 
-Use the `useStyles` hook, not module-level `StyleSheet.create` — it memoizes the StyleSheet against theme identity and rebuilds only when the scheme flips:
+Declare `createStyles` at module scope. It builds the StyleSheet once per scheme (light/dark) and caches it — the closure runs at most twice per component lifetime, not on every render.
 
 ```tsx
-import { useStyles } from "@/utils/cn";
+import { createStyles } from "@/utils/use-styles";
+
+const useStyles = createStyles((t) => ({
+  base: {
+    backgroundColor: t.colors.surface,
+    borderColor: t.colors.border,
+    borderRadius: t.radius.lg,
+    padding: t.spacing.lg,
+  },
+}));
 
 function Card() {
-  const styles = useStyles((t) => ({
-    base: {
-      backgroundColor: t.colors.surface,
-      borderColor: t.colors.border,
-      borderRadius: t.radius.lg,
-      padding: t.spacing.lg,
-    },
-  }));
+  const styles = useStyles();
   return <View style={styles.base} />;
 }
+```
+
+For prop-derived values (e.g. an avatar's size-dependent `borderRadius`), put the static styles in `createStyles` and inline the dynamic parts:
+
+```tsx
+const useStyles = createStyles((t) => ({
+  base: { backgroundColor: t.colors.primaryMuted, alignItems: "center" },
+}));
+
+function Avatar({ size }) {
+  const styles = useStyles();
+  return <View style={[styles.base, { width: size, height: size, borderRadius: size / 2 }]} />;
+}
+```
+
+A small `cn(...)` helper is included in `utils/cn.ts` for assembling style arrays without the booleans-in-arrays noise:
+
+```tsx
+import { cn } from "@/utils/cn";
+
+<View style={cn(styles.base, pressed && styles.pressed, disabled && styles.disabled, style)} />
 ```

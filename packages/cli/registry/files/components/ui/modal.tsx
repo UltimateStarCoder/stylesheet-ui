@@ -7,7 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type ModalProps = {
   visible: boolean;
@@ -19,6 +19,45 @@ export type ModalProps = {
   dismissOnBackdrop?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
 };
+
+const useStyles = createStyles((t) => ({
+  backdrop: {
+    flex: 1,
+    backgroundColor: t.colors.overlay,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: t.spacing.lg,
+  },
+  card: {
+    width: "100%",
+    maxWidth: 420,
+    backgroundColor: t.colors.surface,
+    borderRadius: t.radius.lg,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    padding: t.spacing.lg,
+    gap: t.spacing.md,
+    ...t.shadows.lg,
+  },
+  header:      { gap: t.spacing.xs },
+  title: {
+    fontSize: t.typography.fontSize.lg,
+    lineHeight: t.typography.lineHeight.lg,
+    color: t.colors.foreground,
+    fontWeight: "600" as const,
+  },
+  description: {
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    color: t.colors.foregroundMuted,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: t.spacing.sm,
+    marginTop: t.spacing.sm,
+  },
+}));
 
 export const Modal = forwardRef<View, ModalProps>(function Modal(
   {
@@ -33,44 +72,7 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
   },
   ref,
 ) {
-  const styles = useStyles((t) => ({
-    backdrop: {
-      flex: 1,
-      backgroundColor: t.colors.overlay,
-      alignItems: "center",
-      justifyContent: "center",
-      padding: t.spacing.lg,
-    },
-    card: {
-      width: "100%",
-      maxWidth: 420,
-      backgroundColor: t.colors.surface,
-      borderRadius: t.radius.lg,
-      borderWidth: 1,
-      borderColor: t.colors.border,
-      padding: t.spacing.lg,
-      gap: t.spacing.md,
-      ...t.shadows.lg,
-    },
-    header:      { gap: t.spacing.xs },
-    title: {
-      fontSize: t.typography.fontSize.lg,
-      lineHeight: t.typography.lineHeight.lg,
-      color: t.colors.foreground,
-      fontWeight: "600" as const,
-    },
-    description: {
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-      color: t.colors.foregroundMuted,
-    },
-    footer: {
-      flexDirection: "row",
-      justifyContent: "flex-end",
-      gap: t.spacing.sm,
-      marginTop: t.spacing.sm,
-    },
-  }));
+  const styles = useStyles();
 
   return (
     <RNModal

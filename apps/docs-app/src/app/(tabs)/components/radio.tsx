@@ -1,27 +1,28 @@
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import { Radio, RadioGroup, Text, useStyles } from "@stylesheet-ui/ui";
+import { Radio, RadioGroup, Text, createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+}));
 
 export default function RadioDemo() {
+  const styles = useStyles();
   const [plan, setPlan] = useState<string | null>("pro");
   const [size, setSize] = useState<string | null>("md");
-
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-  }));
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

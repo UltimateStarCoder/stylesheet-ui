@@ -1,0 +1,69 @@
+---
+title: BottomSheet
+description: Drag-to-dismiss sheet with auto-fit-to-content, fixed height, or multi-snap-point modes.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The mobile pattern that's been missing from this set. Three modes via prop precedence: `snapPoints` (most explicit) → `height` (single fixed snap) → **auto-fit to content** when neither is set.
+
+<ComponentPreview slug="components/bottom-sheet" />
+
+## Install
+
+```sh
+npx stylesheet-ui add bottom-sheet
+```
+
+Note: BottomSheet uses `react-native-reanimated` and `react-native-gesture-handler` — both are standard Expo deps, but make sure your app root is wrapped in `<GestureHandlerRootView>` and `<SafeAreaProvider>`.
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { BottomSheet } from "@/components/ui/bottom-sheet";
+import { Button } from "@/components/ui/button";
+
+const [open, setOpen] = useState(false);
+
+<Button onPress={() => setOpen(true)}>Open</Button>
+
+{/* Auto-fits to children's height */}
+<BottomSheet visible={open} onClose={() => setOpen(false)}>
+  <MyForm />
+</BottomSheet>
+
+{/* Fixed height */}
+<BottomSheet visible={open} onClose={() => setOpen(false)} height="60%">
+  <MyContent />
+</BottomSheet>
+
+{/* Multi-snap, starts at smallest */}
+<BottomSheet
+  visible={open}
+  onClose={() => setOpen(false)}
+  snapPoints={["30%", "60%", "90%"]}
+  initialSnap={0}
+>
+  <ScrollableList />
+</BottomSheet>
+```
+
+## Props
+
+| Prop                | Type                                       | Default | Description |
+|---------------------|--------------------------------------------|---------|-------------|
+| `visible`           | `boolean`                                  | —       | Controlled open state |
+| `onClose`           | `() => void`                               | —       | Called on backdrop tap, system back, or drag-dismiss |
+| `snapPoints`        | Array of pixels or `"N%"` strings           | —       | Multi-snap heights. Most explicit |
+| `height`            | Pixels or `"N%"` string                     | —       | Fixed height when `snapPoints` is omitted |
+| `initialSnap`       | `number`                                   | `0`     | Index into `snapPoints` to open at |
+| `dismissOnBackdrop` | `boolean`                                  | `true`  | Tap backdrop to close |
+| `showHandle`        | `boolean`                                  | `true`  | Render the drag-indicator bar at the top |
+| `contentStyle`      | `StyleProp<ViewStyle>`                      | —       | Extra style for the inner content container |
+
+## Behavior
+
+- **Drag to dismiss.** Pulling the sheet down past ~35% of its height (or flinging it with high velocity) animates out and fires `onClose`.
+- **Spring snap-back.** A short drag that doesn't cross the dismiss threshold springs back to the current snap.
+- **Backdrop opacity** interpolates from the sheet's current `translateY` — fully visible when the sheet is open, fully transparent when dismissed.

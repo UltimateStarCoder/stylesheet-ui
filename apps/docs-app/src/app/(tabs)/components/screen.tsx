@@ -1,26 +1,27 @@
-import { Card, Screen, Text, VStack, useStyles } from "@stylesheet-ui/ui";
+import { Card, Screen, Text, VStack, createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  body: {
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    color: t.colors.foreground,
+  },
+  title: {
+    fontSize: t.typography.fontSize.md,
+    fontWeight: "600",
+    color: t.colors.foreground,
+  },
+}));
 
 export default function ScreenDemo() {
-  const styles = useStyles((t) => ({
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    body: {
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-      color: t.colors.foreground,
-    },
-    title: {
-      fontSize: t.typography.fontSize.md,
-      fontWeight: "600",
-      color: t.colors.foreground,
-    },
-  }));
-
+  const styles = useStyles();
   return (
     <Screen edges={null} padding={16}>
       <VStack gap="xl">

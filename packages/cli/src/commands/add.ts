@@ -1,12 +1,17 @@
 import path from "node:path";
 import { logger } from "../utils/logger";
-import { copyFileSafely } from "../utils/fs";
+import { copyFileSafely, type CopyResult } from "../utils/fs";
 import { destinationRoot, readConfig } from "../utils/paths";
 import { rewriteImports, shouldRewrite } from "../utils/rewrite";
 import { getRegistryFilesRoot, resolveInstallPlan } from "../registry";
 import type { RegistryEntry, StylesheetUiConfig } from "../registry/schema";
 
-export type AddOptions = { yes?: boolean; verbose?: boolean };
+export type AddOptions = {
+  yes?: boolean;
+  verbose?: boolean;
+  dryRun?: boolean;
+  diff?: boolean;
+};
 
 export async function addCommand(
   components: string[],
@@ -24,23 +29,39 @@ export async function addCommand(
   const plan = await resolveInstallPlan(components);
   const requested = new Set(components);
 
+  if (opts.diff) {
+    logger.step(`Diffing ${components.join(", ")} against registry source...`);
+  } else if (opts.dryRun) {
+    logger.step(`Dry-run for ${components.join(", ")} (no files will be written):`);
+  }
+
   await applyRegistryEntries(plan, config, cwd, {
     requested,
     overwrite: opts.yes,
     verbose: opts.verbose,
+    dryRun: opts.dryRun,
+    diff: opts.diff,
   });
 
-  logger.success("Done.");
+  if (opts.dryRun) {
+    logger.dim("Dry run complete. Re-run without --dry-run to write files.");
+  } else if (opts.diff) {
+    logger.dim("Diff complete. Re-run without --diff to write files.");
+  } else {
+    logger.success("Done.");
+  }
 }
 
 export type ApplyOptions = {
   requested?: Set<string>;
   overwrite?: boolean;
   skipIfExists?: boolean;
-  // When false, transitive-dep skips are summarized as a single line instead
-  // of listed per file. `verbose: true` reverts to per-file output. Default is
-  // summarized.
+  // When false (default), transitive-dep results are summarized as a single
+  // rollup line instead of listed per file. `verbose: true` reverts to per-file.
   verbose?: boolean;
+  // Pass-through to copyFileSafely.
+  dryRun?: boolean;
+  diff?: boolean;
 };
 
 export async function applyRegistryEntries(
@@ -75,28 +96,43 @@ export async function applyRegistryEntries(
         : undefined;
 
       // Suppress per-file logging for transitive-dep skips unless verbose.
-      // Everything else (explicit installs, conflicts, errors) prints normally.
       const isTransitiveDep = options.requested ? !isRequested : false;
       const silent = isTransitiveDep && !options.verbose;
 
-      const result = await copyFileSafely(from, to, { ...fileOpts, transform, silent });
+      const result = await copyFileSafely(from, to, {
+        ...fileOpts,
+        transform,
+        silent,
+        dryRun: options.dryRun,
+        diff: options.diff,
+      });
+
       if (isTransitiveDep) {
-        if (result === "skipped") depSkipCount++;
-        else if (result === "added") depAddCount++;
+        if (isSkipResult(result)) depSkipCount++;
+        else if (isAddResult(result)) depAddCount++;
       }
     }
   }
 
-  // Roll up the dep summary so the noisy 10-line "(already exists)" block
-  // becomes a single line.
-  if (!options.verbose) {
+  // Roll up the dep summary. Skipped in --diff mode (the diff IS the output).
+  if (!options.verbose && !options.diff) {
     if (depAddCount > 0) {
-      logger.dim(`  ${depAddCount} dependency file${plural(depAddCount)} installed`);
+      const verb = options.dryRun ? "would install" : "installed";
+      logger.dim(`  ${depAddCount} dependency file${plural(depAddCount)} ${verb}`);
     }
     if (depSkipCount > 0) {
-      logger.dim(`  ${depSkipCount} dependency file${plural(depSkipCount)} already present`);
+      const verb = options.dryRun ? "would skip" : "already present";
+      logger.dim(`  ${depSkipCount} dependency file${plural(depSkipCount)} ${verb}`);
     }
   }
+}
+
+function isSkipResult(r: CopyResult): boolean {
+  return r === "skipped" || r === "would-skip";
+}
+
+function isAddResult(r: CopyResult): boolean {
+  return r === "added" || r === "would-add" || r === "overwritten" || r === "would-overwrite";
 }
 
 function plural(n: number): string {

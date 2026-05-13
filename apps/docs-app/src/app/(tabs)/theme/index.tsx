@@ -1,81 +1,83 @@
 import { ScrollView, Text, View } from "react-native";
-import { useTheme, useStyles, spacing, radius, typography } from "@stylesheet-ui/ui";
+import { useTheme, createStyles, spacing, radius, typography } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section:      { gap: t.spacing.sm },
+  sectionTitle: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  swatchRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.md,
+    paddingVertical: t.spacing.xs,
+  },
+  swatchChip: {
+    width: 32,
+    height: 32,
+    borderRadius: t.radius.sm,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+  },
+  swatchLabel: {
+    flex: 1,
+    fontSize: t.typography.fontSize.sm,
+    color: t.colors.foreground,
+  },
+  swatchValue: {
+    fontSize: t.typography.fontSize.xs,
+    color: t.colors.foregroundMuted,
+  },
+  rulerBar: {
+    backgroundColor: t.colors.primary,
+    height: 8,
+    borderRadius: t.radius.full,
+  },
+  rulerLabel: {
+    width: 56,
+    color: t.colors.foreground,
+    fontSize: t.typography.fontSize.sm,
+  },
+  rulerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.md,
+  },
+  radiusChip: {
+    width: 56,
+    height: 56,
+    backgroundColor: t.colors.primaryMuted,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+  },
+  typeSample: { color: t.colors.foreground },
+  schemePill: {
+    alignSelf: "flex-start",
+    paddingHorizontal: t.spacing.md,
+    paddingVertical: t.spacing.xs,
+    borderRadius: t.radius.full,
+    backgroundColor: t.colors.primaryMuted,
+  },
+  schemeText: {
+    color: t.colors.primary,
+    fontSize: t.typography.fontSize.xs,
+    fontWeight: "600",
+  },
+}));
 
 export default function ThemeScreen() {
   const theme = useTheme();
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section:      { gap: t.spacing.sm },
-    sectionTitle: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    swatchRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.md,
-      paddingVertical: t.spacing.xs,
-    },
-    swatchChip: {
-      width: 32,
-      height: 32,
-      borderRadius: t.radius.sm,
-      borderWidth: 1,
-      borderColor: t.colors.border,
-    },
-    swatchLabel: {
-      flex: 1,
-      fontSize: t.typography.fontSize.sm,
-      color: t.colors.foreground,
-    },
-    swatchValue: {
-      fontSize: t.typography.fontSize.xs,
-      color: t.colors.foregroundMuted,
-    },
-    rulerBar: {
-      backgroundColor: t.colors.primary,
-      height: 8,
-      borderRadius: t.radius.full,
-    },
-    rulerLabel: {
-      width: 56,
-      color: t.colors.foreground,
-      fontSize: t.typography.fontSize.sm,
-    },
-    rulerRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.md,
-    },
-    radiusChip: {
-      width: 56,
-      height: 56,
-      backgroundColor: t.colors.primaryMuted,
-      borderWidth: 1,
-      borderColor: t.colors.border,
-    },
-    typeSample: { color: t.colors.foreground },
-    schemePill: {
-      alignSelf: "flex-start",
-      paddingHorizontal: t.spacing.md,
-      paddingVertical: t.spacing.xs,
-      borderRadius: t.radius.full,
-      backgroundColor: t.colors.primaryMuted,
-    },
-    schemeText: {
-      color: t.colors.primary,
-      fontSize: t.typography.fontSize.xs,
-      fontWeight: "600",
-    },
-  }));
+  const styles = useStyles();
 
   const colorEntries = Object.entries(theme.colors) as Array<[string, string]>;
   const spacingEntries = Object.entries(spacing) as Array<[string, number]>;

@@ -1,27 +1,28 @@
 import { ScrollView, Text, View } from "react-native";
-import { Button, useStyles } from "@stylesheet-ui/ui";
+import { Button, createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section:      { gap: t.spacing.sm },
+  sectionTitle: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  row: { flexDirection: "row", gap: t.spacing.sm, flexWrap: "wrap" },
+  iconLight: { color: t.colors.primaryForeground, fontSize: 16 },
+  iconDark:  { color: t.colors.foreground, fontSize: 16 },
+}));
 
 export default function ButtonDemo() {
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section:      { gap: t.spacing.sm },
-    sectionTitle: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    row: { flexDirection: "row", gap: t.spacing.sm, flexWrap: "wrap" },
-    iconLight: { color: t.colors.primaryForeground, fontSize: 16 },
-    iconDark:  { color: t.colors.foreground, fontSize: 16 },
-  }));
-
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>

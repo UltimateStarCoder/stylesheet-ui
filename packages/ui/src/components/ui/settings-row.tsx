@@ -7,7 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type SettingsRowProps = {
   title: string;
@@ -20,44 +20,46 @@ export type SettingsRowProps = {
   style?: StyleProp<ViewStyle>;
 };
 
+const useStyles = createStyles((t) => ({
+  base: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.md,
+    paddingVertical: t.spacing.md,
+    paddingHorizontal: t.spacing.lg,
+    backgroundColor: t.colors.surface,
+    minHeight: 56,
+  },
+  pressed: { backgroundColor: t.colors.surfaceMuted },
+  disabled: { opacity: 0.5 },
+  iconBox: {
+    width: 28,
+    height: 28,
+    borderRadius: t.radius.sm,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: t.colors.surfaceMuted,
+  },
+  body: { flex: 1, gap: 2 },
+  title: {
+    fontSize: t.typography.fontSize.md,
+    lineHeight: t.typography.lineHeight.md,
+    color: t.colors.foreground,
+    fontWeight: "500" as const,
+  },
+  titleDestructive: { color: t.colors.destructive },
+  description: {
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    color: t.colors.foregroundMuted,
+  },
+}));
+
 export const SettingsRow = forwardRef<View, SettingsRowProps>(function SettingsRow(
   { title, description, icon, right, onPress, disabled, destructive, style },
   ref,
 ) {
-  const styles = useStyles((t) => ({
-    base: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.md,
-      paddingVertical: t.spacing.md,
-      paddingHorizontal: t.spacing.lg,
-      backgroundColor: t.colors.surface,
-      minHeight: 56,
-    },
-    pressed: { backgroundColor: t.colors.surfaceMuted },
-    disabled: { opacity: 0.5 },
-    iconBox: {
-      width: 28,
-      height: 28,
-      borderRadius: t.radius.sm,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: t.colors.surfaceMuted,
-    },
-    body: { flex: 1, gap: 2 },
-    title: {
-      fontSize: t.typography.fontSize.md,
-      lineHeight: t.typography.lineHeight.md,
-      color: t.colors.foreground,
-      fontWeight: "500" as const,
-    },
-    titleDestructive: { color: t.colors.destructive },
-    description: {
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-      color: t.colors.foregroundMuted,
-    },
-  }));
+  const styles = useStyles();
 
   const content = (
     <>

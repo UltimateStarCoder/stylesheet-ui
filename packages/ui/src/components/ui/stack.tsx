@@ -1,7 +1,7 @@
 import { forwardRef, type ReactNode } from "react";
 import { View, type StyleProp, type ViewStyle } from "react-native";
+import { useTheme } from "../../theme/use-theme";
 import type { SpacingKey } from "../../theme/spacing";
-import { useStyles } from "../../utils/cn";
 
 export type StackDirection = "column" | "row" | "column-reverse" | "row-reverse";
 export type StackAlign = "stretch" | "start" | "center" | "end" | "baseline";
@@ -34,21 +34,23 @@ const JUSTIFY_MAP: Record<StackJustify, ViewStyle["justifyContent"]> = {
   evenly:  "space-evenly",
 };
 
+// Stack's styles are 100% prop-derived. There's nothing static to hoist via
+// createStyles, so the layout object is built inline. Light/dark doesn't
+// affect any of these values; only props do.
 export const Stack = forwardRef<View, StackProps>(function Stack(
   { children, direction = "column", gap = "none", align, justify, wrap, style },
   ref,
 ) {
-  const styles = useStyles((t) => ({
-    base: {
-      flexDirection: direction,
-      gap: t.spacing[gap],
-      ...(align && { alignItems: ALIGN_MAP[align] }),
-      ...(justify && { justifyContent: JUSTIFY_MAP[justify] }),
-      ...(wrap && { flexWrap: "wrap" as const }),
-    },
-  }));
+  const theme = useTheme();
+  const layout: ViewStyle = {
+    flexDirection: direction,
+    gap: theme.spacing[gap],
+    ...(align && { alignItems: ALIGN_MAP[align] }),
+    ...(justify && { justifyContent: JUSTIFY_MAP[justify] }),
+    ...(wrap && { flexWrap: "wrap" as const }),
+  };
   return (
-    <View ref={ref} style={[styles.base, style]}>
+    <View ref={ref} style={[layout, style]}>
       {children}
     </View>
   );

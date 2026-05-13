@@ -12,7 +12,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type SliderProps = {
   value: number;
@@ -29,6 +29,39 @@ export type SliderProps = {
 const THUMB_PX = 22;
 const TRACK_HEIGHT = 4;
 
+const useStyles = createStyles((t) => ({
+  // Dynamic fill width and thumb left are applied inline; everything else
+  // is static (constants + theme colors).
+  root: {
+    height: THUMB_PX,
+    justifyContent: "center",
+  },
+  track: {
+    height: TRACK_HEIGHT,
+    borderRadius: TRACK_HEIGHT / 2,
+    backgroundColor: t.colors.surfaceMuted,
+    width: "100%",
+  },
+  fill: {
+    position: "absolute",
+    left: 0,
+    height: TRACK_HEIGHT,
+    borderRadius: TRACK_HEIGHT / 2,
+    backgroundColor: t.colors.primary,
+  },
+  thumb: {
+    position: "absolute",
+    width: THUMB_PX,
+    height: THUMB_PX,
+    borderRadius: THUMB_PX / 2,
+    backgroundColor: t.colors.surface,
+    borderWidth: 1,
+    borderColor: t.colors.borderStrong,
+    ...t.shadows.sm,
+  },
+  disabled: { opacity: 0.5 },
+}));
+
 export const Slider = forwardRef<View, SliderProps>(function Slider(
   {
     value,
@@ -42,44 +75,12 @@ export const Slider = forwardRef<View, SliderProps>(function Slider(
   },
   ref,
 ) {
+  const styles = useStyles();
   const [width, setWidth] = useState(0);
-  const trackRef = useRef<View>(null);
   // Latest props captured for the PanResponder closure; pan handlers are
   // created once on mount, so we use refs to read fresh state inside them.
   const propsRef = useRef({ value, onValueChange, onSlidingComplete, min, max, step, width, disabled });
   propsRef.current = { value, onValueChange, onSlidingComplete, min, max, step, width, disabled };
-
-  const styles = useStyles((t) => ({
-    root: {
-      height: THUMB_PX,
-      justifyContent: "center",
-    },
-    track: {
-      height: TRACK_HEIGHT,
-      borderRadius: TRACK_HEIGHT / 2,
-      backgroundColor: t.colors.surfaceMuted,
-      width: "100%",
-    },
-    fill: {
-      position: "absolute",
-      left: 0,
-      height: TRACK_HEIGHT,
-      borderRadius: TRACK_HEIGHT / 2,
-      backgroundColor: t.colors.primary,
-    },
-    thumb: {
-      position: "absolute",
-      top: (THUMB_PX - THUMB_PX) / 2,
-      width: THUMB_PX,
-      height: THUMB_PX,
-      borderRadius: THUMB_PX / 2,
-      backgroundColor: t.colors.surface,
-      borderWidth: 1,
-      borderColor: t.colors.borderStrong,
-      ...t.shadows.sm,
-    },
-    disabled: { opacity: 0.5 },
-  }));
 
   const clampAndStep = useCallback((raw: number) => {
     const { min, max, step } = propsRef.current;
@@ -134,7 +135,7 @@ export const Slider = forwardRef<View, SliderProps>(function Slider(
       accessibilityValue={{ min, max, now: value }}
       {...responder.panHandlers}
     >
-      <View ref={trackRef} style={styles.track} />
+      <View style={styles.track} />
       <View style={[styles.fill, { width: fillWidth }]} />
       <View style={[styles.thumb, { left: Math.max(0, thumbLeft) }]} />
     </View>

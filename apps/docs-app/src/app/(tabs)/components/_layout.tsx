@@ -30,6 +30,8 @@ export default function ComponentsLayout() {
       <Stack.Screen name="checkbox"     options={{ title: "Checkbox" }} />
       <Stack.Screen name="radio"        options={{ title: "Radio" }} />
       <Stack.Screen name="slider"       options={{ title: "Slider" }} />
+      <Stack.Screen name="bottom-sheet" options={{ title: "BottomSheet" }} />
+      <Stack.Screen name="toast"        options={{ title: "Toast" }} />
     </Stack>
   );
 }

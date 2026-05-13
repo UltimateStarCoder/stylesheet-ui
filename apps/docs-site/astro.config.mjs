@@ -50,6 +50,8 @@ export default defineConfig({
           items: [
             "components/modal",
             "components/tabs",
+            "components/bottom-sheet",
+            "components/toast",
           ],
         },
       ],

@@ -30,6 +30,8 @@ async function main() {
     .argument("<components...>", "component names (e.g. button input)")
     .option("-y, --yes", "overwrite existing files without prompting", false)
     .option("-v, --verbose", "print one line per file copied", false)
+    .option("-d, --dry-run", "preview what would be written without touching the filesystem", false)
+    .option("--diff", "show a unified diff between existing files and the registry version", false)
     .action(async (components: string[], opts) => {
       try {
         await addCommand(components, opts);

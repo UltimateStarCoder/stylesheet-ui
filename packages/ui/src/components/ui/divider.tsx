@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { View, type StyleProp, type ViewStyle } from "react-native";
+import { useTheme } from "../../theme/use-theme";
 import type { SpacingKey } from "../../theme/spacing";
-import { useStyles } from "../../utils/cn";
 
 export type DividerProps = {
   orientation?: "horizontal" | "vertical";
@@ -12,27 +12,24 @@ export type DividerProps = {
   style?: StyleProp<ViewStyle>;
 };
 
+// Divider style values are all prop-derived (thickness, inset, orientation),
+// so the layout is built inline. Only the border color comes from the theme.
 export const Divider = forwardRef<View, DividerProps>(function Divider(
   { orientation = "horizontal", inset = "none", thickness = 1, style },
   ref,
 ) {
-  const styles = useStyles((t) => ({
-    horizontal: {
-      height: thickness,
-      backgroundColor: t.colors.border,
-      marginLeft: t.spacing[inset],
-    },
-    vertical: {
-      width: thickness,
-      backgroundColor: t.colors.border,
-      alignSelf: "stretch",
-    },
-  }));
-  return (
-    <View
-      ref={ref}
-      accessibilityRole="none"
-      style={[orientation === "horizontal" ? styles.horizontal : styles.vertical, style]}
-    />
-  );
+  const theme = useTheme();
+  const layout: ViewStyle =
+    orientation === "horizontal"
+      ? {
+          height: thickness,
+          backgroundColor: theme.colors.border,
+          marginLeft: theme.spacing[inset],
+        }
+      : {
+          width: thickness,
+          backgroundColor: theme.colors.border,
+          alignSelf: "stretch",
+        };
+  return <View ref={ref} accessibilityRole="none" style={[layout, style]} />;
 });

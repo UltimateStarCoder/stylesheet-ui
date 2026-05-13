@@ -6,31 +6,32 @@ import {
   Card,
   ListItem,
   Text,
-  useStyles,
+  createStyles,
   useTheme,
 } from "@stylesheet-ui/ui";
 
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  group: { borderRadius: t.radius.lg, overflow: "hidden", borderWidth: 1, borderColor: t.colors.border },
+  sep:   { height: 1, backgroundColor: t.colors.border, marginLeft: t.spacing.lg },
+}));
+
 export default function ListItemDemo() {
   const theme = useTheme();
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    group: { borderRadius: t.radius.lg, overflow: "hidden", borderWidth: 1, borderColor: t.colors.border },
-    sep:   { height: 1, backgroundColor: t.colors.border, marginLeft: t.spacing.lg },
-  }));
-
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>

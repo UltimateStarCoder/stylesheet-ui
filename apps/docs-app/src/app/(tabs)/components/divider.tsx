@@ -1,31 +1,32 @@
 import { ScrollView, View } from "react-native";
-import { Card, Divider, ListItem, Text, useStyles } from "@stylesheet-ui/ui";
+import { Card, Divider, ListItem, Text, createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  vertRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.md,
+    height: 24,
+  },
+  text: { color: t.colors.foreground, fontSize: t.typography.fontSize.sm },
+}));
 
 export default function DividerDemo() {
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    vertRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.md,
-      height: 24,
-    },
-    text: { color: t.colors.foreground, fontSize: t.typography.fontSize.sm },
-  }));
-
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>

@@ -9,7 +9,7 @@ import {
   type ViewStyle,
 } from "react-native";
 import { useTheme } from "../../theme/use-theme";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "destructive";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -24,6 +24,42 @@ export type ButtonProps = Omit<PressableProps, "children" | "style"> & {
   rightIcon?: ReactNode;
   style?: StyleProp<ViewStyle>;
 };
+
+const useStyles = createStyles((t) => ({
+  base: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: t.spacing.sm,
+    borderRadius: t.radius.md,
+    borderWidth: 1,
+    borderColor: "transparent",
+  },
+  sizeSm: { paddingVertical: t.spacing.xs, paddingHorizontal: t.spacing.md, minHeight: 32 },
+  sizeMd: { paddingVertical: t.spacing.sm, paddingHorizontal: t.spacing.lg, minHeight: 40 },
+  sizeLg: { paddingVertical: t.spacing.md, paddingHorizontal: t.spacing.xl, minHeight: 48 },
+
+  primary:            { backgroundColor: t.colors.primary },
+  primaryPressed:     { backgroundColor: t.colors.primary, opacity: 0.85 },
+  secondary:          { backgroundColor: t.colors.surfaceMuted, borderColor: t.colors.border },
+  secondaryPressed:   { backgroundColor: t.colors.border },
+  ghost:              { backgroundColor: "transparent" },
+  ghostPressed:       { backgroundColor: t.colors.surfaceMuted },
+  destructive:        { backgroundColor: t.colors.destructive },
+  destructivePressed: { backgroundColor: t.colors.destructive, opacity: 0.85 },
+
+  disabled: { opacity: 0.5 },
+
+  labelBase: { fontWeight: "600" as const },
+  labelSm:   { fontSize: t.typography.fontSize.sm, lineHeight: t.typography.lineHeight.sm },
+  labelMd:   { fontSize: t.typography.fontSize.md, lineHeight: t.typography.lineHeight.md },
+  labelLg:   { fontSize: t.typography.fontSize.lg, lineHeight: t.typography.lineHeight.lg },
+
+  primaryLabel:     { color: t.colors.primaryForeground },
+  secondaryLabel:   { color: t.colors.foreground },
+  ghostLabel:       { color: t.colors.foreground },
+  destructiveLabel: { color: t.colors.destructiveForeground },
+}));
 
 export const Button = forwardRef<View, ButtonProps>(function Button(
   {
@@ -40,41 +76,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   ref,
 ) {
   const theme = useTheme();
-  const styles = useStyles((t) => ({
-    base: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: t.spacing.sm,
-      borderRadius: t.radius.md,
-      borderWidth: 1,
-      borderColor: "transparent",
-    },
-    sizeSm: { paddingVertical: t.spacing.xs, paddingHorizontal: t.spacing.md, minHeight: 32 },
-    sizeMd: { paddingVertical: t.spacing.sm, paddingHorizontal: t.spacing.lg, minHeight: 40 },
-    sizeLg: { paddingVertical: t.spacing.md, paddingHorizontal: t.spacing.xl, minHeight: 48 },
-
-    primary:            { backgroundColor: t.colors.primary },
-    primaryPressed:     { backgroundColor: t.colors.primary, opacity: 0.85 },
-    secondary:          { backgroundColor: t.colors.surfaceMuted, borderColor: t.colors.border },
-    secondaryPressed:   { backgroundColor: t.colors.border },
-    ghost:              { backgroundColor: "transparent" },
-    ghostPressed:       { backgroundColor: t.colors.surfaceMuted },
-    destructive:        { backgroundColor: t.colors.destructive },
-    destructivePressed: { backgroundColor: t.colors.destructive, opacity: 0.85 },
-
-    disabled: { opacity: 0.5 },
-
-    labelBase: { fontWeight: "600" as const },
-    labelSm:   { fontSize: t.typography.fontSize.sm, lineHeight: t.typography.lineHeight.sm },
-    labelMd:   { fontSize: t.typography.fontSize.md, lineHeight: t.typography.lineHeight.md },
-    labelLg:   { fontSize: t.typography.fontSize.lg, lineHeight: t.typography.lineHeight.lg },
-
-    primaryLabel:     { color: t.colors.primaryForeground },
-    secondaryLabel:   { color: t.colors.foreground },
-    ghostLabel:       { color: t.colors.foreground },
-    destructiveLabel: { color: t.colors.destructiveForeground },
-  }));
+  const styles = useStyles();
 
   const sizeStyle      = { sm: styles.sizeSm, md: styles.sizeMd, lg: styles.sizeLg }[size];
   const labelSizeStyle = { sm: styles.labelSm, md: styles.labelMd, lg: styles.labelLg }[size];

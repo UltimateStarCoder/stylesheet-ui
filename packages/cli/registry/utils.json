@@ -1,9 +1,10 @@
 {
   "name": "utils",
   "type": "util",
-  "description": "useStyles(theme => ...) helper for theme-aware StyleSheet.create.",
+  "description": "createStyles factory + cn(...) style-array helper.",
   "registryDependencies": ["theme"],
   "files": [
-    { "from": "utils/cn.ts", "to": "cn.ts" }
+    { "from": "utils/use-styles.ts", "to": "use-styles.ts" },
+    { "from": "utils/cn.ts",         "to": "cn.ts" }
   ]
 }

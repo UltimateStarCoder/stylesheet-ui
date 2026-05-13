@@ -1,6 +1,6 @@
 import { ScrollView, Text } from "react-native";
 import { Link } from "expo-router";
-import { Card, useStyles } from "@stylesheet-ui/ui";
+import { Card, createStyles } from "@stylesheet-ui/ui";
 
 const ENTRIES = [
   { name: "Button",       href: "/components/button"        as const, blurb: "Variants, sizes, loading, icons" },
@@ -20,28 +20,31 @@ const ENTRIES = [
   { name: "Checkbox",     href: "/components/checkbox"      as const, blurb: "Sizes + label, no SVG dep" },
   { name: "Radio",        href: "/components/radio"         as const, blurb: "RadioGroup + Radio with values" },
   { name: "Slider",       href: "/components/slider"        as const, blurb: "PanResponder, min/max/step" },
+  { name: "BottomSheet",  href: "/components/bottom-sheet"  as const, blurb: "Drag-to-dismiss sheet, auto-fit / fixed / snap" },
+  { name: "Toast",        href: "/components/toast"         as const, blurb: "Imperative toast.show() singleton" },
 ];
 
-export default function ComponentsIndex() {
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.md,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    title: {
-      fontSize: t.typography.fontSize.md,
-      fontWeight: "600",
-      color: t.colors.foreground,
-    },
-    blurb: {
-      marginTop: t.spacing.xs,
-      color: t.colors.foregroundMuted,
-      fontSize: t.typography.fontSize.sm,
-    },
-  }));
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.md,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: t.typography.fontSize.md,
+    fontWeight: "600",
+    color: t.colors.foreground,
+  },
+  blurb: {
+    marginTop: t.spacing.xs,
+    color: t.colors.foregroundMuted,
+    fontSize: t.typography.fontSize.sm,
+  },
+}));
 
+export default function ComponentsIndex() {
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {ENTRIES.map((e) => (

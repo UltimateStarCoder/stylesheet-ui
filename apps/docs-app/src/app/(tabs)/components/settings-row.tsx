@@ -8,32 +8,32 @@ import {
   Moon,
   Shield,
 } from "lucide-react-native";
-import { Card, SettingsRow, Text, useStyles, useTheme } from "@stylesheet-ui/ui";
+import { Card, SettingsRow, Text, createStyles, useTheme } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  sep:   { height: 1, backgroundColor: t.colors.border, marginLeft: 60 },
+  valueText: { color: t.colors.foregroundMuted, fontSize: t.typography.fontSize.sm },
+}));
 
 export default function SettingsRowDemo() {
   const theme = useTheme();
+  const styles = useStyles();
   const [push, setPush] = useState(true);
   const [dark, setDark] = useState(false);
-
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    sep:   { height: 1, backgroundColor: t.colors.border, marginLeft: 60 },
-    chev:  { },
-    valueText: { color: t.colors.foregroundMuted, fontSize: t.typography.fontSize.sm },
-  }));
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

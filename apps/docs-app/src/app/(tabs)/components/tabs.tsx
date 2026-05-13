@@ -6,40 +6,41 @@ import {
   TabsList,
   TabsTrigger,
   Text,
-  useStyles,
+  createStyles,
 } from "@stylesheet-ui/ui";
 
-export default function TabsDemo() {
-  const [value, setValue] = useState("preview");
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  panel: {
+    padding: t.spacing.lg,
+    borderRadius: t.radius.md,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    backgroundColor: t.colors.surface,
+  },
+  body: {
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    color: t.colors.foreground,
+  },
+}));
 
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    panel: {
-      padding: t.spacing.lg,
-      borderRadius: t.radius.md,
-      borderWidth: 1,
-      borderColor: t.colors.border,
-      backgroundColor: t.colors.surface,
-    },
-    body: {
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-      color: t.colors.foreground,
-    },
-  }));
+export default function TabsDemo() {
+  const styles = useStyles();
+  const [value, setValue] = useState("preview");
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

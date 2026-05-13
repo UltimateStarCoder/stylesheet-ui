@@ -1,27 +1,28 @@
 import { ScrollView, View } from "react-native";
-import { Avatar, Text, useStyles } from "@stylesheet-ui/ui";
+import { Avatar, Text, createStyles } from "@stylesheet-ui/ui";
 
 const REMOTE = { uri: "https://i.pravatar.cc/200?u=stylesheet-ui" };
 
-export default function AvatarDemo() {
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section: { gap: t.spacing.sm },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    row: { flexDirection: "row", alignItems: "center", gap: t.spacing.md, flexWrap: "wrap" },
-  }));
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  row: { flexDirection: "row", alignItems: "center", gap: t.spacing.md, flexWrap: "wrap" },
+}));
 
+export default function AvatarDemo() {
+  const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>

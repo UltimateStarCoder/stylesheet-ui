@@ -41,7 +41,7 @@ Component source lands at `src/components/ui/<name>.tsx` and is yours to edit.
 
 Run `npx stylesheet-ui list` to see every component, grouped by type, in your terminal.
 
-**Components:** Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow, Stack, Screen, Divider, Switch, Checkbox, Radio, Slider.
+**Components:** Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow, Stack, Screen, Divider, Switch, Checkbox, Radio, Slider, BottomSheet, Toast.
 
 **Tokens:** colors (light + dark), spacing, radius, typography, shadows.
 
@@ -66,7 +66,7 @@ import { SettingsRow } from "@/components/ui/settings-row";
 
 ```json
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "aliases": {
     "components": "@/components/ui",
     "theme": "@/theme",
@@ -109,12 +109,46 @@ function ThemeToggle() {
 ## CLI commands
 
 ```sh
-npx stylesheet-ui init           # set up stylesheet-ui.json + foundation
-npx stylesheet-ui list           # show every component (alias: ls)
-npx stylesheet-ui add button     # add one or more components
-npx stylesheet-ui add button -y  # skip overwrite prompts
-npx stylesheet-ui add button -v  # print one line per file (default is summarized)
+npx stylesheet-ui init                  # set up stylesheet-ui.json + foundation
+npx stylesheet-ui list                  # show every component (alias: ls)
+npx stylesheet-ui add button            # add one or more components
+npx stylesheet-ui add button -y         # skip overwrite prompts
+npx stylesheet-ui add button -v         # print one line per file (default is summarized)
+npx stylesheet-ui add button --dry-run  # preview what would change without writing
+npx stylesheet-ui add button --diff     # show a unified diff vs the registry version
 ```
+
+## Upgrading from 0.0.2
+
+v0.0.3 is a breaking refactor of the styling primitives. The legacy `useStyles((t) => ({...}))` inline hook was replaced by `createStyles(...)` at module scope, which builds the StyleSheet once per scheme and caches it (much cheaper than the inline form's per-render closure).
+
+```tsx
+// Before (v0.0.2)
+import { useStyles } from "@/utils/cn";
+
+function Card() {
+  const styles = useStyles((t) => ({ base: { ... } }));
+  return <View style={styles.base} />;
+}
+
+// After (v0.0.3)
+import { createStyles } from "@/utils/use-styles";
+
+const useStyles = createStyles((t) => ({ base: { ... } }));
+
+function Card() {
+  const styles = useStyles();
+  return <View style={styles.base} />;
+}
+```
+
+Run `npx stylesheet-ui add <name> --diff` on every component you've copied to see the new shape before deciding which ones to overwrite. The CLI also now stamps `"version"` into `stylesheet-ui.json` and prints a one-line drift warning when a newer CLI meets an older config.
+
+Other changes in 0.0.3:
+
+- New `utils/cn.ts` is a tiny style-array helper (`cn(styles.base, pressed && styles.pressed, style)`). The old hook moved to `utils/use-styles.ts`.
+- New components: `BottomSheet` (auto-fit / fixed / snap-points) and `Toast` (imperative `toast.show(...)` + `<Toaster />` at root).
+- Tabs, Radio, and ThemeProvider use the React 19 `<Context value={...}>` idiom.
 
 ## Philosophy
 

@@ -7,7 +7,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type ListItemProps = {
   title: string;
@@ -19,34 +19,36 @@ export type ListItemProps = {
   style?: StyleProp<ViewStyle>;
 };
 
+const useStyles = createStyles((t) => ({
+  base: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.md,
+    paddingVertical: t.spacing.md,
+    paddingHorizontal: t.spacing.lg,
+    backgroundColor: t.colors.surface,
+  },
+  pressed: { backgroundColor: t.colors.surfaceMuted },
+  disabled: { opacity: 0.5 },
+  body: { flex: 1, gap: 2 },
+  title: {
+    fontSize: t.typography.fontSize.md,
+    lineHeight: t.typography.lineHeight.md,
+    color: t.colors.foreground,
+    fontWeight: "500" as const,
+  },
+  subtitle: {
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    color: t.colors.foregroundMuted,
+  },
+}));
+
 export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   { title, subtitle, left, right, onPress, disabled, style },
   ref,
 ) {
-  const styles = useStyles((t) => ({
-    base: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.md,
-      paddingVertical: t.spacing.md,
-      paddingHorizontal: t.spacing.lg,
-      backgroundColor: t.colors.surface,
-    },
-    pressed: { backgroundColor: t.colors.surfaceMuted },
-    disabled: { opacity: 0.5 },
-    body: { flex: 1, gap: 2 },
-    title: {
-      fontSize: t.typography.fontSize.md,
-      lineHeight: t.typography.lineHeight.md,
-      color: t.colors.foreground,
-      fontWeight: "500" as const,
-    },
-    subtitle: {
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-      color: t.colors.foregroundMuted,
-    },
-  }));
+  const styles = useStyles();
 
   const content = (
     <>

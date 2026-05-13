@@ -1,28 +1,29 @@
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { Input, useStyles } from "@stylesheet-ui/ui";
+import { Input, createStyles } from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  section:      { gap: t.spacing.sm },
+  sectionTitle: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  iconText: { color: t.colors.foregroundMuted, fontSize: 16 },
+}));
 
 export default function InputDemo() {
+  const styles = useStyles();
   const [value, setValue] = useState("");
   const [withError, setWithError] = useState("not-an-email");
-
-  const styles = useStyles((t) => ({
-    container: {
-      padding: t.spacing.lg,
-      gap: t.spacing.xl,
-      backgroundColor: t.colors.background,
-      flexGrow: 1,
-    },
-    section:      { gap: t.spacing.sm },
-    sectionTitle: {
-      fontSize: t.typography.fontSize.sm,
-      fontWeight: "600",
-      color: t.colors.foregroundMuted,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-    },
-    iconText: { color: t.colors.foregroundMuted, fontSize: 16 },
-  }));
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -13,7 +13,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 type TabsContextValue = {
   value: string;
@@ -30,6 +30,40 @@ function useTabs(component: string): TabsContextValue {
   return ctx;
 }
 
+const useRootStyles = createStyles((t) => ({
+  root: { gap: t.spacing.md },
+}));
+
+const useListStyles = createStyles((t) => ({
+  list: {
+    flexDirection: "row",
+    backgroundColor: t.colors.surfaceMuted,
+    borderRadius: t.radius.md,
+    padding: t.spacing.xs,
+    gap: t.spacing.xs,
+  },
+}));
+
+const useTriggerStyles = createStyles((t) => ({
+  base: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: t.spacing.sm,
+    paddingHorizontal: t.spacing.md,
+    borderRadius: t.radius.sm,
+  },
+  active:   { backgroundColor: t.colors.surface, ...t.shadows.sm },
+  disabled: { opacity: 0.5 },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    fontWeight: "600" as const,
+    color: t.colors.foregroundMuted,
+  },
+  labelActive: { color: t.colors.foreground },
+}));
+
 export type TabsProps = {
   children: ReactNode;
   value?: string;
@@ -42,6 +76,7 @@ export const Tabs = forwardRef<View, TabsProps>(function Tabs(
   { children, value, defaultValue, onValueChange, style },
   ref,
 ) {
+  const styles = useRootStyles();
   const [internal, setInternal] = useState(defaultValue ?? "");
   const isControlled = value !== undefined;
   const current = isControlled ? value : internal;
@@ -57,31 +92,19 @@ export const Tabs = forwardRef<View, TabsProps>(function Tabs(
     [current, isControlled, onValueChange],
   );
 
-  const styles = useStyles((t) => ({
-    root: { gap: t.spacing.md },
-  }));
-
   return (
-    <TabsContext.Provider value={ctx}>
+    <TabsContext value={ctx}>
       <View ref={ref} style={[styles.root, style]}>
         {children}
       </View>
-    </TabsContext.Provider>
+    </TabsContext>
   );
 });
 
 export type TabsListProps = { children: ReactNode; style?: StyleProp<ViewStyle> };
 
 export function TabsList({ children, style }: TabsListProps) {
-  const styles = useStyles((t) => ({
-    list: {
-      flexDirection: "row",
-      backgroundColor: t.colors.surfaceMuted,
-      borderRadius: t.radius.md,
-      padding: t.spacing.xs,
-      gap: t.spacing.xs,
-    },
-  }));
+  const styles = useListStyles();
   return <View style={[styles.list, style]}>{children}</View>;
 }
 
@@ -93,27 +116,8 @@ export type TabsTriggerProps = {
 
 export function TabsTrigger({ value, children, disabled }: TabsTriggerProps) {
   const ctx = useTabs("TabsTrigger");
+  const styles = useTriggerStyles();
   const active = ctx.value === value;
-
-  const styles = useStyles((t) => ({
-    base: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      paddingVertical: t.spacing.sm,
-      paddingHorizontal: t.spacing.md,
-      borderRadius: t.radius.sm,
-    },
-    active:   { backgroundColor: t.colors.surface, ...t.shadows.sm },
-    disabled: { opacity: 0.5 },
-    label: {
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-      fontWeight: "600" as const,
-      color: t.colors.foregroundMuted,
-    },
-    labelActive: { color: t.colors.foreground },
-  }));
 
   return (
     <Pressable

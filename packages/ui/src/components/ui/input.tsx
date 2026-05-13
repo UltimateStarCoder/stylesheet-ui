@@ -8,7 +8,7 @@ import {
   type ViewStyle,
 } from "react-native";
 import { useTheme } from "../../theme/use-theme";
-import { useStyles } from "../../utils/cn";
+import { createStyles } from "../../utils/use-styles";
 
 export type InputProps = Omit<TextInputProps, "style"> & {
   error?: string;
@@ -16,42 +16,43 @@ export type InputProps = Omit<TextInputProps, "style"> & {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
+const useStyles = createStyles((t) => ({
+  wrap: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: t.spacing.sm,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    borderRadius: t.radius.md,
+    backgroundColor: t.colors.surface,
+    paddingHorizontal: t.spacing.md,
+    minHeight: 44,
+  },
+  wrapFocused:  { borderColor: t.colors.ring },
+  wrapError:    { borderColor: t.colors.destructive },
+  wrapDisabled: { backgroundColor: t.colors.surfaceMuted, opacity: 0.6 },
+  input: {
+    flex: 1,
+    fontSize: t.typography.fontSize.md,
+    lineHeight: t.typography.lineHeight.md,
+    color: t.colors.foreground,
+    paddingVertical: t.spacing.sm,
+  },
+  error: {
+    marginTop: t.spacing.xs,
+    color: t.colors.destructive,
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+  },
+}));
+
 export const Input = forwardRef<TextInput, InputProps>(function Input(
   { error, leftIcon, containerStyle, onFocus, onBlur, editable = true, ...rest },
   ref,
 ) {
   const theme = useTheme();
+  const styles = useStyles();
   const [focused, setFocused] = useState(false);
-
-  const styles = useStyles((t) => ({
-    wrap: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: t.spacing.sm,
-      borderWidth: 1,
-      borderColor: t.colors.border,
-      borderRadius: t.radius.md,
-      backgroundColor: t.colors.surface,
-      paddingHorizontal: t.spacing.md,
-      minHeight: 44,
-    },
-    wrapFocused:  { borderColor: t.colors.ring },
-    wrapError:    { borderColor: t.colors.destructive },
-    wrapDisabled: { backgroundColor: t.colors.surfaceMuted, opacity: 0.6 },
-    input: {
-      flex: 1,
-      fontSize: t.typography.fontSize.md,
-      lineHeight: t.typography.lineHeight.md,
-      color: t.colors.foreground,
-      paddingVertical: t.spacing.sm,
-    },
-    error: {
-      marginTop: t.spacing.xs,
-      color: t.colors.destructive,
-      fontSize: t.typography.fontSize.sm,
-      lineHeight: t.typography.lineHeight.sm,
-    },
-  }));
 
   return (
     <View style={containerStyle}>

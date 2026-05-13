@@ -1,0 +1,9 @@
+{
+  "name": "toast",
+  "type": "component",
+  "description": "Imperative `toast.show(...)` singleton + <Toaster /> at root.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/toast.tsx", "to": "toast.tsx" }
+  ]
+}

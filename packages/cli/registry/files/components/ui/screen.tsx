@@ -6,13 +6,8 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-  type Edge,
-} from "react-native-safe-area-context";
+import { SafeAreaView, type Edge } from "react-native-safe-area-context";
 import { useTheme } from "../../theme/use-theme";
-import { useStyles } from "../../utils/cn";
 
 export type ScreenProps = {
   children: ReactNode;
@@ -21,9 +16,9 @@ export type ScreenProps = {
   scroll?: boolean;
   // Safe-area edges to inset. Defaults to ["top"] which is right for screens
   // pushed onto a Stack (header handles top, tab bar handles bottom).
-  // Set to undefined to skip SafeAreaView entirely.
+  // Set to null to skip SafeAreaView entirely.
   edges?: readonly Edge[] | null;
-  // Theme background color override. Defaults to t.colors.background.
+  // Theme background color token. Defaults to t.colors.background.
   background?: "background" | "surface" | "surfaceMuted";
   // Inset all four sides with this spacing. Common screen padding.
   padding?: number;
@@ -31,6 +26,9 @@ export type ScreenProps = {
   scrollProps?: Omit<ScrollViewProps, "children" | "contentContainerStyle">;
 };
 
+// Screen's styles are mostly prop-derived (which theme color, whether to
+// scroll, padding). The static parts aren't worth a separate createStyles
+// hook — inline composition is clearer here.
 export const Screen = forwardRef<View, ScreenProps>(function Screen(
   {
     children,
@@ -44,37 +42,36 @@ export const Screen = forwardRef<View, ScreenProps>(function Screen(
   ref,
 ) {
   const theme = useTheme();
-  const styles = useStyles((t) => ({
-    root: { flex: 1, backgroundColor: t.colors[background] },
-    body: {
-      flex: scroll ? undefined : 1,
-      flexGrow: scroll ? 1 : undefined,
-      backgroundColor: t.colors[background],
-      ...(padding !== undefined && { padding }),
-    },
-  }));
+  const bg = theme.colors[background];
+  const rootStyle: ViewStyle = { flex: 1, backgroundColor: bg };
+  const bodyStyle: ViewStyle = {
+    flex: scroll ? undefined : 1,
+    flexGrow: scroll ? 1 : undefined,
+    backgroundColor: bg,
+    ...(padding !== undefined && { padding }),
+  };
 
   const inner = scroll ? (
     <ScrollView
       ref={ref as unknown as React.Ref<ScrollView>}
-      contentContainerStyle={[styles.body, contentStyle]}
+      contentContainerStyle={[bodyStyle, contentStyle]}
       keyboardShouldPersistTaps="handled"
       {...scrollProps}
     >
       {children}
     </ScrollView>
   ) : (
-    <View ref={ref} style={[styles.body, contentStyle]}>
+    <View ref={ref} style={[bodyStyle, contentStyle]}>
       {children}
     </View>
   );
 
   if (edges) {
     return (
-      <SafeAreaView style={styles.root} edges={edges}>
+      <SafeAreaView style={rootStyle} edges={edges}>
         {inner}
       </SafeAreaView>
     );
   }
-  return <View style={styles.root}>{inner}</View>;
+  return <View style={rootStyle}>{inner}</View>;
 });
