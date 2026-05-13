@@ -13,7 +13,16 @@ See the [CLI README](packages/cli/README.md) for usage details.
 
 ## What's included
 
-Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow, plus theme tokens (colors light + dark, spacing, radius, typography, shadows).
+17 components grouped by purpose:
+
+- **Layout:** Screen, Stack (+ HStack / VStack), Divider
+- **Display:** Text, Avatar, Badge, Card, ListItem, SettingsRow
+- **Inputs:** Button, Input, Switch, Checkbox, Radio, Slider
+- **Overlays:** Modal, Tabs
+
+Plus theme tokens (colors light + dark, spacing, radius, typography, shadows) and a `useThemeMode()` hook for in-app Light / Dark / System toggles.
+
+Run `npx stylesheet-ui list` to see them in your terminal.
 
 ## Repository layout
 
@@ -50,8 +59,7 @@ node packages/cli/dist/index.js add button   # run against a test project
 The `prepublishOnly` hook in `packages/cli` runs `sync` then `build`, so publishing always ships a fresh registry:
 
 ```sh
-cd packages/cli
-npm publish
+npm publish --workspace stylesheet-ui
 ```
 
 ## License

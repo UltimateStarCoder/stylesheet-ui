@@ -66,6 +66,7 @@ import { SettingsRow } from "@/components/ui/settings-row";
 
 ```json
 {
+  "version": "0.0.2",
   "aliases": {
     "components": "@/components/ui",
     "theme": "@/theme",
@@ -79,7 +80,41 @@ import { SettingsRow } from "@/components/ui/settings-row";
 }
 ```
 
-`paths.*` is where files are written. `aliases.*` is what gets used in copied imports.
+`paths.*` is where files are written. `aliases.*` is what gets used in copied imports. `version` stamps which CLI initialized this project — running a newer CLI against an older config prints a one-line drift notice but doesn't block.
+
+## Dark mode toggle
+
+Two hooks ship with the theme:
+
+- `useTheme()` — returns the active `Theme` tokens (use in styles).
+- `useThemeMode()` — returns `{ scheme, override, setScheme, isDark }` (use in toggle UI).
+
+```tsx
+import { Switch } from "@/components/ui/switch";
+import { useThemeMode } from "@/theme";
+
+function ThemeToggle() {
+  const { isDark, setScheme } = useThemeMode();
+  return (
+    <Switch
+      value={isDark}
+      onValueChange={(v) => setScheme(v ? "dark" : "light")}
+    />
+  );
+}
+```
+
+`setScheme("system")` returns to following the OS. `<ThemeProvider defaultScheme="system">` is the default. Pass `onOverrideChange` to persist the user's choice to AsyncStorage / MMKV.
+
+## CLI commands
+
+```sh
+npx stylesheet-ui init           # set up stylesheet-ui.json + foundation
+npx stylesheet-ui list           # show every component (alias: ls)
+npx stylesheet-ui add button     # add one or more components
+npx stylesheet-ui add button -y  # skip overwrite prompts
+npx stylesheet-ui add button -v  # print one line per file (default is summarized)
+```
 
 ## Philosophy
 
