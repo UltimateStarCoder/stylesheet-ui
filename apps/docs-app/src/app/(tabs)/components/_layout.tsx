@@ -23,6 +23,13 @@ export default function ComponentsLayout() {
       <Stack.Screen name="modal"        options={{ title: "Modal" }} />
       <Stack.Screen name="tabs"         options={{ title: "Tabs" }} />
       <Stack.Screen name="settings-row" options={{ title: "SettingsRow" }} />
+      <Stack.Screen name="stack"        options={{ title: "Stack" }} />
+      <Stack.Screen name="screen"       options={{ title: "Screen" }} />
+      <Stack.Screen name="divider"      options={{ title: "Divider" }} />
+      <Stack.Screen name="switch"       options={{ title: "Switch" }} />
+      <Stack.Screen name="checkbox"     options={{ title: "Checkbox" }} />
+      <Stack.Screen name="radio"        options={{ title: "Radio" }} />
+      <Stack.Screen name="slider"       options={{ title: "Slider" }} />
     </Stack>
   );
 }

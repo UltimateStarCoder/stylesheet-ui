@@ -1,0 +1,59 @@
+---
+title: Screen
+description: SafeAreaView + ScrollView + theme background in one component. The thing every screen repeats.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A screen wrapper that applies SafeAreaView, ScrollView, and the active theme background in one call. Every screen would otherwise repeat this.
+
+<ComponentPreview slug="components/screen" />
+
+## Install
+
+```sh
+npx stylesheet-ui add screen
+```
+
+Note: `Screen` uses `react-native-safe-area-context`. Make sure your app root is wrapped in `<SafeAreaProvider>`.
+
+## Usage
+
+```tsx
+import { Screen } from "@/components/ui/screen";
+
+export default function Settings() {
+  return (
+    <Screen padding={16}>
+      <SettingsSection />
+    </Screen>
+  );
+}
+
+// Inside a tab layout where the tab bar handles bottom inset:
+<Screen edges={["top"]}>
+  {children}
+</Screen>
+
+// Fixed-height layout, no scroll:
+<Screen scroll={false}>
+  <KeyboardAvoidingView />
+</Screen>
+
+// Inside a Stack route — the navigation header covers the top inset.
+// edges={null} skips SafeAreaView entirely.
+<Screen edges={null} padding={16}>
+  {children}
+</Screen>
+```
+
+## Props
+
+| Prop           | Type                                                  | Default          | Description |
+|----------------|-------------------------------------------------------|------------------|-------------|
+| `scroll`       | `boolean`                                             | `true`           | Wraps content in a ScrollView |
+| `edges`        | `readonly Edge[] \| null`                              | `["top"]`        | Safe-area edges to inset; `null` skips SafeAreaView |
+| `background`   | `"background" \| "surface" \| "surfaceMuted"`          | `"background"`   | Theme color token for the root |
+| `padding`      | `number`                                              | —                | Inset all four sides |
+| `contentStyle` | `StyleProp<ViewStyle>`                                | —                | Style applied to the inner View / ScrollView contentContainerStyle |
+| `scrollProps`  | `ScrollViewProps`                                     | —                | Forwarded to the inner ScrollView |

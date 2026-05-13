@@ -1,0 +1,9 @@
+{
+  "name": "radio",
+  "type": "component",
+  "description": "RadioGroup + Radio with controlled value, three sizes, label.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/radio.tsx", "to": "radio.tsx" }
+  ]
+}

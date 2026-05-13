@@ -80,5 +80,6 @@ export async function initCommand(opts: InitOptions = {}): Promise<void> {
   logger.success("stylesheet-ui is ready.");
   logger.dim("Next steps:");
   logger.dim(`  1. Wrap your app in <${pc.cyan("ThemeProvider")}> from ${pc.cyan(config.paths.theme)}.`);
-  logger.dim(`  2. Run ${pc.cyan("npx stylesheet-ui add button")} to add your first component.`);
+  logger.dim(`  2. Run ${pc.cyan("npx stylesheet-ui list")} to see what's available.`);
+  logger.dim(`  3. Run ${pc.cyan("npx stylesheet-ui add button")} to add your first component.`);
 }

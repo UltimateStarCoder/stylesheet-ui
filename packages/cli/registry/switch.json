@@ -1,0 +1,9 @@
+{
+  "name": "switch",
+  "type": "component",
+  "description": "Themed wrapper over React Native's native Switch.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/switch.tsx", "to": "switch.tsx" }
+  ]
+}

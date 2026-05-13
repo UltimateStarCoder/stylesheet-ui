@@ -1,0 +1,9 @@
+{
+  "name": "screen",
+  "type": "component",
+  "description": "Screen wrapper: SafeAreaView + ScrollView + theme background.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/screen.tsx", "to": "screen.tsx" }
+  ]
+}

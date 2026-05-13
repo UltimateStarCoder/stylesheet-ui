@@ -1,0 +1,48 @@
+---
+title: Stack
+description: Layout primitive with theme-aware gap. Stack (default vertical), HStack (horizontal), VStack (vertical alias).
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The boring-but-essential layout primitive. `Stack` arranges children with a theme-driven `gap`, plus alignment and justification props. `HStack` and `VStack` are direction aliases.
+
+<ComponentPreview slug="components/stack" />
+
+## Install
+
+```sh
+npx stylesheet-ui add stack
+```
+
+## Usage
+
+```tsx
+import { Stack, HStack, VStack } from "@/components/ui/stack";
+
+<VStack gap="md">
+  <Card />
+  <Card />
+</VStack>
+
+<HStack gap="sm" align="center" justify="between">
+  <Badge>Active</Badge>
+  <Button size="sm">Edit</Button>
+</HStack>
+
+<Stack direction="row" gap="sm" wrap>
+  {tags.map((t) => <Badge key={t}>{t}</Badge>)}
+</Stack>
+```
+
+## Props
+
+| Prop        | Type                                                         | Default    |
+|-------------|--------------------------------------------------------------|------------|
+| `direction` | `"column" \| "row" \| "column-reverse" \| "row-reverse"`     | `"column"` |
+| `gap`       | `SpacingKey` (`"none"`–`"4xl"`)                              | `"none"`   |
+| `align`     | `"stretch" \| "start" \| "center" \| "end" \| "baseline"`     | —          |
+| `justify`   | `"start" \| "center" \| "end" \| "between" \| "around" \| "evenly"` | —    |
+| `wrap`      | `boolean`                                                    | `false`    |
+
+`HStack` and `VStack` accept the same props minus `direction`.

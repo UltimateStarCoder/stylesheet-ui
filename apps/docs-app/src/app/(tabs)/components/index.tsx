@@ -13,6 +13,13 @@ const ENTRIES = [
   { name: "Modal",        href: "/components/modal"         as const, blurb: "Centered dialog with backdrop" },
   { name: "Tabs",         href: "/components/tabs"          as const, blurb: "Composable segmented control" },
   { name: "SettingsRow",  href: "/components/settings-row"  as const, blurb: "Icon + title + right element" },
+  { name: "Stack",        href: "/components/stack"         as const, blurb: "Layout primitive with theme gap" },
+  { name: "Screen",       href: "/components/screen"        as const, blurb: "SafeArea + scroll + theme bg" },
+  { name: "Divider",      href: "/components/divider"       as const, blurb: "Theme-colored line, optional inset" },
+  { name: "Switch",       href: "/components/switch"        as const, blurb: "Themed native switch" },
+  { name: "Checkbox",     href: "/components/checkbox"      as const, blurb: "Sizes + label, no SVG dep" },
+  { name: "Radio",        href: "/components/radio"         as const, blurb: "RadioGroup + Radio with values" },
+  { name: "Slider",       href: "/components/slider"        as const, blurb: "PanResponder, min/max/step" },
 ];
 
 export default function ComponentsIndex() {

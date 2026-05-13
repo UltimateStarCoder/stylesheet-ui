@@ -1,6 +1,7 @@
 {
   "name": "list-item",
   "type": "component",
+  "description": "Flexible row: title, subtitle, left/right slots, optional press.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/list-item.tsx", "to": "list-item.tsx" }

@@ -1,0 +1,9 @@
+{
+  "name": "slider",
+  "type": "component",
+  "description": "PanResponder-based slider with min/max/step, no native deps.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/slider.tsx", "to": "slider.tsx" }
+  ]
+}

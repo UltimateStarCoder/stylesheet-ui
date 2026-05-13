@@ -1,6 +1,7 @@
 {
   "name": "modal",
   "type": "component",
+  "description": "Centered dialog with backdrop, title, description, body, footer actions.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/modal.tsx", "to": "modal.tsx" }

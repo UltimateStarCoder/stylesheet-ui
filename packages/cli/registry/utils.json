@@ -1,6 +1,7 @@
 {
   "name": "utils",
   "type": "util",
+  "description": "useStyles(theme => ...) helper for theme-aware StyleSheet.create.",
   "registryDependencies": ["theme"],
   "files": [
     { "from": "utils/cn.ts", "to": "cn.ts" }

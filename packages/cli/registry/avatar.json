@@ -1,6 +1,7 @@
 {
   "name": "avatar",
   "type": "component",
+  "description": "User image with automatic initials fallback. Four sizes, circle or square.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/avatar.tsx", "to": "avatar.tsx" }

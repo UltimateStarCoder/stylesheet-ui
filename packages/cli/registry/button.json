@@ -1,6 +1,7 @@
 {
   "name": "button",
   "type": "component",
+  "description": "Pressable action: variants, sizes, loading, icons.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/button.tsx", "to": "button.tsx" }

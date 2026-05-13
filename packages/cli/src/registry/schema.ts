@@ -8,11 +8,15 @@ export type RegistryFile = {
 export type RegistryEntry = {
   name: string;
   type: RegistryType;
+  description?: string;
   registryDependencies?: string[];
   files: RegistryFile[];
 };
 
 export type StylesheetUiConfig = {
+  // CLI version that wrote this config. Used to warn on drift when an older
+  // config encounters a newer CLI.
+  version?: string;
   aliases: {
     components: string;
     theme: string;

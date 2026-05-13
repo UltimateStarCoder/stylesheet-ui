@@ -1,6 +1,7 @@
 {
   "name": "input",
   "type": "component",
+  "description": "Single-line text input with focus ring, error state, optional left icon.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/input.tsx", "to": "input.tsx" }

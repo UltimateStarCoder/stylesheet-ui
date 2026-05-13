@@ -2,9 +2,6 @@ import fs from "fs-extra";
 import path from "node:path";
 import type { RegistryEntry } from "./schema";
 
-// Registry files are bundled in the published package at `<pkg>/registry/`.
-// `__dirname` after tsup-bundling resolves to `<pkg>/dist`, so the registry
-// sits one directory up.
 const REGISTRY_ROOT = path.resolve(__dirname, "..", "registry");
 const FILES_ROOT = path.join(REGISTRY_ROOT, "files");
 
@@ -16,7 +13,7 @@ export async function loadRegistryEntry(name: string): Promise<RegistryEntry> {
   const manifestPath = path.join(REGISTRY_ROOT, `${name}.json`);
   if (!(await fs.pathExists(manifestPath))) {
     throw new Error(
-      `Unknown registry entry: "${name}". No manifest at ${manifestPath}.`,
+      `Unknown registry entry: "${name}". Run \`stylesheet-ui list\` to see available names.`,
     );
   }
   const entry = (await fs.readJson(manifestPath)) as RegistryEntry;
@@ -26,6 +23,22 @@ export async function loadRegistryEntry(name: string): Promise<RegistryEntry> {
     );
   }
   return entry;
+}
+
+// Lists every registry manifest in the bundle. Used by `list` and tab
+// completion in the future.
+export async function listAllEntries(): Promise<RegistryEntry[]> {
+  const entries: RegistryEntry[] = [];
+  const files = await fs.readdir(REGISTRY_ROOT);
+  for (const file of files) {
+    if (!file.endsWith(".json")) continue;
+    const full = path.join(REGISTRY_ROOT, file);
+    const stat = await fs.stat(full);
+    if (!stat.isFile()) continue;
+    const entry = (await fs.readJson(full)) as RegistryEntry;
+    entries.push(entry);
+  }
+  return entries;
 }
 
 // Topologically resolve a set of registry names + their transitive

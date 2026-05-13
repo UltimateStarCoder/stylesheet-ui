@@ -1,0 +1,9 @@
+{
+  "name": "checkbox",
+  "type": "component",
+  "description": "Custom checkbox with three sizes, optional label, no SVG dep.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/checkbox.tsx", "to": "checkbox.tsx" }
+  ]
+}

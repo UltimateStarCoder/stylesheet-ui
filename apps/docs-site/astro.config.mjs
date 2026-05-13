@@ -16,18 +16,40 @@ export default defineConfig({
         { label: "Getting started", slug: "getting-started" },
         { label: "Theme", slug: "theme" },
         {
-          label: "Components",
+          label: "Layout",
           items: [
-            "components/button",
-            "components/input",
-            "components/card",
+            "components/screen",
+            "components/stack",
+            "components/divider",
+          ],
+        },
+        {
+          label: "Display",
+          items: [
             "components/text",
             "components/avatar",
             "components/badge",
+            "components/card",
             "components/list-item",
+            "components/settings-row",
+          ],
+        },
+        {
+          label: "Inputs",
+          items: [
+            "components/button",
+            "components/input",
+            "components/switch",
+            "components/checkbox",
+            "components/radio",
+            "components/slider",
+          ],
+        },
+        {
+          label: "Overlays",
+          items: [
             "components/modal",
             "components/tabs",
-            "components/settings-row",
           ],
         },
       ],

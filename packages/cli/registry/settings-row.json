@@ -1,6 +1,7 @@
 {
   "name": "settings-row",
   "type": "component",
+  "description": "Specialized row for settings screens: icon tile, title, description, right element.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/settings-row.tsx", "to": "settings-row.tsx" }

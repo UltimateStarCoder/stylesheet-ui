@@ -1,0 +1,9 @@
+{
+  "name": "stack",
+  "type": "component",
+  "description": "Stack/HStack/VStack layout primitives with theme-aware gap.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/stack.tsx", "to": "stack.tsx" }
+  ]
+}

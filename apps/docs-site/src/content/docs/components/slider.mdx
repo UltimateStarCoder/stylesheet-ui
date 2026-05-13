@@ -1,0 +1,52 @@
+---
+title: Slider
+description: Drag-to-set value slider with min/max/step. Built on PanResponder — no native modules.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A horizontal slider built on `PanResponder` — no native module, no reanimated dependency. Supports continuous and stepped values, with an `onSlidingComplete` callback for "commit on release" patterns.
+
+<ComponentPreview slug="components/slider" />
+
+## Install
+
+```sh
+npx stylesheet-ui add slider
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Slider } from "@/components/ui/slider";
+
+const [volume, setVolume] = useState(40);
+
+<Slider
+  value={volume}
+  onValueChange={setVolume}
+  min={0}
+  max={100}
+/>
+
+// Stepped, with commit-on-release:
+<Slider
+  value={rating}
+  onValueChange={setRatingLocal}
+  onSlidingComplete={saveRatingToServer}
+  min={1} max={5} step={1}
+/>
+```
+
+## Props
+
+| Prop                | Type                       | Default | Description |
+|---------------------|----------------------------|---------|-------------|
+| `value`             | `number`                   | —       | Controlled value |
+| `onValueChange`     | `(next: number) => void`   | —       | Fires on every change while dragging |
+| `onSlidingComplete` | `(next: number) => void`   | —       | Fires when the user releases the thumb |
+| `min`               | `number`                   | `0`     | Lower bound |
+| `max`               | `number`                   | `100`   | Upper bound |
+| `step`              | `number`                   | —       | If set, snaps to multiples of this |
+| `disabled`          | `boolean`                  | `false` | Mutes opacity, disables drag |

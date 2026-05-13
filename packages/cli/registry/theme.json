@@ -1,6 +1,7 @@
 {
   "name": "theme",
   "type": "theme",
+  "description": "Color/spacing/radius/typography/shadow tokens + ThemeProvider + useTheme/useThemeMode hooks.",
   "registryDependencies": [],
   "files": [
     { "from": "theme/colors.ts",          "to": "colors.ts" },
@@ -11,6 +12,7 @@
     { "from": "theme/tokens.ts",          "to": "tokens.ts" },
     { "from": "theme/theme-provider.tsx", "to": "theme-provider.tsx" },
     { "from": "theme/use-theme.ts",       "to": "use-theme.ts" },
+    { "from": "theme/use-theme-mode.ts",  "to": "use-theme-mode.ts" },
     { "from": "theme/index.ts",           "to": "index.ts" }
   ]
 }

@@ -1,0 +1,41 @@
+---
+title: Switch
+description: Themed wrapper over React Native's native Switch. Same API, theme-aware colors.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A thin wrapper over React Native's built-in `<Switch>` that pins the track and thumb colors to the theme. Same API otherwise — every `SwitchProps` is forwarded.
+
+<ComponentPreview slug="components/switch" />
+
+## Install
+
+```sh
+npx stylesheet-ui add switch
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
+
+const [enabled, setEnabled] = useState(false);
+<Switch value={enabled} onValueChange={setEnabled} />
+```
+
+### Pair with `useThemeMode()` for a system theme toggle
+
+```tsx
+import { useThemeMode } from "@/theme";
+import { Switch } from "@/components/ui/switch";
+
+const { isDark, setScheme } = useThemeMode();
+
+<Switch value={isDark} onValueChange={(v) => setScheme(v ? "dark" : "light")} />
+```
+
+## Props
+
+All [`SwitchProps`](https://reactnative.dev/docs/switch) are forwarded except `trackColor`, `thumbColor`, and `ios_backgroundColor` — those are set from theme tokens.

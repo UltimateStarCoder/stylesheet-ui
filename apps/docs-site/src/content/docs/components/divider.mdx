@@ -1,0 +1,46 @@
+---
+title: Divider
+description: 1px theme-colored line. Horizontal or vertical, with optional inset for list rows.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A 1px line in the theme border color. Used between list items, settings rows, and section boundaries.
+
+<ComponentPreview slug="components/divider" />
+
+## Install
+
+```sh
+npx stylesheet-ui add divider
+```
+
+## Usage
+
+```tsx
+import { Divider } from "@/components/ui/divider";
+
+<Card padding="none">
+  <ListItem title="First" />
+  <Divider />
+  <ListItem title="Second" />
+</Card>
+
+// Inset past the icon area (iOS-style settings divider):
+<Divider inset="2xl" />
+
+// Vertical separator inside a row:
+<HStack gap="md">
+  <Text>Left</Text>
+  <Divider orientation="vertical" />
+  <Text>Right</Text>
+</HStack>
+```
+
+## Props
+
+| Prop         | Type                            | Default        | Description |
+|--------------|---------------------------------|----------------|-------------|
+| `orientation`| `"horizontal" \| "vertical"`     | `"horizontal"` | Line direction |
+| `inset`      | `SpacingKey`                    | `"none"`       | Left inset using the spacing scale |
+| `thickness`  | `number`                        | `1`            | Line width in px |

@@ -1,6 +1,7 @@
 {
   "name": "card",
   "type": "component",
+  "description": "Container surface: default/muted/outline variants, padding scale, optional pressable.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/card.tsx", "to": "card.tsx" }

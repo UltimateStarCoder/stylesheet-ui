@@ -1,0 +1,9 @@
+{
+  "name": "divider",
+  "type": "component",
+  "description": "Horizontal or vertical theme-colored line with optional inset.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/divider.tsx", "to": "divider.tsx" }
+  ]
+}

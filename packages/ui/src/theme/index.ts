@@ -6,3 +6,4 @@ export * from "./shadows";
 export * from "./tokens";
 export * from "./theme-provider";
 export * from "./use-theme";
+export * from "./use-theme-mode";

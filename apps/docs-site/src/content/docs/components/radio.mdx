@@ -1,0 +1,50 @@
+---
+title: Radio
+description: Composable RadioGroup + Radio with controlled value, sizes, labels.
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+A composable Radio primitive: `RadioGroup` owns the selected value; child `Radio`s self-register and read/write via context. Both controlled and disabled at the group level.
+
+<ComponentPreview slug="components/radio" />
+
+## Install
+
+```sh
+npx stylesheet-ui add radio
+```
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Radio, RadioGroup } from "@/components/ui/radio";
+
+const [plan, setPlan] = useState<string | null>("pro");
+
+<RadioGroup value={plan} onValueChange={setPlan}>
+  <Radio value="free" label="Free" />
+  <Radio value="pro" label="Pro" />
+  <Radio value="team" label="Team" />
+</RadioGroup>
+```
+
+## Props
+
+### `RadioGroup`
+
+| Prop            | Type                       | Description |
+|-----------------|----------------------------|-------------|
+| `value`         | `string \| null`            | Currently-selected value |
+| `onValueChange` | `(next: string) => void`   | Fires when a child Radio is pressed |
+| `disabled`      | `boolean`                  | Disables every child Radio |
+
+### `Radio`
+
+| Prop      | Type                            | Default | Description |
+|-----------|---------------------------------|---------|-------------|
+| `value`   | `string`                        | —       | Identifies this radio in the group |
+| `label`   | `ReactNode`                     | —       | Optional label |
+| `size`    | `"sm" \| "md" \| "lg"`            | `"md"`  | 16 / 20 / 24 px |
+| `disabled`| `boolean`                       | `false` | Disables this radio specifically |

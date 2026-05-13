@@ -39,9 +39,26 @@ Component source lands at `src/components/ui/<name>.tsx` and is yours to edit.
 
 ## What's included
 
-Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow.
+Run `npx stylesheet-ui list` to see every component, grouped by type, in your terminal.
 
-Tokens: colors (light + dark), spacing, radius, typography, shadows.
+**Components:** Button, Input, Card, Text, Avatar, Badge, ListItem, Modal, Tabs, SettingsRow, Stack, Screen, Divider, Switch, Checkbox, Radio, Slider.
+
+**Tokens:** colors (light + dark), spacing, radius, typography, shadows.
+
+## Icons
+
+Components like `Button`, `ListItem`, and `SettingsRow` accept `ReactNode` for their icon slots — they're icon-library-agnostic. We recommend [`lucide-react-native`](https://lucide.dev/guide/packages/lucide-react-native) for cross-platform parity, or [`expo-symbols`](https://docs.expo.dev/versions/latest/sdk/symbols/) if you want SF Symbols on iOS and an Android fallback.
+
+```sh
+npx expo install lucide-react-native react-native-svg
+```
+
+```tsx
+import { Bell } from "lucide-react-native";
+import { SettingsRow } from "@/components/ui/settings-row";
+
+<SettingsRow title="Notifications" icon={<Bell size={18} />} />
+```
 
 ## Configuration
 

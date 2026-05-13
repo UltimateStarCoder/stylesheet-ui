@@ -1,6 +1,7 @@
 {
   "name": "text",
   "type": "component",
+  "description": "Typography primitive with size/weight/intent variants.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/text.tsx", "to": "text.tsx" }

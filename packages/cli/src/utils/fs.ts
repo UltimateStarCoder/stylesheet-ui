@@ -7,11 +7,12 @@ export type CopyOptions = {
   skipIfExists?: boolean;
   overwrite?: boolean;
   transform?: (content: string) => string;
+  // Suppress per-file log output. The caller usually wants this for
+  // transitive-dep skips that get summarized in a rollup line.
+  silent?: boolean;
 };
 
 // Copies a single file. Returns "added" | "skipped" | "overwritten".
-// If `transform` is provided, reads source as UTF-8, transforms, writes string.
-// Otherwise streams via fs.copy (safe for binary).
 export async function copyFileSafely(
   from: string,
   to: string,
@@ -22,7 +23,7 @@ export async function copyFileSafely(
 
   if (exists) {
     if (options.skipIfExists) {
-      logger.skipped(to);
+      if (!options.silent) logger.skipped(to);
       return "skipped";
     }
     if (!options.overwrite) {
@@ -33,17 +34,17 @@ export async function copyFileSafely(
         initial: false,
       });
       if (!confirm) {
-        logger.skipped(to);
+        if (!options.silent) logger.skipped(to);
         return "skipped";
       }
     }
     await writeWithOptionalTransform(from, to, options.transform);
-    logger.added(to + " (overwritten)");
+    if (!options.silent) logger.added(to + " (overwritten)");
     return "overwritten";
   }
 
   await writeWithOptionalTransform(from, to, options.transform);
-  logger.added(to);
+  if (!options.silent) logger.added(to);
   return "added";
 }
 

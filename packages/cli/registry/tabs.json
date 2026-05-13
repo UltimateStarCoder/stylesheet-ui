@@ -1,6 +1,7 @@
 {
   "name": "tabs",
   "type": "component",
+  "description": "Composable segmented control. Controlled or uncontrolled.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/tabs.tsx", "to": "tabs.tsx" }

@@ -1,6 +1,7 @@
 {
   "name": "badge",
   "type": "component",
+  "description": "Pill label for statuses, counts, and tags. Six variants, two sizes.",
   "registryDependencies": ["theme", "utils"],
   "files": [
     { "from": "components/ui/badge.tsx", "to": "badge.tsx" }
