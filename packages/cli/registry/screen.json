@@ -3,6 +3,9 @@
   "type": "component",
   "description": "Screen wrapper: SafeAreaView + ScrollView + theme background.",
   "registryDependencies": ["theme", "utils"],
+  "peerDependencies": {
+    "react-native-safe-area-context": ">=4.0.0"
+  },
   "files": [
     { "from": "components/ui/screen.tsx", "to": "screen.tsx" }
   ]

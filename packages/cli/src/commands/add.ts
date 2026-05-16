@@ -1,4 +1,5 @@
 import path from "node:path";
+import fs from "fs-extra";
 import { logger } from "../utils/logger";
 import { copyFileSafely, type CopyResult } from "../utils/fs";
 import { destinationRoot, readConfig } from "../utils/paths";
@@ -8,6 +9,7 @@ import type { RegistryEntry, StylesheetUiConfig } from "../registry/schema";
 
 export type AddOptions = {
   yes?: boolean;
+  force?: boolean;
   verbose?: boolean;
   dryRun?: boolean;
   diff?: boolean;
@@ -29,6 +31,10 @@ export async function addCommand(
   const plan = await resolveInstallPlan(components);
   const requested = new Set(components);
 
+  if (!opts.dryRun && !opts.diff) {
+    await warnMissingPeers(plan, cwd);
+  }
+
   if (opts.diff) {
     logger.step(`Diffing ${components.join(", ")} against registry source...`);
   } else if (opts.dryRun) {
@@ -37,7 +43,8 @@ export async function addCommand(
 
   await applyRegistryEntries(plan, config, cwd, {
     requested,
-    overwrite: opts.yes,
+    yes: opts.yes,
+    force: opts.force,
     verbose: opts.verbose,
     dryRun: opts.dryRun,
     diff: opts.diff,
@@ -53,13 +60,18 @@ export async function addCommand(
 }
 
 export type ApplyOptions = {
+  /** Names the user typed on the CLI; everything else is a transitive dep. */
   requested?: Set<string>;
-  overwrite?: boolean;
+  /** Skip prompts; preserve files with local edits. */
+  yes?: boolean;
+  /** Overwrite even files with local edits. */
+  force?: boolean;
   skipIfExists?: boolean;
-  // When false (default), transitive-dep results are summarized as a single
-  // rollup line instead of listed per file. `verbose: true` reverts to per-file.
+  /**
+   * Default `false` rolls transitive-dep file results into a single summary
+   * line. `true` emits per-file logs.
+   */
   verbose?: boolean;
-  // Pass-through to copyFileSafely.
   dryRun?: boolean;
   diff?: boolean;
 };
@@ -77,14 +89,13 @@ export async function applyRegistryEntries(
   for (const entry of entries) {
     const isRequested = options.requested ? options.requested.has(entry.name) : true;
 
-    // Pick file-level options for this entry.
-    let fileOpts: { overwrite?: boolean; skipIfExists?: boolean };
-    if (options.skipIfExists) {
-      fileOpts = { skipIfExists: true };
-    } else if (options.requested && !isRequested) {
+    // Transitive deps that already exist always keep their on-disk version;
+    // only entries the user explicitly named are eligible for overwrite.
+    let fileOpts: { yes?: boolean; force?: boolean; skipIfExists?: boolean };
+    if (options.skipIfExists || (options.requested && !isRequested)) {
       fileOpts = { skipIfExists: true };
     } else {
-      fileOpts = { overwrite: options.overwrite };
+      fileOpts = { yes: options.yes, force: options.force };
     }
 
     const destRoot = destinationRoot(config, entry.type, cwd);
@@ -95,7 +106,6 @@ export async function applyRegistryEntries(
         ? (content: string) => rewriteImports(content, config.aliases)
         : undefined;
 
-      // Suppress per-file logging for transitive-dep skips unless verbose.
       const isTransitiveDep = options.requested ? !isRequested : false;
       const silent = isTransitiveDep && !options.verbose;
 
@@ -114,7 +124,7 @@ export async function applyRegistryEntries(
     }
   }
 
-  // Roll up the dep summary. Skipped in --diff mode (the diff IS the output).
+  // The diff output already shows every changed line, so the rollup is noise.
   if (!options.verbose && !options.diff) {
     if (depAddCount > 0) {
       const verb = options.dryRun ? "would install" : "installed";
@@ -137,4 +147,44 @@ function isAddResult(r: CopyResult): boolean {
 
 function plural(n: number): string {
   return n === 1 ? "" : "s";
+}
+
+// Reads the consumer's package.json and warns about any npm peers the install
+// plan declares that are not already installed. Non-fatal — the user may have
+// a non-standard setup, and we would rather warn than block.
+async function warnMissingPeers(plan: RegistryEntry[], cwd: string): Promise<void> {
+  const pkgPath = path.join(cwd, "package.json");
+  if (!(await fs.pathExists(pkgPath))) return;
+
+  let installed: Record<string, string>;
+  try {
+    const pkg = await fs.readJson(pkgPath);
+    installed = {
+      ...(pkg.dependencies ?? {}),
+      ...(pkg.devDependencies ?? {}),
+      ...(pkg.peerDependencies ?? {}),
+    };
+  } catch {
+    return;
+  }
+
+  const missing = new Map<string, { range: string; neededBy: string[] }>();
+  for (const entry of plan) {
+    const peers = entry.peerDependencies;
+    if (!peers) continue;
+    for (const [name, range] of Object.entries(peers)) {
+      if (installed[name]) continue;
+      const slot = missing.get(name);
+      if (slot) slot.neededBy.push(entry.name);
+      else missing.set(name, { range, neededBy: [entry.name] });
+    }
+  }
+
+  if (missing.size === 0) return;
+
+  logger.warn("Missing peer dependencies:");
+  for (const [name, { range, neededBy }] of missing) {
+    logger.dim(`  ${name}@${range}  (needed by ${neededBy.join(", ")})`);
+  }
+  logger.dim("Install them before running your app.");
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, Text, View, type StyleProp, type ViewStyle } from "react-native";
 import Animated, {
   Easing,
@@ -141,28 +141,53 @@ export function Toaster({ position = "top", max = 3, style }: ToasterProps) {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   const [items, setItems] = useState<ToastItem[]>([]);
+  const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
   useEffect(() => {
+    const clearTimer = (id: string) => {
+      const t = timers.current.get(id);
+      if (t !== undefined) {
+        clearTimeout(t);
+        timers.current.delete(id);
+      }
+    };
+    const removeItem = (id: string) => {
+      clearTimer(id);
+      setItems((prev) => prev.filter((it) => it.id !== id));
+    };
     const off = subscribe((event) => {
       if (event.type === "show") {
         setItems((prev) => {
           const next = [...prev, event.item];
-          // Evict oldest beyond `max`.
-          return next.length > max ? next.slice(next.length - max) : next;
+          // Items dropped by the max-cap need their pending timers cleared.
+          if (next.length > max) {
+            const dropped = next.slice(0, next.length - max);
+            dropped.forEach((it) => clearTimer(it.id));
+            return next.slice(next.length - max);
+          }
+          return next;
         });
         if (event.item.duration > 0) {
-          setTimeout(() => {
-            setItems((prev) => prev.filter((it) => it.id !== event.item.id));
-          }, event.item.duration);
+          const handle = setTimeout(() => removeItem(event.item.id), event.item.duration);
+          timers.current.set(event.item.id, handle);
         }
       } else {
-        setItems((prev) => prev.filter((it) => it.id !== event.id));
+        removeItem(event.id);
       }
     });
-    return off;
+    return () => {
+      off();
+      timers.current.forEach((t) => clearTimeout(t));
+      timers.current.clear();
+    };
   }, [max]);
 
   const dismiss = (id: string) => {
+    const handle = timers.current.get(id);
+    if (handle !== undefined) {
+      clearTimeout(handle);
+      timers.current.delete(id);
+    }
     setItems((prev) => prev.filter((it) => it.id !== id));
   };
 

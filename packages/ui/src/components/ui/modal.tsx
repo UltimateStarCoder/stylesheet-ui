@@ -17,6 +17,9 @@ export type ModalProps = {
   children?: ReactNode;
   footer?: ReactNode;
   dismissOnBackdrop?: boolean;
+  /** Styles the full-screen backdrop wrapper. */
+  style?: StyleProp<ViewStyle>;
+  /** Styles the centered card. */
   contentStyle?: StyleProp<ViewStyle>;
 };
 
@@ -68,6 +71,7 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
     children,
     footer,
     dismissOnBackdrop = true,
+    style,
     contentStyle,
   },
   ref,
@@ -83,7 +87,7 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
       statusBarTranslucent
     >
       <Pressable
-        style={styles.backdrop}
+        style={[styles.backdrop, style]}
         onPress={dismissOnBackdrop ? onClose : undefined}
         accessibilityRole="button"
         accessibilityLabel="Close"

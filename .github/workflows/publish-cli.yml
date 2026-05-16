@@ -1,0 +1,47 @@
+name: publish CLI to npm
+
+# Triggers only when a tag matching v*.*.* is pushed. Bump the version in
+# packages/cli/package.json, commit, then `git tag vX.Y.Z && git push --tags`.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  publish:
+    name: build + publish stylesheet-ui
+    runs-on: ubuntu-latest
+    # `id-token: write` enables npm provenance, which embeds the GitHub Actions
+    # build context into the published package so consumers can verify it.
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck all workspaces
+        run: npm run typecheck
+
+      # The CLI's `prepublishOnly` already runs sync + build, but doing it
+      # explicitly here surfaces failures in the workflow timeline.
+      - name: Sync registry
+        run: npm run registry:sync
+
+      - name: Build CLI
+        run: npm run cli:build
+
+      - name: Publish
+        working-directory: packages/cli
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

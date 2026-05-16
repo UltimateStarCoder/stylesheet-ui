@@ -44,6 +44,9 @@ export type BottomSheetProps = {
   // Render the small drag-handle bar at the top. Defaults to true.
   showHandle?: boolean;
   children: ReactNode;
+  /** Styles the animated sheet container (the bottom panel itself). */
+  style?: StyleProp<ViewStyle>;
+  /** Styles the inner content wrapper that holds `children`. */
   contentStyle?: StyleProp<ViewStyle>;
 };
 
@@ -104,6 +107,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
     dismissOnBackdrop = true,
     showHandle = true,
     children,
+    style,
     contentStyle,
   },
   ref,
@@ -160,8 +164,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
         if (done) runOnJS(setModalVisible)(false);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, sheetHeight]);
+  }, [visible, sheetHeight, modalVisible, translateY]);
 
   const onLayoutContent = (e: LayoutChangeEvent) => {
     setMeasuredContent(e.nativeEvent.layout.height);
@@ -235,6 +238,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
               styles.sheet,
               sheetHeight > 0 && { height: sheetHeight },
               sheetAnimatedStyle,
+              style,
             ]}
           >
             {showHandle && <View style={styles.handle} accessibilityRole="none" />}

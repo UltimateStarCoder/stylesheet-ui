@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: typecheck + registry sync
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck all workspaces
+        run: npm run typecheck
+
+      # Re-runs the sync. If packages/ui/src has drifted from the bundled
+      # registry, or a manifest is missing a dep, this step exits non-zero.
+      - name: Validate registry sync
+        run: npm run registry:sync
+
+      # If syncing introduced any file changes, the registry was committed
+      # stale. Catching that here is much cheaper than discovering it after
+      # a publish.
+      - name: Fail if registry is out of date
+        run: |
+          if ! git diff --exit-code packages/cli/registry; then
+            echo ""
+            echo "::error::packages/cli/registry is stale. Run 'npm run registry:sync' locally and commit the result."
+            exit 1
+          fi
+
+      - name: Build CLI
+        run: npm run cli:build

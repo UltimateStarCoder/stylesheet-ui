@@ -1,5 +1,10 @@
 import { forwardRef } from "react";
-import { Text as RNText, type TextProps as RNTextProps, type TextStyle } from "react-native";
+import {
+  Text as RNText,
+  type StyleProp,
+  type TextProps as RNTextProps,
+  type TextStyle,
+} from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type TextSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
@@ -17,7 +22,7 @@ export type TextProps = Omit<RNTextProps, "style"> & {
   size?: TextSize;
   weight?: TextWeight;
   intent?: TextIntent;
-  style?: TextStyle | TextStyle[];
+  style?: StyleProp<TextStyle>;
 };
 
 const useStyles = createStyles((t) => ({
@@ -54,13 +59,7 @@ export const Text = forwardRef<RNText, TextProps>(function Text(
   return (
     <RNText
       ref={ref}
-      style={[
-        styles.base,
-        styles[size],
-        styles[weight],
-        styles[intent],
-        ...(Array.isArray(style) ? style : style ? [style] : []),
-      ]}
+      style={[styles.base, styles[size], styles[weight], styles[intent], style]}
       {...rest}
     />
   );

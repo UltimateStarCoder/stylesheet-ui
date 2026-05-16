@@ -2,7 +2,6 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "lib": ["ESNext"],
-    "jsx": "preserve",
     "types": ["node"]
   },
   "include": ["src/**/*", "scripts/**/*"]

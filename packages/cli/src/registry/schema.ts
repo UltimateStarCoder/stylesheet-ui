@@ -9,7 +9,14 @@ export type RegistryEntry = {
   name: string;
   type: RegistryType;
   description?: string;
+  /** Other entries that must be installed alongside this one. */
   registryDependencies?: string[];
+  /**
+   * npm packages the consumer must already have installed for this component
+   * to run. Keyed by package name, valued by a semver range. `react` and
+   * `react-native` are implicit and never need to be listed.
+   */
+  peerDependencies?: Record<string, string>;
   files: RegistryFile[];
 };
 

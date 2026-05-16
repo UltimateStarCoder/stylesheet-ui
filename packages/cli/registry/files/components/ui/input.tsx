@@ -10,6 +10,10 @@ import {
 import { useTheme } from "../../theme/use-theme";
 import { createStyles } from "../../utils/use-styles";
 
+/**
+ * `ref` forwards to the underlying `TextInput`, so callers can call
+ * `.focus()` / `.blur()` directly. Use `containerStyle` to style the wrapper.
+ */
 export type InputProps = Omit<TextInputProps, "style"> & {
   error?: string;
   leftIcon?: ReactNode;

@@ -3,6 +3,11 @@
   "type": "component",
   "description": "Drag-to-dismiss sheet with auto-fit / fixed / snap-point modes.",
   "registryDependencies": ["theme", "utils"],
+  "peerDependencies": {
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-safe-area-context": ">=4.0.0"
+  },
   "files": [
     { "from": "components/ui/bottom-sheet.tsx", "to": "bottom-sheet.tsx" }
   ]

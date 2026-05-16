@@ -18,7 +18,7 @@ export const Switch = forwardRef<RNSwitch, SwitchProps>(function Switch(props, r
         false: theme.colors.surfaceMuted,
         true:  theme.colors.primary,
       }}
-      thumbColor="#FFFFFF"
+      thumbColor={theme.colors.foreground}
       ios_backgroundColor={theme.colors.surfaceMuted}
       {...props}
     />

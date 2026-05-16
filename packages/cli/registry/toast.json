@@ -3,6 +3,10 @@
   "type": "component",
   "description": "Imperative `toast.show(...)` singleton + <Toaster /> at root.",
   "registryDependencies": ["theme", "utils"],
+  "peerDependencies": {
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-safe-area-context": ">=4.0.0"
+  },
   "files": [
     { "from": "components/ui/toast.tsx", "to": "toast.tsx" }
   ]
