@@ -10,3 +10,6 @@ node_modules/
 
 # Logs
 *.log
+
+# Vercel link metadata (contains orgId/projectId — kept locally, not committed)
+.vercel

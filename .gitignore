@@ -38,6 +38,9 @@ yarn-error.*
 # local env files
 .env*.local
 
+# Vercel CLI link metadata
+.vercel
+
 # typescript
 *.tsbuildinfo
 
