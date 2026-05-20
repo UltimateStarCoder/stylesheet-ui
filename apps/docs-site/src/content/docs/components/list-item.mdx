@@ -1,11 +1,9 @@
 ---
 title: ListItem
-description: Flexible row with title, optional subtitle, and leading/trailing slots. Pressable on demand.
+description: Row with title, optional subtitle, and left/right slots.
 ---
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
-
-A row primitive for lists. Title plus optional subtitle, with `left` and `right` slots that accept any `ReactNode` — icons, avatars, badges, switches, chevrons.
 
 <ComponentPreview slug="components/list-item" />
 
@@ -21,7 +19,6 @@ npx stylesheet-ui add list-item
 import { ListItem } from "@/components/ui/list-item";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ChevronRight } from "lucide-react-native";
 
 <ListItem
   title="Inbox"
@@ -32,19 +29,7 @@ import { ChevronRight } from "lucide-react-native";
 <ListItem
   title="Ada Lovelace"
   subtitle="ada@example.com"
-  left={<Avatar size="md" name="Ada Lovelace" />}
-  right={<ChevronRight size={18} />}
+  left={<Avatar name="Ada Lovelace" />}
   onPress={() => {}}
 />
 ```
-
-## Props
-
-| Prop       | Type                                | Default | Description |
-|------------|-------------------------------------|---------|-------------|
-| `title`    | `string`                            | —       | Primary label |
-| `subtitle` | `string`                            | —       | Secondary line below the title |
-| `left`     | `ReactNode`                         | —       | Element rendered before the title |
-| `right`    | `ReactNode`                         | —       | Element rendered after the title |
-| `onPress`  | `PressableProps["onPress"]`         | —       | Makes the row pressable when provided |
-| `disabled` | `boolean`                           | `false` | Mutes opacity; disables press |

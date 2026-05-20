@@ -1,11 +1,9 @@
 ---
 title: Card
-description: Container surface with three variants, four padding sizes, and optional pressable behavior.
+description: Container surface. Three variants, four padding sizes, optionally pressable.
 ---
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
-
-A container with a configurable surface (`default`, `muted`, `outline`), padding scale, and optional press handling.
 
 <ComponentPreview slug="components/card" />
 
@@ -21,24 +19,14 @@ npx stylesheet-ui add card
 import { Card } from "@/components/ui/card";
 
 <Card>
-  <Text>Default surface with shadow.</Text>
+  <Text>Default surface.</Text>
 </Card>
 
 <Card surface="muted" padding="lg">
-  <Text>Tinted background, no shadow, generous padding.</Text>
+  <Text>Tinted background.</Text>
 </Card>
 
 <Card pressable onPress={() => {}}>
-  <Text>Press dims opacity.</Text>
+  <Text>Press to dim.</Text>
 </Card>
 ```
-
-## Props
-
-| Prop        | Type                                                | Default     | Description |
-|-------------|-----------------------------------------------------|-------------|-------------|
-| `surface`   | `"default" \| "muted" \| "outline"`                  | `"default"` | Visual treatment |
-| `padding`   | `"none" \| "sm" \| "md" \| "lg"`                     | `"md"`      | Interior spacing |
-| `pressable` | `boolean`                                           | `false`     | Renders a `Pressable` instead of a `View` |
-| `onPress`   | `PressableProps["onPress"]`                         | —           | Press handler (requires `pressable`) |
-| `style`     | `StyleProp<ViewStyle>`                              | —           | Extra style |

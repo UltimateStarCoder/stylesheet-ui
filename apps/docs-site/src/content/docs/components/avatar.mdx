@@ -1,11 +1,9 @@
 ---
 title: Avatar
-description: User image with automatic initials fallback. Four sizes, circle or square.
+description: Image or initials in a circle or rounded square.
 ---
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
-
-Renders an image when `source` is provided; falls back to initials of `name` when the image is missing or fails to load.
 
 <ComponentPreview slug="components/avatar" />
 
@@ -20,16 +18,7 @@ npx stylesheet-ui add avatar
 ```tsx
 import { Avatar } from "@/components/ui/avatar";
 
-<Avatar source={{ uri: "https://..." }} name="Ada Lovelace" />
-<Avatar name="Grace Hopper" size="lg" />
-<Avatar name="Margaret Hamilton" size="xl" shape="square" />
+<Avatar name="Ada Lovelace" />
+<Avatar source={{ uri: "https://…" }} size="lg" />
+<Avatar name="A" shape="square" />
 ```
-
-## Props
-
-| Prop     | Type                                | Default    | Description |
-|----------|-------------------------------------|------------|-------------|
-| `source` | `ImageSourcePropType`               | —          | Image source; falls back to initials if missing or errors |
-| `name`   | `string`                            | —          | Used to derive initials when no image is shown |
-| `size`   | `"sm" \| "md" \| "lg" \| "xl"`        | `"md"`     | 28 / 36 / 48 / 64 px |
-| `shape`  | `"circle" \| "square"`               | `"circle"` | Rounded square uses the `md` radius token |

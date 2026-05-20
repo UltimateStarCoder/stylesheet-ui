@@ -1,11 +1,9 @@
 ---
 title: Tabs
-description: Composable segmented control. Use as controlled or uncontrolled, with any content per panel.
+description: Composable segmented control. Controlled or uncontrolled.
 ---
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
-
-A composable Tabs primitive with four parts: `Tabs` (root), `TabsList`, `TabsTrigger`, `TabsContent`. Supports controlled and uncontrolled modes.
 
 <ComponentPreview slug="components/tabs" />
 
@@ -16,8 +14,6 @@ npx stylesheet-ui add tabs
 ```
 
 ## Usage
-
-### Uncontrolled
 
 ```tsx
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -31,41 +27,3 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
   <TabsContent value="password">…</TabsContent>
 </Tabs>
 ```
-
-### Controlled
-
-```tsx
-const [value, setValue] = useState("preview");
-
-<Tabs value={value} onValueChange={setValue}>
-  <TabsList>
-    <TabsTrigger value="preview">Preview</TabsTrigger>
-    <TabsTrigger value="code">Code</TabsTrigger>
-  </TabsList>
-  <TabsContent value="preview">…</TabsContent>
-  <TabsContent value="code">…</TabsContent>
-</Tabs>
-```
-
-## Props
-
-### `Tabs`
-
-| Prop            | Type                       | Description |
-|-----------------|----------------------------|-------------|
-| `value`         | `string`                   | Controlled active value |
-| `defaultValue`  | `string`                   | Uncontrolled initial value |
-| `onValueChange` | `(next: string) => void`   | Fires on user selection |
-
-### `TabsTrigger`
-
-| Prop       | Type      | Description |
-|------------|-----------|-------------|
-| `value`    | `string`  | Matches the corresponding `TabsContent` |
-| `disabled` | `boolean` | Disables press |
-
-### `TabsContent`
-
-| Prop    | Type     | Description |
-|---------|----------|-------------|
-| `value` | `string` | Renders only when active |

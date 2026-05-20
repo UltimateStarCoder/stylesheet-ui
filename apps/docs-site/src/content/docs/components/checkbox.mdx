@@ -1,11 +1,9 @@
 ---
 title: Checkbox
-description: Custom checkbox with three sizes and optional label. No SVG dependency.
+description: Custom checkbox with three sizes and an optional label.
 ---
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
-
-A custom checkbox built on `Pressable`. The check mark is a CSS-rotated rectangle, so the component has no SVG dependency.
 
 <ComponentPreview slug="components/checkbox" />
 
@@ -29,13 +27,3 @@ const [accepted, setAccepted] = useState(false);
   label="I accept the terms"
 />
 ```
-
-## Props
-
-| Prop              | Type                            | Default | Description |
-|-------------------|---------------------------------|---------|-------------|
-| `checked`         | `boolean`                       | —       | Controlled checked state |
-| `onCheckedChange` | `(next: boolean) => void`       | —       | Fired on press |
-| `label`           | `ReactNode`                     | —       | Optional label rendered to the right |
-| `size`            | `"sm" \| "md" \| "lg"`            | `"md"`  | 16 / 20 / 24 px |
-| `disabled`        | `boolean`                       | `false` | Mutes opacity, disables press |
