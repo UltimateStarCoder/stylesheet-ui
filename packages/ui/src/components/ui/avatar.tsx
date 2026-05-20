@@ -28,6 +28,13 @@ const SIZE_PX: Record<AvatarSize, number> = {
   xl: 64,
 };
 
+const SIZE_FONTSIZE_KEY: Record<AvatarSize, "xs" | "sm" | "lg" | "xl"> = {
+  sm: "xs",
+  md: "sm",
+  lg: "lg",
+  xl: "xl",
+};
+
 function getInitials(name?: string): string {
   if (!name) return "?";
   const parts = name.trim().split(/\s+/).slice(0, 2);
@@ -59,12 +66,8 @@ export const Avatar = forwardRef<View, AvatarProps>(function Avatar(
   const [errored, setErrored] = useState(false);
   const px = SIZE_PX[size];
 
-  const borderRadius = shape === "circle" ? px / 2 : theme.radius.md;
-  const fontSize =
-    px <= 32 ? theme.typography.fontSize.xs
-    : px <= 40 ? theme.typography.fontSize.sm
-    : px <= 56 ? theme.typography.fontSize.lg
-    : theme.typography.fontSize.xl;
+  const borderRadius = shape === "circle" ? px / 2 : px * 0.2;
+  const fontSize = theme.typography.fontSize[SIZE_FONTSIZE_KEY[size]];
 
   const showImage = !!source && !errored;
 

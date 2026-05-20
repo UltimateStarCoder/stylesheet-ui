@@ -43,3 +43,83 @@ jobs:
 
       - name: Build CLI
         run: npm run cli:build
+
+  smoke:
+    name: cli scratch-install + docs-app web build
+    runs-on: ubuntu-latest
+    needs: validate
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build CLI
+        run: npm run cli:build
+
+      # Catches Expo-side regressions that the typecheck job alone misses
+      # (Metro/web bundling, react-native-web compat, etc).
+      - name: Export docs-app web build
+        working-directory: apps/docs-app
+        run: npx expo export --platform web
+
+      # Pack the built CLI into a tarball so a scratch project can `npm install`
+      # it exactly the way an end user would consume it from the registry.
+      - name: Pack CLI tarball
+        id: pack
+        working-directory: packages/cli
+        run: |
+          TARBALL=$(npm pack --json | jq -r '.[0].filename')
+          echo "tarball=$(pwd)/$TARBALL" >> "$GITHUB_OUTPUT"
+
+      # Minimal scratch project — faster and more reliable than
+      # `create-expo-app`, and sufficient to typecheck what the CLI emits.
+      - name: Set up scratch consumer project
+        run: |
+          mkdir -p /tmp/smoke/src
+          cd /tmp/smoke
+          npm init -y
+          npm install --save-dev typescript @types/react
+          npm install --save react react-native
+          cat > tsconfig.json << 'EOF'
+          {
+            "compilerOptions": {
+              "target": "ES2020",
+              "lib": ["ES2020", "DOM"],
+              "module": "ESNext",
+              "moduleResolution": "bundler",
+              "jsx": "react-native",
+              "strict": true,
+              "esModuleInterop": true,
+              "skipLibCheck": true,
+              "noEmit": true,
+              "baseUrl": ".",
+              "paths": { "@/*": ["src/*"] }
+            },
+            "include": ["src/**/*"]
+          }
+          EOF
+
+      - name: Install built CLI into scratch project
+        working-directory: /tmp/smoke
+        run: npm install --save-dev "${{ steps.pack.outputs.tarball }}"
+
+      - name: Run stylesheet-ui init + add
+        working-directory: /tmp/smoke
+        run: |
+          npx stylesheet-ui init --yes
+          npx stylesheet-ui add button card input switch tabs --yes
+
+      # Proves the emitted component sources actually compile against
+      # vanilla react + react-native types under the default tsconfig the CLI
+      # implies. A regression here is exactly the kind that would otherwise
+      # ship to npm undetected.
+      - name: Typecheck scratch project
+        working-directory: /tmp/smoke
+        run: npx tsc --noEmit

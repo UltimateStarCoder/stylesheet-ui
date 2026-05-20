@@ -105,7 +105,11 @@ export type TabsListProps = { children: ReactNode; style?: StyleProp<ViewStyle> 
 
 export function TabsList({ children, style }: TabsListProps) {
   const styles = useListStyles();
-  return <View style={[styles.list, style]}>{children}</View>;
+  return (
+    <View accessibilityRole="tablist" style={[styles.list, style]}>
+      {children}
+    </View>
+  );
 }
 
 export type TabsTriggerProps = {

@@ -17,6 +17,11 @@ export type ModalProps = {
   children?: ReactNode;
   footer?: ReactNode;
   dismissOnBackdrop?: boolean;
+  /**
+   * Announced by screen readers as the modal's name. Falls back to `title`.
+   * VoiceOver/TalkBack need an explicit label because RN has no "dialog" role.
+   */
+  accessibilityLabel?: string;
   /** Styles the full-screen backdrop wrapper. */
   style?: StyleProp<ViewStyle>;
   /** Styles the centered card. */
@@ -71,12 +76,14 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
     children,
     footer,
     dismissOnBackdrop = true,
+    accessibilityLabel,
     style,
     contentStyle,
   },
   ref,
 ) {
   const styles = useStyles();
+  const dialogLabel = accessibilityLabel ?? title;
 
   return (
     <RNModal
@@ -89,13 +96,14 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
       <Pressable
         style={[styles.backdrop, style]}
         onPress={dismissOnBackdrop ? onClose : undefined}
-        accessibilityRole="button"
-        accessibilityLabel="Close"
+        accessibilityLabel={dismissOnBackdrop ? "Close" : undefined}
       >
         <Pressable
           ref={ref}
           style={[styles.card, contentStyle]}
           onPress={(e) => e.stopPropagation()}
+          accessibilityViewIsModal
+          accessibilityLabel={dialogLabel}
         >
           {(title || description) && (
             <View style={styles.header}>

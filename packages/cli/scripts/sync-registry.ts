@@ -135,6 +135,7 @@ async function validateManifests(manifests: Manifest[]): Promise<ValidationError
       }
       const source = await fs.readFile(sourcePath, "utf8");
       const specs = extractImportSpecifiers(source);
+      const fileSection = file.from.split("/")[0];
 
       for (const spec of specs) {
         const classified = classify(spec);
@@ -147,7 +148,18 @@ async function validateManifests(manifests: Manifest[]): Promise<ValidationError
           continue;
         }
 
-        if (classified.kind !== "cross") continue;
+        // Same-section relative imports inside `components/` are sibling
+        // component dependencies. The CLI emits these files into the
+        // consumer's components dir, so the `./<name>` path resolves
+        // unchanged — but the manifest still needs to declare the sibling
+        // so `add <component>` installs it automatically.
+        if (classified.kind === "same") {
+          if (fileSection !== "components") continue;
+          const m = classified.raw.match(/^\.\/([a-z][a-z0-9-]*)$/);
+          if (!m) continue;
+          usedRegistry.add(m[1]);
+          continue;
+        }
 
         // For theme/utils sections each import maps to a single manifest. A
         // future component-to-component import would resolve to a manifest

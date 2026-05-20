@@ -15,12 +15,22 @@ import { createStyles } from "../../utils/use-styles";
  * `.focus()` / `.blur()` directly. Use `containerStyle` to style the wrapper.
  */
 export type InputProps = Omit<TextInputProps, "style"> & {
+  // Visible label rendered above the field. Also becomes the input's
+  // accessibilityLabel so screen readers announce it on focus.
+  label?: string;
   error?: string;
   leftIcon?: ReactNode;
   containerStyle?: StyleProp<ViewStyle>;
 };
 
 const useStyles = createStyles((t) => ({
+  label: {
+    marginBottom: t.spacing.xs,
+    color: t.colors.foreground,
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+    fontWeight: "500" as const,
+  },
   wrap: {
     flexDirection: "row",
     alignItems: "center",
@@ -51,7 +61,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const Input = forwardRef<TextInput, InputProps>(function Input(
-  { error, leftIcon, containerStyle, onFocus, onBlur, editable = true, ...rest },
+  { label, error, leftIcon, containerStyle, onFocus, onBlur, editable = true, ...rest },
   ref,
 ) {
   const theme = useTheme();
@@ -60,6 +70,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
 
   return (
     <View style={containerStyle}>
+      {!!label && <Text style={styles.label}>{label}</Text>}
       <View
         style={[
           styles.wrap,
@@ -73,6 +84,9 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
           ref={ref}
           editable={editable}
           placeholderTextColor={theme.colors.foregroundSubtle}
+          accessibilityLabel={label}
+          accessibilityHint={error}
+          aria-invalid={!!error || undefined}
           onFocus={(e) => {
             setFocused(true);
             onFocus?.(e);

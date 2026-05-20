@@ -37,6 +37,15 @@ export default function InputDemo() {
       </View>
 
       <View style={styles.section}>
+        <Text style={styles.sectionTitle}>With label</Text>
+        <Input
+          label="Full name"
+          placeholder="Ada Lovelace"
+          autoCapitalize="words"
+        />
+      </View>
+
+      <View style={styles.section}>
         <Text style={styles.sectionTitle}>With left icon</Text>
         <Input
           placeholder="Search"
@@ -47,7 +56,8 @@ export default function InputDemo() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>With error</Text>
         <Input
-          placeholder="Email"
+          label="Email"
+          placeholder="you@example.com"
           value={withError}
           onChangeText={setWithError}
           error="Enter a valid email address"
