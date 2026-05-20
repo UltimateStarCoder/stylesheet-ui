@@ -112,10 +112,18 @@ function ThemeToggle() {
 npx stylesheet-ui init                  # set up stylesheet-ui.json + foundation
 npx stylesheet-ui list                  # show every component (alias: ls)
 npx stylesheet-ui add button            # add one or more components
-npx stylesheet-ui add button -y         # skip overwrite prompts
-npx stylesheet-ui add button -v         # print one line per file (default is summarized)
-npx stylesheet-ui add button --dry-run  # preview what would change without writing
-npx stylesheet-ui add button --diff     # show a unified diff vs the registry version
+npx stylesheet-ui update                # refresh every installed component (alias: up)
+npx stylesheet-ui update button input   # refresh only the named components
+```
+
+Flags on `add` and `update`:
+
+```sh
+-y, --yes         # skip prompts; preserve files with local edits
+-f, --force       # overwrite even files with local edits
+-d, --dry-run     # preview what would change without writing
+    --diff        # show a unified diff vs the registry version
+-v, --verbose     # print one line per file copied
 ```
 
 ## Upgrading from 0.0.2
