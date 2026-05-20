@@ -74,11 +74,21 @@ jobs:
 
       # Pack the built CLI into a tarball so a scratch project can `npm install`
       # it exactly the way an end user would consume it from the registry.
+      # Predict the filename from package.json rather than parsing `npm pack`
+      # output — npm 10's lifecycle scripts can pollute stdout even with
+      # --ignore-scripts, which breaks `npm pack --json | jq`.
       - name: Pack CLI tarball
         id: pack
         working-directory: packages/cli
         run: |
-          TARBALL=$(npm pack --json --ignore-scripts | jq -r '.[0].filename')
+          npm pack --ignore-scripts >/dev/null 2>&1
+          VERSION=$(node -p "require('./package.json').version")
+          TARBALL="stylesheet-ui-${VERSION}.tgz"
+          if [ ! -f "$TARBALL" ]; then
+            echo "::error::Expected tarball $TARBALL not found in $(pwd)"
+            ls -la
+            exit 1
+          fi
           echo "tarball=$(pwd)/$TARBALL" >> "$GITHUB_OUTPUT"
 
       # Minimal scratch project — faster and more reliable than
@@ -102,7 +112,6 @@ jobs:
               "esModuleInterop": true,
               "skipLibCheck": true,
               "noEmit": true,
-              "baseUrl": ".",
               "paths": { "@/*": ["src/*"] }
             },
             "include": ["src/**/*"]
