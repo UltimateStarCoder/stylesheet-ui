@@ -112,7 +112,9 @@ jobs:
               "esModuleInterop": true,
               "skipLibCheck": true,
               "noEmit": true,
-              "paths": { "@/*": ["src/*"] }
+              "baseUrl": ".",
+              "paths": { "@/*": ["src/*"] },
+              "ignoreDeprecations": "6.0"
             },
             "include": ["src/**/*"]
           }
