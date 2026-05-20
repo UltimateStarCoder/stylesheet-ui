@@ -7,8 +7,6 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "build:expo": "cd ../docs-app && npx expo export --platform web --output-dir ../docs-site/public/expo --clear",
-    "build:all": "npm run build:expo && npm run build",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro sync"
