@@ -1,6 +1,6 @@
-import { defineConfig } from "astro/config";
-import starlight from "@astrojs/starlight";
 import mdx from "@astrojs/mdx";
+import starlight from "@astrojs/starlight";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
   site: "https://stylesheet-ui.dev",
@@ -9,9 +9,13 @@ export default defineConfig({
       title: "stylesheet-ui",
       description:
         "shadcn-style copy-paste components for Expo / React Native. Plain StyleSheet, no DSL.",
-      social: {
-        github: "https://github.com/UltimateStarCoder/stylesheet-ui",
-      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/UltimateStarCoder/stylesheet-ui",
+        },
+      ],
       sidebar: [
         { label: "Getting started", slug: "getting-started" },
         { label: "Theme", slug: "theme" },
