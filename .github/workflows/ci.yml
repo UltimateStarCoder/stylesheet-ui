@@ -6,15 +6,18 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   validate:
     name: typecheck + registry sync
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -50,9 +53,9 @@ jobs:
     needs: validate
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -75,7 +78,7 @@ jobs:
         id: pack
         working-directory: packages/cli
         run: |
-          TARBALL=$(npm pack --json | jq -r '.[0].filename')
+          TARBALL=$(npm pack --json --ignore-scripts | jq -r '.[0].filename')
           echo "tarball=$(pwd)/$TARBALL" >> "$GITHUB_OUTPUT"
 
       # Minimal scratch project — faster and more reliable than
