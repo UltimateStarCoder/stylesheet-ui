@@ -13,7 +13,8 @@
     "cli:build": "npm run build --workspace stylesheet-ui",
     "cli:dev": "npm run dev --workspace stylesheet-ui",
     "registry:sync": "npm run sync --workspace stylesheet-ui",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "release": "node scripts/release.mjs"
   },
   "overrides": {
     "postcss": "8.5.14"
