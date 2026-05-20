@@ -1,7 +1,7 @@
 {
   "name": "stylesheet-ui",
   "version": "0.0.4",
-  "description": "shadcn-style copy-paste components for Expo / React Native. Plain StyleSheet, no DSL. Run `npx stylesheet-ui add <name>` to drop a component into your project.",
+  "description": "Copy-paste React Native components for Expo. Plain StyleSheet, no DSL, no runtime — you own the source. Run `npx stylesheet-ui add <name>` to drop a component into your project.",
   "keywords": [
     "expo",
     "react-native",
@@ -9,7 +9,6 @@
     "ui",
     "design-system",
     "stylesheet",
-    "shadcn",
     "cli"
   ],
   "homepage": "https://github.com/UltimateStarCoder/stylesheet-ui#readme",

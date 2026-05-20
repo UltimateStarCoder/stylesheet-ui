@@ -35,8 +35,9 @@ export default function AboutScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>stylesheet-ui</Text>
       <Text style={styles.body}>
-        A React Native component system in the spirit of shadcn/ui: copy-paste
-        components, owned source, no styling DSL. Plain {`StyleSheet`} only.
+        A React Native component system where you own every file. The CLI drops
+        components into your project as source — plain {`StyleSheet`}, no
+        styling DSL, no runtime to depend on.
       </Text>
 
       <Text style={styles.sectionTitle}>Install</Text>

@@ -1,8 +1,8 @@
 # stylesheet-ui
 
-shadcn-style copy-paste components for Expo / React Native.
+Copy-paste React Native components for Expo, distributed as source you own.
 
-Plain `StyleSheet.create`. No DSL. No runtime. You own the source.
+Plain `StyleSheet.create`. No DSL. No runtime. No lock-in.
 
 ## Install
 
