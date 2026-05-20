@@ -50,10 +50,10 @@ export async function addCommand(
     diff: opts.diff,
   });
 
-  if (opts.dryRun) {
-    logger.dim("Dry run complete. Re-run without --dry-run to write files.");
-  } else if (opts.diff) {
+  if (opts.diff) {
     logger.dim("Diff complete. Re-run without --diff to write files.");
+  } else if (opts.dryRun) {
+    logger.dim("Dry run complete. Re-run without --dry-run to write files.");
   } else {
     logger.success("Done.");
   }
@@ -156,17 +156,18 @@ async function warnMissingPeers(plan: RegistryEntry[], cwd: string): Promise<voi
   const pkgPath = path.join(cwd, "package.json");
   if (!(await fs.pathExists(pkgPath))) return;
 
-  let installed: Record<string, string>;
+  let pkg: Record<string, unknown>;
   try {
-    const pkg = await fs.readJson(pkgPath);
-    installed = {
-      ...(pkg.dependencies ?? {}),
-      ...(pkg.devDependencies ?? {}),
-      ...(pkg.peerDependencies ?? {}),
-    };
+    pkg = await fs.readJson(pkgPath);
   } catch {
     return;
   }
+
+  const installed: Record<string, string> = {
+    ...((pkg.dependencies as Record<string, string>) ?? {}),
+    ...((pkg.devDependencies as Record<string, string>) ?? {}),
+    ...((pkg.peerDependencies as Record<string, string>) ?? {}),
+  };
 
   const missing = new Map<string, { range: string; neededBy: string[] }>();
   for (const entry of plan) {
@@ -186,5 +187,28 @@ async function warnMissingPeers(plan: RegistryEntry[], cwd: string): Promise<voi
   for (const [name, { range, neededBy }] of missing) {
     logger.dim(`  ${name}@${range}  (needed by ${neededBy.join(", ")})`);
   }
-  logger.dim("Install them before running your app.");
+
+  const command = installCommand(Array.from(missing.keys()), installed, cwd);
+  logger.info("");
+  logger.info("  Install with:");
+  logger.info("    " + command);
+  logger.info("");
+}
+
+// Picks the right install command for the consumer's project. Expo projects
+// need `npx expo install` so versions stay pinned to the SDK; otherwise we
+// honor the lockfile (pnpm/yarn/npm/bun) so the user's existing flow keeps
+// working.
+function installCommand(
+  packages: string[],
+  installed: Record<string, string>,
+  cwd: string,
+): string {
+  const args = packages.join(" ");
+  if (installed["expo"]) return `npx expo install ${args}`;
+
+  if (fs.pathExistsSync(path.join(cwd, "pnpm-lock.yaml"))) return `pnpm add ${args}`;
+  if (fs.pathExistsSync(path.join(cwd, "yarn.lock"))) return `yarn add ${args}`;
+  if (fs.pathExistsSync(path.join(cwd, "bun.lockb"))) return `bun add ${args}`;
+  return `npm install ${args}`;
 }

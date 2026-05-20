@@ -26,10 +26,6 @@ export async function updateCommand(
   components: string[],
   opts: UpdateOptions = {},
 ): Promise<void> {
-  if (opts.diff && opts.dryRun) {
-    throw new Error("--diff and --dry-run are mutually exclusive. Pick one.");
-  }
-
   const cwd = process.cwd();
   const config = await readConfig(cwd);
 
@@ -57,10 +53,10 @@ export async function updateCommand(
     diff: opts.diff,
   });
 
-  if (opts.dryRun) {
-    logger.dim("Dry run complete. Re-run without --dry-run to write files.");
-  } else if (opts.diff) {
+  if (opts.diff) {
     logger.dim("Diff complete. Re-run without --diff to write files.");
+  } else if (opts.dryRun) {
+    logger.dim("Dry run complete. Re-run without --dry-run to write files.");
   } else {
     logger.success("Done.");
   }

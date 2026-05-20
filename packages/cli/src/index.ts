@@ -36,9 +36,6 @@ async function main() {
     .option("--diff", "show a unified diff between existing files and the registry version", false)
     .action(async (components: string[], opts) => {
       try {
-        if (opts.diff && opts.dryRun) {
-          throw new Error("--diff and --dry-run are mutually exclusive. Pick one.");
-        }
         await addCommand(components, opts);
       } catch (err) {
         logger.error((err as Error).message);
