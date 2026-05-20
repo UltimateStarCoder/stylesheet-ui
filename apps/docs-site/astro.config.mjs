@@ -15,6 +15,7 @@ export default defineConfig({
       sidebar: [
         { label: "Getting started", slug: "getting-started" },
         { label: "Theme", slug: "theme" },
+        { label: "Hooks", slug: "hooks" },
         {
           label: "Layout",
           items: [

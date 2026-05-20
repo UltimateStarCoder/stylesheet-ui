@@ -36,3 +36,49 @@ import { Button } from "@/components/ui/button";
 ```
 
 The copied files are yours. Edit freely.
+
+## CLI commands
+
+```sh
+npx stylesheet-ui init             # set up the project
+npx stylesheet-ui add <name…>      # add component(s)
+npx stylesheet-ui update [name…]   # refresh installed components (alias: up)
+npx stylesheet-ui list             # show every component (alias: ls)
+```
+
+Flags on `add` and `update`:
+
+- `-y, --yes` — skip prompts; preserve locally-edited files
+- `-f, --force` — overwrite even files with local edits
+- `-d, --dry-run` — preview what would change
+- `--diff` — unified diff vs. the registry version
+- `-v, --verbose` — one line per file copied
+
+## Config file
+
+`stylesheet-ui.json`, created by `init`:
+
+```json
+{
+  "aliases": {
+    "components": "@/components/ui",
+    "theme": "@/theme",
+    "utils": "@/utils"
+  },
+  "paths": {
+    "components": "src/components/ui",
+    "theme": "src/theme",
+    "utils": "src/utils"
+  }
+}
+```
+
+`paths.*` is where files land. `aliases.*` is what imports use.
+
+## Icons
+
+Components like `Button`, `ListItem`, and `SettingsRow` accept any `ReactNode` for icon slots. We recommend [`lucide-react-native`](https://lucide.dev/guide/packages/lucide-react-native):
+
+```sh
+npx expo install lucide-react-native react-native-svg
+```

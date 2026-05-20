@@ -1,0 +1,69 @@
+---
+title: Hooks
+description: useTheme for tokens, useThemeMode for light/dark toggles.
+---
+
+## `useTheme()`
+
+Returns the active theme tokens. Use it in custom components.
+
+```tsx
+import { useTheme } from "@/theme";
+
+function Dot() {
+  const theme = useTheme();
+  return <View style={{ width: 8, height: 8, backgroundColor: theme.colors.primary }} />;
+}
+```
+
+For most styling, prefer `createStyles` — it caches the StyleSheet per scheme:
+
+```tsx
+import { createStyles } from "@/utils/use-styles";
+
+const useStyles = createStyles((t) => ({
+  base: { backgroundColor: t.colors.surface, padding: t.spacing.lg },
+}));
+```
+
+## `useThemeMode()`
+
+Returns `{ scheme, override, setScheme, isDark }`. Use it to build a light/dark/system toggle.
+
+```tsx
+import { useThemeMode } from "@/theme";
+import { Switch } from "@/components/ui/switch";
+
+function ThemeToggle() {
+  const { isDark, setScheme } = useThemeMode();
+  return (
+    <Switch
+      value={isDark}
+      onValueChange={(v) => setScheme(v ? "dark" : "light")}
+    />
+  );
+}
+```
+
+`setScheme("system")` returns to following the OS.
+
+## ThemeProvider props
+
+```tsx
+<ThemeProvider
+  defaultScheme="system"           // "light" | "dark" | "system" (default)
+  onOverrideChange={(o) => save(o)} // persist to AsyncStorage / MMKV
+>
+  <App />
+</ThemeProvider>
+```
+
+## `cn()` helper
+
+A small style-array helper. Drops falsy values so you don't have to read past the booleans.
+
+```tsx
+import { cn } from "@/utils/cn";
+
+<View style={cn(styles.base, pressed && styles.pressed, disabled && styles.disabled, style)} />
+```
