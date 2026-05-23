@@ -1,0 +1,34 @@
+---
+title: Select
+description: Pick-one control. Opens a BottomSheet of options.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add select
+```
+
+Also installs `bottom-sheet` and `list-item` as dependencies.
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Select } from "@/components/ui/select";
+
+function PlanPicker() {
+  const [plan, setPlan] = useState("free");
+  return (
+    <Select
+      value={plan}
+      onValueChange={setPlan}
+      options={[
+        { value: "free", label: "Free", description: "For personal projects" },
+        { value: "pro",  label: "Pro",  description: "For teams" },
+        { value: "ent",  label: "Enterprise", disabled: true },
+      ]}
+    />
+  );
+}
+```

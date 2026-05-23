@@ -1,0 +1,9 @@
+{
+  "name": "tooltip",
+  "type": "component",
+  "description": "Long-press hint bubble with anchored positioning.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/tooltip.tsx", "to": "tooltip.tsx" }
+  ]
+}

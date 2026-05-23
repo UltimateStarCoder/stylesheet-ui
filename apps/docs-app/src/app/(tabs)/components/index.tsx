@@ -22,6 +22,15 @@ const ENTRIES = [
   { name: "Slider",       href: "/components/slider"        as const, blurb: "PanResponder, min/max/step" },
   { name: "BottomSheet",  href: "/components/bottom-sheet"  as const, blurb: "Drag-to-dismiss sheet, auto-fit / fixed / snap" },
   { name: "Toast",        href: "/components/toast"         as const, blurb: "Imperative toast.show() singleton" },
+  { name: "Spinner",      href: "/components/spinner"       as const, blurb: "Theme-colored ActivityIndicator" },
+  { name: "Progress",     href: "/components/progress"      as const, blurb: "Determinate or indeterminate bar" },
+  { name: "Skeleton",     href: "/components/skeleton"      as const, blurb: "Pulsing placeholder block" },
+  { name: "Alert",        href: "/components/alert"         as const, blurb: "Inline banner, 4 variants, closable" },
+  { name: "AlertDialog",  href: "/components/alert-dialog"  as const, blurb: "Confirm / cancel modal, optional destructive" },
+  { name: "Select",       href: "/components/select"        as const, blurb: "Pick one, opens BottomSheet" },
+  { name: "Menu",         href: "/components/menu"          as const, blurb: "Anchored action menu, measured position" },
+  { name: "Accordion",    href: "/components/accordion"     as const, blurb: "Collapsible sections, single or multiple" },
+  { name: "Tooltip",      href: "/components/tooltip"       as const, blurb: "Long-press hint bubble" },
 ];
 
 const useStyles = createStyles((t) => ({

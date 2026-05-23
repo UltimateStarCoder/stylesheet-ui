@@ -1,0 +1,23 @@
+---
+title: Tooltip
+description: Long-press hint bubble with anchored positioning.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add tooltip
+```
+
+RN has no hover, so the tooltip opens on **long-press** of the wrapped trigger.
+
+## Usage
+
+```tsx
+import { Tooltip } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+
+<Tooltip label="This will permanently delete the account">
+  <Button variant="destructive">Delete</Button>
+</Tooltip>
+```

@@ -1,0 +1,9 @@
+{
+  "name": "progress",
+  "type": "component",
+  "description": "Linear progress bar. Determinate value or indeterminate sweep.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/progress.tsx", "to": "progress.tsx" }
+  ]
+}

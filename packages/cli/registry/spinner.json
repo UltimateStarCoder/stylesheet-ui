@@ -1,0 +1,9 @@
+{
+  "name": "spinner",
+  "type": "component",
+  "description": "Theme-colored ActivityIndicator with size presets.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/spinner.tsx", "to": "spinner.tsx" }
+  ]
+}

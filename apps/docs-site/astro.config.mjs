@@ -8,7 +8,7 @@ export default defineConfig({
     starlight({
       title: "stylesheet-ui",
       description:
-        "shadcn-style copy-paste components for Expo / React Native. Plain StyleSheet, no DSL.",
+        "Copy-paste React Native components for Expo, distributed as source you own. Plain StyleSheet. No DSL. No runtime. No lock-in.",
       social: [
         {
           icon: "github",
@@ -37,6 +37,7 @@ export default defineConfig({
             "components/card",
             "components/list-item",
             "components/settings-row",
+            "components/skeleton",
           ],
         },
         {
@@ -48,15 +49,28 @@ export default defineConfig({
             "components/checkbox",
             "components/radio",
             "components/slider",
+            "components/select",
+          ],
+        },
+        {
+          label: "Feedback",
+          items: [
+            "components/spinner",
+            "components/progress",
+            "components/alert",
+            "components/toast",
           ],
         },
         {
           label: "Overlays",
           items: [
             "components/modal",
+            "components/alert-dialog",
             "components/tabs",
+            "components/accordion",
             "components/bottom-sheet",
-            "components/toast",
+            "components/menu",
+            "components/tooltip",
           ],
         },
       ],

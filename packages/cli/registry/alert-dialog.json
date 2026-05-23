@@ -1,0 +1,9 @@
+{
+  "name": "alert-dialog",
+  "type": "component",
+  "description": "Modal confirm/cancel dialog. Optional destructive styling.",
+  "registryDependencies": ["theme", "utils", "modal"],
+  "files": [
+    { "from": "components/ui/alert-dialog.tsx", "to": "alert-dialog.tsx" }
+  ]
+}

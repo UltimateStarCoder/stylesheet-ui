@@ -1,0 +1,27 @@
+---
+title: Menu
+description: Anchored action menu with measured positioning.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add menu
+```
+
+## Usage
+
+```tsx
+import { Menu } from "@/components/ui/menu";
+import { Button } from "@/components/ui/button";
+
+<Menu
+  trigger={<Button variant="secondary">Actions</Button>}
+  placement="bottom-end"
+  items={[
+    { label: "Rename", onPress: () => {} },
+    { label: "Duplicate", onPress: () => {} },
+    { label: "Delete", onPress: () => {}, destructive: true },
+  ]}
+/>
+```

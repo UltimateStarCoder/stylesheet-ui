@@ -13,12 +13,13 @@ See the [CLI README](packages/cli/README.md) for usage details.
 
 ## What's included
 
-19 components grouped by purpose:
+28 components grouped by purpose:
 
 - **Layout:** Screen, Stack (+ HStack / VStack), Divider
-- **Display:** Text, Avatar, Badge, Card, ListItem, SettingsRow
-- **Inputs:** Button, Input, Switch, Checkbox, Radio, Slider
-- **Overlays:** Modal, Tabs, BottomSheet, Toast
+- **Display:** Text, Avatar, Badge, Card, ListItem, SettingsRow, Skeleton
+- **Inputs:** Button, Input, Switch, Checkbox, Radio, Slider, Select
+- **Feedback:** Spinner, Progress, Alert, Toast
+- **Overlays:** Modal, AlertDialog, Tabs, Accordion, BottomSheet, Menu, Tooltip
 
 Plus theme tokens (colors light + dark, spacing, radius, typography, shadows) and a `useThemeMode()` hook for in-app Light / Dark / System toggles.
 

@@ -1,0 +1,9 @@
+{
+  "name": "select",
+  "type": "component",
+  "description": "Pick-one control. Opens a BottomSheet of options.",
+  "registryDependencies": ["theme", "utils", "bottom-sheet", "list-item"],
+  "files": [
+    { "from": "components/ui/select.tsx", "to": "select.tsx" }
+  ]
+}

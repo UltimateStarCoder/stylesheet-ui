@@ -1,0 +1,25 @@
+---
+title: Alert
+description: Inline banner with info / success / warning / destructive variants.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add alert
+```
+
+## Usage
+
+```tsx
+import { Alert } from "@/components/ui/alert";
+
+<Alert title="Heads up" description="This is an informational message." />
+<Alert variant="success" title="Saved" description="Your changes are live." />
+<Alert
+  variant="destructive"
+  title="Could not delete"
+  description="Try again in a moment."
+  onClose={() => {}}
+/>
+```

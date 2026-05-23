@@ -1,0 +1,38 @@
+---
+title: AlertDialog
+description: Modal confirm/cancel dialog. Optional destructive styling.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add alert-dialog
+```
+
+Also installs `modal` as a dependency.
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { AlertDialog } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+
+function DeleteAccount() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="destructive" onPress={() => setOpen(true)}>Delete</Button>
+      <AlertDialog
+        visible={open}
+        title="Delete account?"
+        description="This cannot be undone."
+        confirmLabel="Delete"
+        destructive
+        onCancel={() => setOpen(false)}
+        onConfirm={() => setOpen(false)}
+      />
+    </>
+  );
+}
+```

@@ -1,0 +1,9 @@
+{
+  "name": "alert",
+  "type": "component",
+  "description": "Inline banner with info / success / warning / destructive variants.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/alert.tsx", "to": "alert.tsx" }
+  ]
+}

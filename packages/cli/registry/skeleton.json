@@ -1,0 +1,9 @@
+{
+  "name": "skeleton",
+  "type": "component",
+  "description": "Pulsing placeholder block for loading states.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/skeleton.tsx", "to": "skeleton.tsx" }
+  ]
+}

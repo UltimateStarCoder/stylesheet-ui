@@ -1,0 +1,9 @@
+{
+  "name": "accordion",
+  "type": "component",
+  "description": "Collapsible sections. Single or multiple expand. LayoutAnimation.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/accordion.tsx", "to": "accordion.tsx" }
+  ]
+}

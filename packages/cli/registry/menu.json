@@ -1,0 +1,9 @@
+{
+  "name": "menu",
+  "type": "component",
+  "description": "Anchored action menu with measured positioning.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/menu.tsx", "to": "menu.tsx" }
+  ]
+}
