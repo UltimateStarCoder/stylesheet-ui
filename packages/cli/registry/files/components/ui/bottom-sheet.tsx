@@ -3,6 +3,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -18,14 +19,13 @@ import {
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   interpolate,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
+import { scheduleOnRN } from "react-native-worklets";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTheme } from "../../theme/use-theme";
 import { createStyles } from "../../utils/use-styles";
 
 export type SnapPoint = number | `${number}%`;
@@ -33,11 +33,13 @@ export type SnapPoint = number | `${number}%`;
 export type BottomSheetProps = {
   visible: boolean;
   onClose: () => void;
-  // Multiple snap points; the sheet rests at one of them. Most explicit.
+  // Multiple snap points the user can drag between. Sorted ascending by the
+  // component, so `initialSnap` always indexes into the sorted set
+  // (0 = smallest, length-1 = largest).
   snapPoints?: SnapPoint[];
   // Single fixed height when snapPoints is omitted.
   height?: SnapPoint;
-  // Index into snapPoints to open at. Defaults to 0 (smallest).
+  // Index into the sorted snapPoints to open at. Defaults to 0 (smallest).
   initialSnap?: number;
   // Tap the backdrop to dismiss. Defaults to true.
   dismissOnBackdrop?: boolean;
@@ -51,11 +53,15 @@ export type BottomSheetProps = {
 };
 
 const SPRING_CONFIG = { damping: 26, stiffness: 240, mass: 1 } as const;
-// If the user drags the sheet down by this fraction of its current height,
-// release dismisses. Otherwise it springs back.
+// If the user drags below the smallest snap by this fraction of that snap's
+// height, release dismisses. Otherwise it snaps to the nearest snap point.
 const DISMISS_THRESHOLD = 0.35;
-// Velocity (px/s) past which a downward fling always dismisses.
+// Velocity (px/s) past which a downward fling below the smallest snap dismisses.
 const FLING_DISMISS_VELOCITY = 800;
+// Multiplier used to project the resting position from current velocity. A
+// short fling overshoots a little so the snap target reflects intent, not
+// just where the finger happens to lift.
+const VELOCITY_PROJECTION = 0.15;
 
 function resolveSnap(value: SnapPoint, screenHeight: number): number {
   if (typeof value === "number") return value;
@@ -112,7 +118,6 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
   },
   ref,
 ) {
-  const theme = useTheme();
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   const [screenH, setScreenH] = useState(() => Dimensions.get("window").height);
@@ -121,12 +126,16 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
   // the close animation before unmounting.
   const [modalVisible, setModalVisible] = useState(visible);
   const [currentSnap, setCurrentSnap] = useState(initialSnap);
+  // Read inside the open/close effect without putting currentSnap in deps —
+  // we don't want snap-change re-renders to re-trigger the open animation.
+  const currentSnapRef = useRef(currentSnap);
+  currentSnapRef.current = currentSnap;
 
-  // Resolve snap heights in pixels. Auto-fit (when neither snapPoints nor
-  // height is set) uses the measured content height + bottom inset.
+  // Snap heights in ASCENDING order (smallest first). Sorting means the user
+  // can pass snap points in any order and `initialSnap` indexes consistently.
   const snapHeights = useMemo<number[]>(() => {
     if (snapPoints && snapPoints.length > 0) {
-      return snapPoints.map((s) => resolveSnap(s, screenH));
+      return snapPoints.map((s) => resolveSnap(s, screenH)).sort((a, b) => a - b);
     }
     if (height !== undefined) {
       return [resolveSnap(height, screenH)];
@@ -137,13 +146,22 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
     return [];
   }, [snapPoints, height, screenH, measuredContent, insets.bottom]);
 
-  // translateY is measured from the closed position. 0 = fully open at
-  // current snap; positive = pushed down toward closed.
+  // The sheet container is rendered at the LARGEST snap height. Smaller snaps
+  // are reached by pushing the sheet down via translateY so only that portion
+  // peeks above the screen edge. This way one container can host every snap.
+  const sheetMaxHeight = snapHeights[snapHeights.length - 1] ?? 0;
+  // restingPositions[i] is the translateY value where the sheet rests at
+  // snap i. Index 0 = smallest snap (largest translateY, most pushed down);
+  // last index = largest snap (translateY = 0, fully extended).
+  const restingPositions = useMemo<number[]>(
+    () => snapHeights.map((h) => sheetMaxHeight - h),
+    [snapHeights, sheetMaxHeight],
+  );
+
+  // translateY is measured from the fully-extended position. 0 = at largest
+  // snap; positive = pushed down toward closed; sheetMaxHeight = off-screen.
   const translateY = useSharedValue(0);
   const startY = useSharedValue(0);
-  // The pixel height of the sheet at the current snap. Used to size the
-  // animated container so it doesn't overflow when partial.
-  const sheetHeight = snapHeights[currentSnap] ?? 0;
 
   const closeInternal = useCallback(() => {
     setModalVisible(false);
@@ -154,17 +172,18 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
   useEffect(() => {
     if (visible) {
       setModalVisible(true);
-      // Wait one frame so layout settles, then spring up.
+      // Wait one frame so layout settles, then spring up to the current snap.
       requestAnimationFrame(() => {
-        translateY.value = sheetHeight;
-        translateY.value = withSpring(0, SPRING_CONFIG);
+        const target = restingPositions[currentSnapRef.current] ?? 0;
+        translateY.value = sheetMaxHeight;
+        translateY.value = withSpring(target, SPRING_CONFIG);
       });
     } else if (modalVisible) {
-      translateY.value = withTiming(sheetHeight, { duration: 200 }, (done) => {
-        if (done) runOnJS(setModalVisible)(false);
+      translateY.value = withTiming(sheetMaxHeight, { duration: 200 }, (done) => {
+        if (done) scheduleOnRN(setModalVisible, false);
       });
     }
-  }, [visible, sheetHeight, modalVisible, translateY]);
+  }, [visible, sheetMaxHeight, modalVisible, translateY, restingPositions]);
 
   const onLayoutContent = (e: LayoutChangeEvent) => {
     setMeasuredContent(e.nativeEvent.layout.height);
@@ -181,23 +200,47 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
           startY.value = translateY.value;
         })
         .onUpdate((e) => {
-          // Drag down (positive y) follows the finger; drag up clamps at 0.
-          translateY.value = Math.max(0, startY.value + e.translationY);
+          // Clamp between fully open (0) and fully closed (sheetMaxHeight).
+          // Allowing the full range lets the user drag UP to a larger snap or
+          // DOWN past the smallest snap to dismiss.
+          translateY.value = Math.max(
+            0,
+            Math.min(sheetMaxHeight, startY.value + e.translationY),
+          );
         })
         .onEnd((e) => {
-          const dragged = translateY.value;
+          const projected = translateY.value + e.velocityY * VELOCITY_PROJECTION;
+          const smallestSnapHeight = snapHeights[0] ?? 0;
+          const smallestRestingY = restingPositions[0] ?? 0;
+
+          // Dismiss when projected position is below the smallest snap by
+          // more than threshold, or a fast downward fling below it.
+          const dragPastSmallest = projected - smallestRestingY;
           const shouldDismiss =
-            dragged > sheetHeight * DISMISS_THRESHOLD ||
-            e.velocityY > FLING_DISMISS_VELOCITY;
+            dragPastSmallest > smallestSnapHeight * DISMISS_THRESHOLD ||
+            (e.velocityY > FLING_DISMISS_VELOCITY && dragPastSmallest > 0);
+
           if (shouldDismiss) {
-            translateY.value = withTiming(sheetHeight, { duration: 180 }, (done) => {
-              if (done) runOnJS(closeInternal)();
+            translateY.value = withTiming(sheetMaxHeight, { duration: 180 }, (done) => {
+              if (done) scheduleOnRN(closeInternal);
             });
-          } else {
-            translateY.value = withSpring(0, SPRING_CONFIG);
+            return;
           }
+
+          // Snap to the resting position nearest the projected end-of-fling.
+          let nearestIdx = 0;
+          let nearestDist = Infinity;
+          for (let i = 0; i < restingPositions.length; i++) {
+            const d = Math.abs(projected - restingPositions[i]);
+            if (d < nearestDist) {
+              nearestDist = d;
+              nearestIdx = i;
+            }
+          }
+          scheduleOnRN(setCurrentSnap, nearestIdx);
+          translateY.value = withSpring(restingPositions[nearestIdx], SPRING_CONFIG);
         }),
-    [sheetHeight, closeInternal, translateY, startY],
+    [sheetMaxHeight, snapHeights, restingPositions, closeInternal, translateY, startY],
   );
 
   const sheetAnimatedStyle = useAnimatedStyle(() => ({
@@ -207,7 +250,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
   const backdropAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       translateY.value,
-      [0, sheetHeight || 1],
+      [0, sheetMaxHeight || 1],
       [0.45, 0],
       "clamp",
     ),
@@ -236,7 +279,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
           <Animated.View
             style={[
               styles.sheet,
-              sheetHeight > 0 && { height: sheetHeight },
+              sheetMaxHeight > 0 && { height: sheetMaxHeight },
               sheetAnimatedStyle,
               style,
             ]}
