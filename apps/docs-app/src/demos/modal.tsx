@@ -33,14 +33,14 @@ export default function ModalDemo() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>Confirmation</Text>
-        <Button variant="destructive" onPress={() => setConfirmOpen(true)}>
+        <Button fullWidth variant="destructive" onPress={() => setConfirmOpen(true)}>
           Delete account
         </Button>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Informational</Text>
-        <Button variant="secondary" onPress={() => setInfoOpen(true)}>
+        <Button fullWidth variant="secondary" onPress={() => setInfoOpen(true)}>
           Show details
         </Button>
       </View>

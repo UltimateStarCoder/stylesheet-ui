@@ -20,6 +20,9 @@ export type ButtonProps = Omit<PressableProps, "children" | "style"> & {
   size?: ButtonSize;
   loading?: boolean;
   disabled?: boolean;
+  // Stretch the button to fill its parent's width. By default the button
+  // shrinks to fit its content, matching web/Paper/gluestack conventions.
+  fullWidth?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
   style?: StyleProp<ViewStyle>;
@@ -27,6 +30,10 @@ export type ButtonProps = Omit<PressableProps, "children" | "style"> & {
 
 const useStyles = createStyles((t) => ({
   base: {
+    // Shrink to content by default. RN's flex default would stretch the button
+    // to fill any column-flex parent, which is surprising and rarely what you
+    // want. `fullWidth` opts back into stretching.
+    alignSelf: "flex-start",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -35,6 +42,7 @@ const useStyles = createStyles((t) => ({
     borderWidth: 1,
     borderColor: "transparent",
   },
+  fullWidth: { alignSelf: "stretch" },
   sizeSm: { paddingVertical: t.spacing.xs, paddingHorizontal: t.spacing.md, minHeight: 32 },
   sizeMd: { paddingVertical: t.spacing.sm, paddingHorizontal: t.spacing.lg, minHeight: 40 },
   sizeLg: { paddingVertical: t.spacing.md, paddingHorizontal: t.spacing.xl, minHeight: 48 },
@@ -68,6 +76,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
     size = "md",
     loading = false,
     disabled = false,
+    fullWidth = false,
     leftIcon,
     rightIcon,
     style,
@@ -99,6 +108,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
         variantStyle,
         pressed && !isInactive && variantPressedStyle,
         isInactive && styles.disabled,
+        fullWidth && styles.fullWidth,
         style,
       ]}
       {...rest}

@@ -29,16 +29,18 @@ export default function ToastDemo() {
       <View style={styles.section}>
         <Text style={styles.label}>Variants</Text>
         <VStack gap="sm">
-          <Button onPress={() => toast.show("Saved to drafts")}>
+          <Button fullWidth onPress={() => toast.show("Saved to drafts")}>
             Default toast
           </Button>
           <Button
+            fullWidth
             variant="secondary"
             onPress={() => toast.success("Payment confirmed")}
           >
             Success toast
           </Button>
           <Button
+            fullWidth
             variant="secondary"
             onPress={() =>
               toast.warning({ title: "Slow connection", description: "We'll keep trying." })
@@ -47,6 +49,7 @@ export default function ToastDemo() {
             Warning toast
           </Button>
           <Button
+            fullWidth
             variant="destructive"
             onPress={() =>
               toast.error({
@@ -63,6 +66,7 @@ export default function ToastDemo() {
       <View style={styles.section}>
         <Text style={styles.label}>Rapid-fire (queue stacking)</Text>
         <Button
+          fullWidth
           variant="secondary"
           onPress={() => {
             toast.show("First");

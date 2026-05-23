@@ -18,3 +18,12 @@ import { Button } from "@/components/ui/button";
 <Button variant="secondary" size="lg">Secondary</Button>
 <Button variant="destructive" loading>Deleting…</Button>
 ```
+
+## Sizing
+
+Buttons shrink to fit their content by default — matching web, React Native Paper, and gluestack conventions. Pass `fullWidth` to stretch the button across its parent's width, useful for primary CTAs in forms, cards, and sheets.
+
+```tsx
+<Button>Save</Button>             // sizes to "Save"
+<Button fullWidth>Save</Button>   // fills parent width
+```

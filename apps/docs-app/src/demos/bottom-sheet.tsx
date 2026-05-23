@@ -48,19 +48,19 @@ export default function BottomSheetDemo() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>Auto-fit to content (default)</Text>
-        <Button onPress={() => setAutoOpen(true)}>Open auto-fit sheet</Button>
+        <Button fullWidth onPress={() => setAutoOpen(true)}>Open auto-fit sheet</Button>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Fixed height (60%)</Text>
-        <Button variant="secondary" onPress={() => setFixedOpen(true)}>
+        <Button fullWidth variant="secondary" onPress={() => setFixedOpen(true)}>
           Open fixed-height sheet
         </Button>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Snap points (30% / 60% / 90%)</Text>
-        <Button variant="secondary" onPress={() => setSnapOpen(true)}>
+        <Button fullWidth variant="secondary" onPress={() => setSnapOpen(true)}>
           Open snap-point sheet
         </Button>
       </View>
@@ -72,10 +72,10 @@ export default function BottomSheetDemo() {
             The sheet measures its children with onLayout and snaps to that
             height. Drag down to dismiss, or use the buttons.
           </Text>
-          <Button variant="destructive" onPress={() => setAutoOpen(false)}>
+          <Button fullWidth variant="destructive" onPress={() => setAutoOpen(false)}>
             Confirm
           </Button>
-          <Button variant="ghost" onPress={() => setAutoOpen(false)}>
+          <Button fullWidth variant="ghost" onPress={() => setAutoOpen(false)}>
             Cancel
           </Button>
         </VStack>

@@ -62,6 +62,12 @@ export default function ButtonDemo() {
           </Button>
         </View>
       </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Full width</Text>
+        <Button fullWidth>Stretches to parent</Button>
+        <Button fullWidth variant="secondary">Useful for primary CTAs</Button>
+      </View>
     </ScrollView>
   );
 }
