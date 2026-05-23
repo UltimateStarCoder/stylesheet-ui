@@ -135,9 +135,9 @@ export const Slider = forwardRef<View, SliderProps>(function Slider(
       accessibilityValue={{ min, max, now: value }}
       {...responder.panHandlers}
     >
-      <View style={styles.track} />
-      <View style={[styles.fill, { width: fillWidth }]} />
-      <View style={[styles.thumb, { left: Math.max(0, thumbLeft) }]} />
+      <View pointerEvents="none" style={styles.track} />
+      <View pointerEvents="none" style={[styles.fill, { width: fillWidth }]} />
+      <View pointerEvents="none" style={[styles.thumb, { left: Math.max(0, thumbLeft) }]} />
     </View>
   );
 });
