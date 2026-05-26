@@ -8,7 +8,7 @@ export default defineConfig({
     starlight({
       title: "stylesheet-ui",
       description:
-        "Copy-paste React Native components for Expo, distributed as source you own. Plain StyleSheet. No DSL. No runtime. No lock-in.",
+        "Copy-paste React Native components for Expo, distributed as source you own. Plain StyleSheet. No DSL. No lock-in.",
       social: [
         {
           icon: "github",
@@ -36,8 +36,11 @@ export default defineConfig({
             "components/badge",
             "components/card",
             "components/list-item",
+            "components/list",
+            "components/section",
             "components/settings-row",
             "components/skeleton",
+            "components/table",
           ],
         },
         {

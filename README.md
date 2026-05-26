@@ -2,7 +2,7 @@
 
 Copy-paste React Native components for Expo, distributed as source you own.
 
-Plain `StyleSheet.create`. No DSL. No runtime. No lock-in.
+Plain `StyleSheet.create`. No DSL. No lock-in.
 
 ```sh
 npx stylesheet-ui init
@@ -13,10 +13,10 @@ See the [CLI README](packages/cli/README.md) for usage details.
 
 ## What's included
 
-28 components grouped by purpose:
+31 components grouped by purpose:
 
 - **Layout:** Screen, Stack (+ HStack / VStack), Divider
-- **Display:** Text, Avatar, Badge, Card, ListItem, SettingsRow, Skeleton
+- **Display:** Text, Avatar, Badge, Card, ListItem, List, Section, SettingsRow, Skeleton, Table
 - **Inputs:** Button, Input, Switch, Checkbox, Radio, Slider, Select
 - **Feedback:** Spinner, Progress, Alert, Toast
 - **Overlays:** Modal, AlertDialog, Tabs, Accordion, BottomSheet, Menu, Tooltip

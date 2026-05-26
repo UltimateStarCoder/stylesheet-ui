@@ -1,0 +1,9 @@
+{
+  "name": "table",
+  "type": "component",
+  "description": "Tabular layout: header + data rows with flex columns.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/table.tsx", "to": "table.tsx" }
+  ]
+}

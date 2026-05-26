@@ -1,0 +1,9 @@
+{
+  "name": "list",
+  "type": "component",
+  "description": "Rounded card container that wraps rows with internal dividers.",
+  "registryDependencies": ["theme", "utils", "divider"],
+  "files": [
+    { "from": "components/ui/list.tsx", "to": "list.tsx" }
+  ]
+}

@@ -2,7 +2,7 @@
 
 Copy-paste React Native components for Expo, distributed as source you own.
 
-Plain `StyleSheet.create`. No DSL. No runtime. No lock-in.
+Plain `StyleSheet.create`. No DSL. No lock-in.
 
 Docs: <https://stylesheet-ui.dev>
 

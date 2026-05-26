@@ -1,0 +1,9 @@
+{
+  "name": "section",
+  "type": "component",
+  "description": "Labeled group: uppercase title and optional description around any content.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/section.tsx", "to": "section.tsx" }
+  ]
+}

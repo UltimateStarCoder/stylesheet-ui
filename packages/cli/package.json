@@ -1,7 +1,7 @@
 {
   "name": "stylesheet-ui",
   "version": "0.0.8",
-  "description": "Copy-paste React Native components for Expo. Plain StyleSheet, no DSL, no runtime — you own the source. Run `npx stylesheet-ui init`, then `add <name>` to drop a component into your project.",
+  "description": "Copy-paste React Native components for Expo. Plain StyleSheet, no DSL — you own the source. Run `npx stylesheet-ui init`, then `add <name>` to drop a component into your project.",
   "keywords": [
     "expo",
     "react-native",

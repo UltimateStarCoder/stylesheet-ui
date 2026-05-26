@@ -1,0 +1,64 @@
+import { ScrollView, View } from "react-native";
+import { ChevronRight, Inbox, Mail, Star } from "lucide-react-native";
+import {
+  Badge,
+  List,
+  ListItem,
+  Text,
+  createStyles,
+  useTheme,
+} from "@stylesheet-ui/ui";
+
+const useStyles = createStyles((t) => ({
+  container: {
+    padding: t.spacing.lg,
+    gap: t.spacing.xl,
+    backgroundColor: t.colors.background,
+    flexGrow: 1,
+  },
+  block: { gap: t.spacing.sm },
+  label: {
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "600",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+}));
+
+export default function ListDemo() {
+  const theme = useTheme();
+  const styles = useStyles();
+  const chevron = <ChevronRight color={theme.colors.foregroundSubtle} size={18} />;
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.block}>
+        <Text style={styles.label}>Default</Text>
+        <List>
+          <ListItem title="Inbox" subtitle="4 unread" left={<Inbox color={theme.colors.primary} size={20} />} right={<Badge size="sm">4</Badge>} />
+          <ListItem title="Starred" subtitle="2 items" left={<Star color={theme.colors.warning} size={20} />} />
+          <ListItem title="Sent" subtitle="12 items" left={<Mail color={theme.colors.primary} size={20} />} />
+        </List>
+      </View>
+
+      <View style={styles.block}>
+        <Text style={styles.label}>Muted, pressable rows</Text>
+        <List surface="muted">
+          <ListItem title="Ada Lovelace" subtitle="ada@example.com" right={chevron} onPress={() => {}} />
+          <ListItem title="Grace Hopper" subtitle="grace@example.com" right={chevron} onPress={() => {}} />
+          <ListItem title="Margaret Hamilton" subtitle="margaret@example.com" right={chevron} onPress={() => {}} />
+        </List>
+      </View>
+
+      <View style={styles.block}>
+        <Text style={styles.label}>Outline, no dividers</Text>
+        <List surface="outline" divided={false}>
+          <ListItem title="One" />
+          <ListItem title="Two" />
+          <ListItem title="Three" />
+        </List>
+      </View>
+    </ScrollView>
+  );
+}

@@ -1,0 +1,34 @@
+---
+title: Section
+description: Labeled group with uppercase title and optional description.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add section
+```
+
+## Usage
+
+```tsx
+import { Section } from "@/components/ui/section";
+import { List } from "@/components/ui/list";
+import { SettingsRow } from "@/components/ui/settings-row";
+
+<Section title="Account" description="Manage how others see you.">
+  <List>
+    <SettingsRow title="Profile" onPress={() => {}} />
+    <SettingsRow title="Privacy" onPress={() => {}} />
+  </List>
+</Section>
+```
+
+## Props
+
+| Prop          | Type     |
+| ------------- | -------- |
+| `title`       | `string` |
+| `description` | `string` |
+
+Both are optional. The children render between them, so `Section` works around any content — usually a [`List`](/components/list/), but not required.

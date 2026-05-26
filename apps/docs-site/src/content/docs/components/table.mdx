@@ -1,0 +1,62 @@
+---
+title: Table
+description: Tabular layout — header row, body rows, flex columns.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add table
+```
+
+## Usage
+
+```tsx
+import { Table, type TableColumn } from "@/components/ui/table";
+
+type User = { id: string; name: string; role: string };
+
+const columns: TableColumn<User>[] = [
+  { key: "name", header: "Name", flex: 2 },
+  { key: "role", header: "Role", flex: 1 },
+];
+
+const data: User[] = [
+  { id: "1", name: "Ada Lovelace", role: "Owner" },
+  { id: "2", name: "Grace Hopper", role: "Admin" },
+];
+
+<Table columns={columns} data={data} keyExtractor={(u) => u.id} />
+```
+
+## Columns
+
+Each column declares one cell. By default the cell renders `row[col.key]` as text. Pass `render` to render anything else.
+
+```tsx
+{
+  key: "status",
+  header: "Status",
+  flex: 1,
+  render: (row) => <Badge size="sm">{row.status}</Badge>,
+}
+```
+
+| Field    | Type                        | Default |
+| -------- | --------------------------- | ------- |
+| `key`    | `string`                    | —       |
+| `header` | `ReactNode`                 | —       |
+| `flex`   | `number`                    | `1`     |
+| `render` | `(row, index) => ReactNode` | —       |
+
+## Props
+
+| Prop           | Type                     | Default |
+| -------------- | ------------------------ | ------- |
+| `columns`      | `TableColumn<T>[]`       | —       |
+| `data`         | `T[]`                    | —       |
+| `keyExtractor` | `(row, index) => string` | index   |
+
+## Notes
+
+This is a display primitive, not a data grid. Sorting, pagination, selection, striped rows, pressable rows, horizontal scroll, and empty states are all out of scope — they're a couple of lines on top of the source you now own. For long datasets, render the same row layout inside a `FlatList` and keep `Table` for the header.

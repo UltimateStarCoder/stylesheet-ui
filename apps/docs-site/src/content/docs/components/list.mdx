@@ -1,0 +1,51 @@
+---
+title: List
+description: Rounded card that wraps rows with internal dividers.
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add list
+```
+
+Installs `list` along with `divider` and the theme.
+
+## Usage
+
+```tsx
+import { List } from "@/components/ui/list";
+import { ListItem } from "@/components/ui/list-item";
+
+<List>
+  <ListItem title="Inbox"   subtitle="4 unread"  />
+  <ListItem title="Starred" subtitle="2 items"   />
+  <ListItem title="Sent"    subtitle="12 items"  />
+</List>
+```
+
+## Props
+
+| Prop      | Type                                  | Default     |
+| --------- | ------------------------------------- | ----------- |
+| `surface` | `"default" \| "muted" \| "outline"`   | `"default"` |
+| `divided` | `boolean`                             | `true`      |
+| `inset`   | `SpacingKey`                          | `"lg"`      |
+
+`inset` controls where the divider starts on the left so it aligns with row content rather than an icon column.
+
+## Recipes
+
+```tsx
+// Filled card, no separators
+<List surface="muted" divided={false}>
+  <ListItem title="One" />
+  <ListItem title="Two" />
+</List>
+
+// Custom inset (push divider past a leading avatar)
+<List inset="3xl">
+  <ListItem left={<Avatar name="Ada" />} title="Ada" />
+  <ListItem left={<Avatar name="Grace" />} title="Grace" />
+</List>
+```

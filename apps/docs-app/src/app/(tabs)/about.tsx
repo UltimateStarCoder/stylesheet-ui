@@ -37,7 +37,7 @@ export default function AboutScreen() {
       <Text style={styles.body}>
         A React Native component system where you own every file. The CLI drops
         components into your project as source — plain {`StyleSheet`}, no
-        styling DSL, no runtime to depend on.
+        styling DSL.
       </Text>
 
       <Text style={styles.sectionTitle}>Install</Text>
