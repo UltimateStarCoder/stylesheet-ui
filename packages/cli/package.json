@@ -1,7 +1,7 @@
 {
   "name": "stylesheet-ui",
   "version": "0.0.7",
-  "description": "Copy-paste React Native components for Expo. Plain StyleSheet, no DSL, no runtime — you own the source. Run `npx stylesheet-ui add <name>` to drop a component into your project.",
+  "description": "Copy-paste React Native components for Expo. Plain StyleSheet, no DSL, no runtime — you own the source. Run `npx stylesheet-ui init`, then `add <name>` to drop a component into your project.",
   "keywords": [
     "expo",
     "react-native",
@@ -11,7 +11,7 @@
     "stylesheet",
     "cli"
   ],
-  "homepage": "https://github.com/UltimateStarCoder/stylesheet-ui#readme",
+  "homepage": "https://stylesheet-ui.dev",
   "bugs": {
     "url": "https://github.com/UltimateStarCoder/stylesheet-ui/issues"
   },
@@ -24,7 +24,7 @@
   "author": "Mac-Rufus Umeokolo",
   "type": "commonjs",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "bin": {
     "stylesheet-ui": "dist/index.js"
@@ -36,8 +36,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs --target node18 --clean --shims --no-splitting",
-    "dev": "tsup src/index.ts --format cjs --target node18 --watch --shims --no-splitting",
+    "build": "tsup src/index.ts --format cjs --target node20 --clean --shims --no-splitting",
+    "dev": "tsup src/index.ts --format cjs --target node20 --watch --shims --no-splitting",
     "sync": "tsx scripts/sync-registry.ts",
     "prepare": "npm run sync && npm run build",
     "prepublishOnly": "npm run sync && npm run build",

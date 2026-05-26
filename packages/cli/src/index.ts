@@ -67,9 +67,10 @@ async function main() {
     .command("list")
     .alias("ls")
     .description("List every component available in the registry.")
-    .action(async () => {
+    .option("--json", "output as JSON (machine-readable, for tooling and agents)", false)
+    .action(async (opts) => {
       try {
-        await listCommand();
+        await listCommand(opts);
       } catch (err) {
         logger.error((err as Error).message);
         process.exit(1);

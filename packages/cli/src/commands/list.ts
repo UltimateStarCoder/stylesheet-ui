@@ -9,8 +9,16 @@ const TYPE_LABEL: Record<RegistryType, string> = {
   util: "Utilities",
 };
 
-export async function listCommand(): Promise<void> {
+export type ListOptions = { json?: boolean };
+
+export async function listCommand(opts: ListOptions = {}): Promise<void> {
   const entries = await listAllEntries();
+
+  if (opts.json) {
+    process.stdout.write(JSON.stringify(entries.sort(byName), null, 2) + "\n");
+    return;
+  }
+
   const grouped = groupByType(entries);
 
   for (const type of TYPE_ORDER) {
