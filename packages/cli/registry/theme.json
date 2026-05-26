@@ -4,7 +4,7 @@
   "description": "Color/spacing/radius/typography/shadow tokens + ThemeProvider + useTheme/useThemeMode hooks.",
   "registryDependencies": [],
   "files": [
-    { "from": "theme/colors.ts",          "to": "colors.ts" },
+    { "from": "theme/presets/mono.ts",    "to": "colors.ts" },
     { "from": "theme/spacing.ts",         "to": "spacing.ts" },
     { "from": "theme/radius.ts",          "to": "radius.ts" },
     { "from": "theme/typography.ts",      "to": "typography.ts" },

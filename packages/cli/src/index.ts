@@ -16,6 +16,7 @@ async function main() {
     .command("init")
     .description("Initialize stylesheet-ui in your project.")
     .option("-y, --yes", "skip prompts, accept defaults", false)
+    .option("--preset <name>", "theme preset: mono | blue | green | violet | rose")
     .action(async (opts) => {
       try {
         await initCommand(opts);
