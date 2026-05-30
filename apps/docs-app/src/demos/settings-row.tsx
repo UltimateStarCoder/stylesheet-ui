@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ScrollView, Switch, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import {
   Bell,
   ChevronRight,
@@ -8,7 +8,7 @@ import {
   Moon,
   Shield,
 } from "lucide-react-native";
-import { Card, SettingsRow, Text, createStyles, useTheme } from "@stylesheet-ui/ui";
+import { Card, SettingsRow, Switch, Text, createStyles, useTheme } from "@stylesheet-ui/ui";
 
 const useStyles = createStyles((t) => ({
   container: {
