@@ -91,8 +91,15 @@ export async function initCommand(opts: InitOptions = {}): Promise<void> {
       preset = answers.preset as ThemePreset;
     }
 
+    // Derive aliases from the chosen paths so the import-rewriter and the
+    // on-disk layout can't silently diverge. A user who relocates components
+    // gets a matching alias instead of the stale default.
     config = {
-      aliases: { ...DEFAULT_CONFIG.aliases },
+      aliases: {
+        components: deriveAlias(answers.componentsPath),
+        theme:      deriveAlias(answers.themePath),
+        utils:      deriveAlias(answers.utilsPath),
+      },
       paths: {
         components: answers.componentsPath,
         theme:      answers.themePath,
@@ -115,6 +122,18 @@ export async function initCommand(opts: InitOptions = {}): Promise<void> {
   logger.dim(`  1. Wrap your app in <${pc.cyan("ThemeProvider")}> from ${pc.cyan(config.paths.theme)}.`);
   logger.dim(`  2. Run ${pc.cyan("npx stylesheet-ui list")} to see what's available.`);
   logger.dim(`  3. Run ${pc.cyan("npx stylesheet-ui add button")} to add your first component.`);
+}
+
+// Map a destination path to an import alias, mirroring the default mapping
+// (`src/components/ui` -> `@/components/ui`). Strips a leading `src/` — the
+// conventional root that `@/*` tsconfig paths point at — and prefixes `@/`.
+// Consumers who use a different alias scheme can edit stylesheet-ui.json after.
+function deriveAlias(p: string): string {
+  const normalized = p
+    .replace(/\\/g, "/")
+    .replace(/^\.\//, "")
+    .replace(/\/+$/, "");
+  return `@/${normalized.replace(/^src\//, "")}`;
 }
 
 function resolvePresetFlag(value: string | undefined): ThemePreset {

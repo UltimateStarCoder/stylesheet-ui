@@ -206,11 +206,40 @@ async function validateManifests(manifests: Manifest[]): Promise<ValidationError
   return errors;
 }
 
+// The "What's included" list in README.md is hand-maintained, so it drifts
+// silently when a component is added. Normalize both sides to alphanumerics
+// (so `alert-dialog` matches `AlertDialog`) and flag any component manifest
+// the README never mentions. Theme/util ship under a separate "Foundation"
+// blurb, so only `component` entries are checked.
+async function checkReadmeCoverage(manifests: Manifest[]): Promise<ValidationError[]> {
+  const readmePath = path.join(CLI_ROOT, "README.md");
+  if (!(await fs.pathExists(readmePath))) {
+    return [{ manifest: "README.md", message: "not found — cannot verify component coverage" }];
+  }
+  const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const readme = normalize(await fs.readFile(readmePath, "utf8"));
+
+  const errors: ValidationError[] = [];
+  for (const manifest of manifests) {
+    if (manifest.type !== "component") continue;
+    if (!readme.includes(normalize(manifest.name))) {
+      errors.push({
+        manifest: manifest.name,
+        message: `is not listed in README.md "What's included" — add it before publishing`,
+      });
+    }
+  }
+  return errors;
+}
+
 async function main() {
   await syncFiles();
 
   const manifests = await loadManifests();
-  const errors = await validateManifests(manifests);
+  const errors = [
+    ...(await validateManifests(manifests)),
+    ...(await checkReadmeCoverage(manifests)),
+  ];
 
   if (errors.length > 0) {
     console.error("");

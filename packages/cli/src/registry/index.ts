@@ -25,8 +25,7 @@ export async function loadRegistryEntry(name: string): Promise<RegistryEntry> {
   return entry;
 }
 
-// Lists every registry manifest in the bundle. Used by `list` and tab
-// completion in the future.
+// Lists every registry manifest in the bundle.
 export async function listAllEntries(): Promise<RegistryEntry[]> {
   const entries: RegistryEntry[] = [];
   const files = await fs.readdir(REGISTRY_ROOT);

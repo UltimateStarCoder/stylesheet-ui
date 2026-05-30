@@ -63,9 +63,9 @@ Component source lands at `src/components/ui/<name>.tsx` and is yours to edit. I
 
 Run `npx stylesheet-ui list` to see every entry in your terminal. Pass `--json` for machine-readable output (handy for tooling and AI agents).
 
-**Layout:** Screen, Stack, Divider.
+**Layout:** Screen, Stack, Section, Divider.
 
-**Display:** Text, Avatar, Badge, Card, ListItem, SettingsRow, Skeleton, Spinner.
+**Display:** Text, Avatar, Badge, Card, List, ListItem, SettingsRow, Table, Skeleton, Spinner.
 
 **Inputs:** Button, Input, Checkbox, Radio, Switch, Slider, Select.
 

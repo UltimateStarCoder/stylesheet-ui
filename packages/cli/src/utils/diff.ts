@@ -22,25 +22,33 @@ export function unifiedDiff(
   let i = 0;
   while (i < N) {
     if (ops[i].kind === "same") {
-      // Look ahead for the next change.
+      // Span the full run of unchanged lines [i, j).
       let j = i;
       while (j < N && ops[j].kind === "same") j++;
       const changeAhead = j < N;
       const changeBehind = lines.length > 0;
-      const startTrim = changeBehind ? i + ctx : j;
-      const endTrim = changeAhead ? Math.max(startTrim, j - ctx) : i;
 
-      // Emit `ctx` lines after a previous change.
-      for (let k = i; k < Math.min(startTrim, j); k++) {
-        lines.push(pc.dim(`  ${ops[k].line}`));
+      // A whole-file no-op run (no change on either side) carries no signal.
+      if (!changeAhead && !changeBehind) {
+        i = j;
+        continue;
       }
-      // Skip the middle.
-      if (endTrim > startTrim) {
+
+      // Show up to `ctx` lines trailing the previous change (the "head") and
+      // up to `ctx` lines leading the next change (the "tail"). Either side is
+      // empty when there's no change on that side — so leading context before
+      // the first change and trailing context after the last change collapse
+      // too, not just the gaps between changes.
+      const headEnd = changeBehind ? Math.min(i + ctx, j) : i;
+      const tailStart = changeAhead ? Math.max(j - ctx, i) : j;
+
+      if (headEnd >= tailStart) {
+        // Head and tail meet or overlap: nothing is hidden, show the whole run.
+        for (let k = i; k < j; k++) lines.push(pc.dim(`  ${ops[k].line}`));
+      } else {
+        for (let k = i; k < headEnd; k++) lines.push(pc.dim(`  ${ops[k].line}`));
         lines.push(pc.dim(`  ...`));
-      }
-      // Emit `ctx` lines before the next change.
-      for (let k = Math.max(endTrim, startTrim); k < j; k++) {
-        lines.push(pc.dim(`  ${ops[k].line}`));
+        for (let k = tailStart; k < j; k++) lines.push(pc.dim(`  ${ops[k].line}`));
       }
       i = j;
     } else if (ops[i].kind === "remove") {

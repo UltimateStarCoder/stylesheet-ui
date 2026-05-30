@@ -41,7 +41,8 @@
     "sync": "tsx scripts/sync-registry.ts",
     "prepare": "npm run sync && npm run build",
     "prepublishOnly": "npm run sync && npm run build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\""
   },
   "dependencies": {
     "commander": "^12.1.0",

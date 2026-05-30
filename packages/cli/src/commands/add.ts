@@ -19,12 +19,8 @@ export async function addCommand(
   components: string[],
   opts: AddOptions = {},
 ): Promise<void> {
-  if (components.length === 0) {
-    logger.error("Pass at least one component name. Try: stylesheet-ui add button");
-    process.exitCode = 1;
-    return;
-  }
-
+  // commander's required variadic `<components...>` guarantees ≥1 name, so no
+  // empty-input guard is needed here.
   const cwd = process.cwd();
   const config = await readConfig(cwd);
 
