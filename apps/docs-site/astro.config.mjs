@@ -16,66 +16,20 @@ export default defineConfig({
           href: "https://github.com/UltimateStarCoder/stylesheet-ui",
         },
       ],
+      // Component groups are generated from the folder tree: a new page added
+      // under any group directory shows up in the sidebar automatically, so
+      // this list can't drift from the pages on disk. Each group's pages sort
+      // alphabetically by title; add `sidebar.order` frontmatter to a page to
+      // override its position within its group.
       sidebar: [
         { label: "Getting started", slug: "getting-started" },
         { label: "Theme", slug: "theme" },
         { label: "Hooks", slug: "hooks" },
-        {
-          label: "Layout",
-          items: [
-            "components/screen",
-            "components/stack",
-            "components/divider",
-          ],
-        },
-        {
-          label: "Display",
-          items: [
-            "components/text",
-            "components/avatar",
-            "components/badge",
-            "components/card",
-            "components/list-item",
-            "components/list",
-            "components/section",
-            "components/settings-row",
-            "components/skeleton",
-            "components/table",
-          ],
-        },
-        {
-          label: "Inputs",
-          items: [
-            "components/button",
-            "components/input",
-            "components/switch",
-            "components/checkbox",
-            "components/radio",
-            "components/slider",
-            "components/select",
-          ],
-        },
-        {
-          label: "Feedback",
-          items: [
-            "components/spinner",
-            "components/progress",
-            "components/alert",
-            "components/toast",
-          ],
-        },
-        {
-          label: "Overlays",
-          items: [
-            "components/modal",
-            "components/alert-dialog",
-            "components/tabs",
-            "components/accordion",
-            "components/bottom-sheet",
-            "components/menu",
-            "components/tooltip",
-          ],
-        },
+        { label: "Layout", items: [{ autogenerate: { directory: "components/layout" } }] },
+        { label: "Display", items: [{ autogenerate: { directory: "components/display" } }] },
+        { label: "Inputs", items: [{ autogenerate: { directory: "components/inputs" } }] },
+        { label: "Feedback", items: [{ autogenerate: { directory: "components/feedback" } }] },
+        { label: "Overlays", items: [{ autogenerate: { directory: "components/overlays" } }] },
       ],
       customCss: ["./src/styles/custom.css"],
       components: {
