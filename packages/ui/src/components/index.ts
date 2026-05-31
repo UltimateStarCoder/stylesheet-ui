@@ -35,6 +35,7 @@ export * from "./ui/tooltip";
 export * from "./ui/auth-screen";
 export * from "./ui/sign-in-form";
 export * from "./ui/sign-up-form";
+export * from "./ui/forgot-password-form";
 export * from "./ui/otp-input";
 export * from "./ui/social-auth-buttons";
 export * from "./ui/new-password-form";

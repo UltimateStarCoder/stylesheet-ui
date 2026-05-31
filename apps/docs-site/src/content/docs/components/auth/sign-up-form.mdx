@@ -47,3 +47,23 @@ export default function SignUpScreen() {
   return <SignUpForm onSubmit={onSubmit} loading={loading} error={error} />;
 }
 ```
+
+## Fields
+
+By default the form collects email + password. Two opt-in props add more:
+
+- **`nameFields`** — adds First/Last name inputs (side by side). When set, `onSubmit` receives `firstName` and `lastName` alongside `emailAddress` and `password`.
+- **`requireConfirm`** — adds a confirm-password field and blocks submit until it matches.
+
+```tsx
+<SignUpForm
+  nameFields
+  requireConfirm
+  onSubmit={({ emailAddress, password, firstName, lastName }) => {
+    // create the account with whatever fields you collected
+  }}
+/>
+```
+
+Need other fields (username, phone, terms checkbox)? The form is yours — add inputs and include them in the `onSubmit` payload.
+

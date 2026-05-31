@@ -35,6 +35,7 @@ export default function ComponentsLayout() {
       <Stack.Screen name="auth-screen"         options={{ title: "AuthScreen" }} />
       <Stack.Screen name="sign-in-form"        options={{ title: "SignInForm" }} />
       <Stack.Screen name="sign-up-form"        options={{ title: "SignUpForm" }} />
+      <Stack.Screen name="forgot-password-form" options={{ title: "ForgotPasswordForm" }} />
       <Stack.Screen name="otp-input"           options={{ title: "OtpInput" }} />
       <Stack.Screen name="social-auth-buttons" options={{ title: "SocialAuthButtons" }} />
       <Stack.Screen name="new-password-form"   options={{ title: "NewPasswordForm" }} />

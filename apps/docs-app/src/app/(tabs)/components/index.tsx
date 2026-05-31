@@ -42,7 +42,8 @@ const ENTRIES = [
 const AUTH = [
   { name: "AuthScreen",        href: "/components/auth-screen"         as const, blurb: "Keyboard-aware centered auth layout" },
   { name: "SignInForm",        href: "/components/sign-in-form"        as const, blurb: "Email + password sign-in" },
-  { name: "SignUpForm",        href: "/components/sign-up-form"        as const, blurb: "Email + password sign-up" },
+  { name: "SignUpForm",        href: "/components/sign-up-form"        as const, blurb: "Sign-up, optional name + confirm" },
+  { name: "ForgotPasswordForm", href: "/components/forgot-password-form" as const, blurb: "Request a password reset code" },
   { name: "OtpInput",          href: "/components/otp-input"           as const, blurb: "Segmented verification code" },
   { name: "SocialAuthButtons", href: "/components/social-auth-buttons" as const, blurb: "OAuth / SSO provider buttons" },
   { name: "NewPasswordForm",   href: "/components/new-password-form"   as const, blurb: "Set a new password, optional confirm" },
