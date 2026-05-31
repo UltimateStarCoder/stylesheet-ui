@@ -3,6 +3,7 @@ import {
   Pressable,
   Text,
   View,
+  type PressableProps,
   type StyleProp,
   type ViewStyle,
 } from "react-native";
@@ -11,7 +12,7 @@ import { createStyles } from "../../utils/use-styles";
 
 export type CheckboxSize = "sm" | "md" | "lg";
 
-export type CheckboxProps = {
+export type CheckboxProps = Omit<PressableProps, "children" | "style" | "onPress"> & {
   checked: boolean;
   onCheckedChange?: (next: boolean) => void;
   label?: ReactNode;
@@ -50,7 +51,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const Checkbox = forwardRef<View, CheckboxProps>(function Checkbox(
-  { checked, onCheckedChange, label, size = "md", disabled, style },
+  { checked, onCheckedChange, label, size = "md", disabled, style, ...rest },
   ref,
 ) {
   const theme = useTheme();
@@ -77,6 +78,7 @@ export const Checkbox = forwardRef<View, CheckboxProps>(function Checkbox(
       accessibilityRole="checkbox"
       accessibilityState={{ checked, disabled }}
       style={[styles.row, disabled && styles.disabled, style]}
+      {...rest}
     >
       <View style={[styles.box, { width: px, height: px }, checked && styles.boxChecked]}>
         {checked && <View style={checkStyle} />}

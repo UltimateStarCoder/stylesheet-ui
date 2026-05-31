@@ -5,6 +5,7 @@ import {
   View,
   type ImageSourcePropType,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { useTheme } from "../../theme/use-theme";
@@ -13,7 +14,7 @@ import { createStyles } from "../../utils/use-styles";
 export type AvatarSize = "sm" | "md" | "lg" | "xl";
 export type AvatarShape = "circle" | "square";
 
-export type AvatarProps = {
+export type AvatarProps = Omit<ViewProps, "style"> & {
   source?: ImageSourcePropType;
   name?: string;
   size?: AvatarSize;
@@ -58,7 +59,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const Avatar = forwardRef<View, AvatarProps>(function Avatar(
-  { source, name, size = "md", shape = "circle", style },
+  { source, name, size = "md", shape = "circle", style, ...rest },
   ref,
 ) {
   const theme = useTheme();
@@ -75,6 +76,7 @@ export const Avatar = forwardRef<View, AvatarProps>(function Avatar(
     <View
       ref={ref}
       style={[styles.base, { width: px, height: px, borderRadius }, style]}
+      {...rest}
     >
       {showImage ? (
         <Image source={source} style={styles.image} onError={() => setErrored(true)} />

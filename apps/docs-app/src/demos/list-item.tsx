@@ -33,11 +33,11 @@ export default function ListItemDemo() {
   const theme = useTheme();
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-list-item">
       <View style={styles.section}>
         <Text style={styles.label}>Default</Text>
-        <Card padding="none">
-          <ListItem title="Inbox" subtitle="4 unread messages" left={<Inbox color={theme.colors.primary} size={20} />} right={<Badge size="sm">4</Badge>} />
+        <Card padding="none" testID="list-item-card-default">
+          <ListItem testID="list-item-inbox" title="Inbox" subtitle="4 unread messages" left={<Inbox color={theme.colors.primary} size={20} />} right={<Badge size="sm">4</Badge>} />
         </Card>
       </View>
 
@@ -45,6 +45,7 @@ export default function ListItemDemo() {
         <Text style={styles.label}>Pressable group</Text>
         <View style={styles.group}>
           <ListItem
+            testID="list-item-ada"
             title="Ada Lovelace"
             subtitle="ada@example.com"
             left={<Avatar size="md" name="Ada Lovelace" />}
@@ -53,6 +54,7 @@ export default function ListItemDemo() {
           />
           <View style={styles.sep} />
           <ListItem
+            testID="list-item-grace"
             title="Grace Hopper"
             subtitle="grace@example.com"
             left={<Avatar size="md" name="Grace Hopper" />}
@@ -61,6 +63,7 @@ export default function ListItemDemo() {
           />
           <View style={styles.sep} />
           <ListItem
+            testID="list-item-margaret"
             title="Margaret Hamilton"
             subtitle="margaret@example.com"
             left={<Avatar size="md" name="Margaret Hamilton" />}
@@ -72,8 +75,9 @@ export default function ListItemDemo() {
 
       <View style={styles.section}>
         <Text style={styles.label}>States</Text>
-        <Card padding="none">
+        <Card padding="none" testID="list-item-card-states">
           <ListItem
+            testID="list-item-starred"
             title="Starred"
             subtitle="Disabled state"
             left={<Star color={theme.colors.foregroundSubtle} size={20} />}

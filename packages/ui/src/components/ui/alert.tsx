@@ -4,13 +4,14 @@ import {
   Text,
   View,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type AlertVariant = "info" | "success" | "warning" | "destructive";
 
-export type AlertProps = {
+export type AlertProps = Omit<ViewProps, "children" | "style"> & {
   variant?: AlertVariant;
   title?: string;
   description?: string;
@@ -58,7 +59,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const Alert = forwardRef<View, AlertProps>(function Alert(
-  { variant = "info", title, description, icon, onClose, children, style },
+  { variant = "info", title, description, icon, onClose, children, style, ...rest },
   ref,
 ) {
   const styles = useStyles();
@@ -69,6 +70,7 @@ export const Alert = forwardRef<View, AlertProps>(function Alert(
       ref={ref}
       accessibilityRole="alert"
       style={[styles.base, variantStyle, style]}
+      {...rest}
     >
       {!!icon && <View style={styles.iconBox}>{icon}</View>}
       <View style={styles.body}>

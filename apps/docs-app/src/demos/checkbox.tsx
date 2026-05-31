@@ -25,29 +25,29 @@ export default function CheckboxDemo() {
   const [marketing, setMarketing] = useState(false);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-checkbox" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>Default</Text>
         <VStack gap="sm">
-          <Checkbox checked={accepted} onCheckedChange={setAccepted} label="I accept the terms" />
-          <Checkbox checked={marketing} onCheckedChange={setMarketing} label="Email me about new features" />
+          <Checkbox testID="checkbox-accept-terms" checked={accepted} onCheckedChange={setAccepted} label="I accept the terms" />
+          <Checkbox testID="checkbox-marketing" checked={marketing} onCheckedChange={setMarketing} label="Email me about new features" />
         </VStack>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Sizes</Text>
         <VStack gap="sm">
-          <Checkbox checked size="sm" label="Small" />
-          <Checkbox checked size="md" label="Medium" />
-          <Checkbox checked size="lg" label="Large" />
+          <Checkbox testID="checkbox-size-sm" checked size="sm" label="Small" />
+          <Checkbox testID="checkbox-size-md" checked size="md" label="Medium" />
+          <Checkbox testID="checkbox-size-lg" checked size="lg" label="Large" />
         </VStack>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>States</Text>
         <VStack gap="sm">
-          <Checkbox checked={false} disabled label="Unchecked, disabled" />
-          <Checkbox checked disabled label="Checked, disabled" />
+          <Checkbox testID="checkbox-unchecked-disabled" checked={false} disabled label="Unchecked, disabled" />
+          <Checkbox testID="checkbox-checked-disabled" checked disabled label="Checked, disabled" />
         </VStack>
       </View>
     </ScrollView>

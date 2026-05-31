@@ -1,9 +1,16 @@
 import { forwardRef } from "react";
-import { Pressable, Text, View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Pressable,
+  Text,
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { createStyles } from "../../utils/use-styles";
 import { Modal } from "./modal";
 
-export type AlertDialogProps = {
+export type AlertDialogProps = Omit<ViewProps, "children" | "style"> & {
   visible: boolean;
   onCancel: () => void;
   onConfirm: () => void;
@@ -54,6 +61,7 @@ export const AlertDialog = forwardRef<View, AlertDialogProps>(function AlertDial
     cancelLabel = "Cancel",
     destructive = false,
     style,
+    ...rest
   },
   ref,
 ) {
@@ -69,6 +77,7 @@ export const AlertDialog = forwardRef<View, AlertDialogProps>(function AlertDial
       accessibilityLabel={title}
       dismissOnBackdrop={false}
       contentStyle={style}
+      {...rest}
     >
       <View style={styles.actions}>
         <Pressable

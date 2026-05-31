@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type SettingsRowProps = {
+export type SettingsRowProps = Omit<PressableProps, "children" | "style"> & {
   title: string;
   description?: string;
   icon?: ReactNode;
@@ -56,7 +56,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const SettingsRow = forwardRef<View, SettingsRowProps>(function SettingsRow(
-  { title, description, icon, right, onPress, disabled, destructive, style },
+  { title, description, icon, right, onPress, disabled, destructive, style, ...rest },
   ref,
 ) {
   const styles = useStyles();
@@ -84,6 +84,7 @@ export const SettingsRow = forwardRef<View, SettingsRowProps>(function SettingsR
           disabled && styles.disabled,
           style,
         ]}
+        {...rest}
       >
         {content}
       </Pressable>
@@ -91,7 +92,7 @@ export const SettingsRow = forwardRef<View, SettingsRowProps>(function SettingsR
   }
 
   return (
-    <View ref={ref} style={[styles.base, disabled && styles.disabled, style]}>
+    <View ref={ref} style={[styles.base, disabled && styles.disabled, style]} {...rest}>
       {content}
     </View>
   );

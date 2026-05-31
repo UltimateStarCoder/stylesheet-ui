@@ -40,10 +40,10 @@ export default function SelectDemo() {
   const [region, setRegion] = useState<string | undefined>(undefined);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-select">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>With descriptions</Text>
-        <Select value={plan} onValueChange={setPlan} options={PLAN_OPTIONS} />
+        <Select value={plan} onValueChange={setPlan} options={PLAN_OPTIONS} testID="select-plan" />
         <Text style={styles.value}>Selected: {plan}</Text>
       </View>
 
@@ -54,12 +54,13 @@ export default function SelectDemo() {
           onValueChange={setRegion}
           options={REGION_OPTIONS}
           placeholder="Choose a region…"
+          testID="select-region"
         />
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Disabled</Text>
-        <Select value="free" onValueChange={() => {}} options={PLAN_OPTIONS} disabled />
+        <Select value="free" onValueChange={() => {}} options={PLAN_OPTIONS} disabled testID="select-disabled" />
       </View>
     </ScrollView>
   );

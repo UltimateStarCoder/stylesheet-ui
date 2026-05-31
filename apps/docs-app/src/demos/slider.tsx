@@ -26,22 +26,22 @@ export default function SliderDemo() {
   const [stepped, setStepped] = useState(3);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-slider">
       <View style={styles.section}>
         <Text style={styles.label}>Continuous (0–100)</Text>
-        <Slider value={volume} onValueChange={setVolume} min={0} max={100} />
+        <Slider value={volume} onValueChange={setVolume} min={0} max={100} testID="slider-continuous" />
         <Text style={styles.value}>value = {Math.round(volume)}</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Stepped (step=1, range 1–5)</Text>
-        <Slider value={stepped} onValueChange={setStepped} min={1} max={5} step={1} />
+        <Slider value={stepped} onValueChange={setStepped} min={1} max={5} step={1} testID="slider-stepped" />
         <Text style={styles.value}>value = {stepped}</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Disabled</Text>
-        <Slider value={60} onValueChange={() => {}} disabled />
+        <Slider value={60} onValueChange={() => {}} disabled testID="slider-disabled" />
       </View>
     </ScrollView>
   );

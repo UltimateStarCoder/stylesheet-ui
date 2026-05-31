@@ -22,24 +22,24 @@ const useStyles = createStyles((t) => ({
 export default function BadgeDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-badge">
       <View style={styles.section}>
         <Text style={styles.label}>Variants</Text>
         <View style={styles.row}>
-          <Badge>Primary</Badge>
-          <Badge variant="secondary">Secondary</Badge>
-          <Badge variant="success">Success</Badge>
-          <Badge variant="warning">Warning</Badge>
-          <Badge variant="destructive">Destructive</Badge>
-          <Badge variant="outline">Outline</Badge>
+          <Badge testID="badge-primary">Primary</Badge>
+          <Badge variant="secondary" testID="badge-secondary">Secondary</Badge>
+          <Badge variant="success" testID="badge-success">Success</Badge>
+          <Badge variant="warning" testID="badge-warning">Warning</Badge>
+          <Badge variant="destructive" testID="badge-destructive">Destructive</Badge>
+          <Badge variant="outline" testID="badge-outline">Outline</Badge>
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Sizes</Text>
         <View style={styles.row}>
-          <Badge size="sm">Small</Badge>
-          <Badge size="md">Medium</Badge>
+          <Badge size="sm" testID="badge-size-sm">Small</Badge>
+          <Badge size="md" testID="badge-size-md">Medium</Badge>
         </View>
       </View>
     </ScrollView>

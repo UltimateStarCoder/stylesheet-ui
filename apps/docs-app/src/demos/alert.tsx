@@ -25,14 +25,14 @@ export default function AlertDemo() {
   const [closableOpen, setClosableOpen] = useState(true);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-alert">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Variants</Text>
         <View style={styles.stack}>
-          <Alert variant="info" title="Heads up" description="This is an informational message." />
-          <Alert variant="success" title="Saved" description="Your changes are live." />
-          <Alert variant="warning" title="Careful" description="This action affects all collaborators." />
-          <Alert variant="destructive" title="Failed" description="Could not save changes. Try again." />
+          <Alert variant="info" title="Heads up" description="This is an informational message." testID="alert-info-panel" />
+          <Alert variant="success" title="Saved" description="Your changes are live." testID="alert-success-panel" />
+          <Alert variant="warning" title="Careful" description="This action affects all collaborators." testID="alert-warning-panel" />
+          <Alert variant="destructive" title="Failed" description="Could not save changes. Try again." testID="alert-destructive-panel" />
         </View>
       </View>
 
@@ -44,6 +44,7 @@ export default function AlertDemo() {
             title="Cookies are enabled"
             description="We use cookies for session and analytics."
             onClose={() => setClosableOpen(false)}
+            testID="alert-dismissible-panel"
           />
         )}
       </View>

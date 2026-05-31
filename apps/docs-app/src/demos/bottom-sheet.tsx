@@ -45,37 +45,37 @@ export default function BottomSheetDemo() {
   const [snapOpen, setSnapOpen] = useState(false);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-bottom-sheet">
       <View style={styles.section}>
         <Text style={styles.label}>Auto-fit to content (default)</Text>
-        <Button fullWidth onPress={() => setAutoOpen(true)}>Open auto-fit sheet</Button>
+        <Button fullWidth onPress={() => setAutoOpen(true)} testID="bottom-sheet-open-auto">Open auto-fit sheet</Button>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Fixed height (60%)</Text>
-        <Button fullWidth variant="secondary" onPress={() => setFixedOpen(true)}>
+        <Button fullWidth variant="secondary" onPress={() => setFixedOpen(true)} testID="bottom-sheet-open-fixed">
           Open fixed-height sheet
         </Button>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Snap points (30% / 60% / 90%)</Text>
-        <Button fullWidth variant="secondary" onPress={() => setSnapOpen(true)}>
+        <Button fullWidth variant="secondary" onPress={() => setSnapOpen(true)} testID="bottom-sheet-open-snap">
           Open snap-point sheet
         </Button>
       </View>
 
-      <BottomSheet visible={autoOpen} onClose={() => setAutoOpen(false)}>
+      <BottomSheet visible={autoOpen} onClose={() => setAutoOpen(false)} testID="bottom-sheet-auto-panel">
         <VStack gap="md">
           <Text style={styles.sheetTitle}>Confirm action</Text>
           <Text style={styles.sheetBody}>
             The sheet measures its children with onLayout and snaps to that
             height. Drag down to dismiss, or use the buttons.
           </Text>
-          <Button fullWidth variant="destructive" onPress={() => setAutoOpen(false)}>
+          <Button fullWidth variant="destructive" onPress={() => setAutoOpen(false)} testID="bottom-sheet-auto-confirm">
             Confirm
           </Button>
-          <Button fullWidth variant="ghost" onPress={() => setAutoOpen(false)}>
+          <Button fullWidth variant="ghost" onPress={() => setAutoOpen(false)} testID="bottom-sheet-auto-cancel">
             Cancel
           </Button>
         </VStack>
@@ -85,6 +85,7 @@ export default function BottomSheetDemo() {
         visible={fixedOpen}
         onClose={() => setFixedOpen(false)}
         height="60%"
+        testID="bottom-sheet-fixed-panel"
       >
         <Text style={styles.sheetTitle}>Fixed 60% height</Text>
         <Text style={styles.sheetBody}>
@@ -99,6 +100,7 @@ export default function BottomSheetDemo() {
         onClose={() => setSnapOpen(false)}
         snapPoints={["30%", "60%", "90%"]}
         initialSnap={0}
+        testID="bottom-sheet-snap-panel"
       >
         <VStack gap="md">
           <Text style={styles.sheetTitle}>Snap points</Text>

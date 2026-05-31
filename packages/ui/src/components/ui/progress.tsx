@@ -4,11 +4,12 @@ import {
   Easing,
   View,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type ProgressProps = {
+export type ProgressProps = Omit<ViewProps, "children" | "style"> & {
   // 0–100. Ignored when `indeterminate` is true.
   value?: number;
   indeterminate?: boolean;
@@ -35,7 +36,7 @@ const ANIMATION_DURATION = 200;
 const INDETERMINATE_DURATION = 1200;
 
 export const Progress = forwardRef<View, ProgressProps>(function Progress(
-  { value = 0, indeterminate = false, height = 8, style },
+  { value = 0, indeterminate = false, height = 8, style, ...rest },
   ref,
 ) {
   const styles = useStyles();
@@ -96,6 +97,7 @@ export const Progress = forwardRef<View, ProgressProps>(function Progress(
       accessibilityRole="progressbar"
       accessibilityValue={indeterminate ? undefined : { now: clamped, min: 0, max: 100 }}
       style={[styles.track, { height }, style]}
+      {...rest}
     >
       <Animated.View style={[styles.fill, fillStyle]} />
     </View>

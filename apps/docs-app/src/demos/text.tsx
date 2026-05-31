@@ -21,36 +21,36 @@ const useStyles = createStyles((t) => ({
 export default function TextDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-text" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>Sizes</Text>
-        <Text size="xs">xs — the quick brown fox</Text>
-        <Text size="sm">sm — the quick brown fox</Text>
-        <Text size="md">md — the quick brown fox</Text>
-        <Text size="lg">lg — the quick brown fox</Text>
-        <Text size="xl">xl — the quick brown fox</Text>
-        <Text size="2xl">2xl — the quick brown fox</Text>
-        <Text size="3xl">3xl — the quick brown</Text>
-        <Text size="4xl">4xl — quick brown</Text>
+        <Text testID="text-size-xs" size="xs">xs — the quick brown fox</Text>
+        <Text testID="text-size-sm" size="sm">sm — the quick brown fox</Text>
+        <Text testID="text-size-md" size="md">md — the quick brown fox</Text>
+        <Text testID="text-size-lg" size="lg">lg — the quick brown fox</Text>
+        <Text testID="text-size-xl" size="xl">xl — the quick brown fox</Text>
+        <Text testID="text-size-2xl" size="2xl">2xl — the quick brown fox</Text>
+        <Text testID="text-size-3xl" size="3xl">3xl — the quick brown</Text>
+        <Text testID="text-size-4xl" size="4xl">4xl — quick brown</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Weights</Text>
-        <Text weight="regular">Regular weight</Text>
-        <Text weight="medium">Medium weight</Text>
-        <Text weight="semibold">Semibold weight</Text>
-        <Text weight="bold">Bold weight</Text>
+        <Text testID="text-weight-regular" weight="regular">Regular weight</Text>
+        <Text testID="text-weight-medium" weight="medium">Medium weight</Text>
+        <Text testID="text-weight-semibold" weight="semibold">Semibold weight</Text>
+        <Text testID="text-weight-bold" weight="bold">Bold weight</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Intents</Text>
-        <Text intent="default">Default — primary foreground</Text>
-        <Text intent="muted">Muted — secondary</Text>
-        <Text intent="subtle">Subtle — tertiary</Text>
-        <Text intent="primary">Primary — brand</Text>
-        <Text intent="destructive">Destructive — error</Text>
-        <Text intent="success">Success</Text>
-        <Text intent="warning">Warning</Text>
+        <Text testID="text-intent-default" intent="default">Default — primary foreground</Text>
+        <Text testID="text-intent-muted" intent="muted">Muted — secondary</Text>
+        <Text testID="text-intent-subtle" intent="subtle">Subtle — tertiary</Text>
+        <Text testID="text-intent-primary" intent="primary">Primary — brand</Text>
+        <Text testID="text-intent-destructive" intent="destructive">Destructive — error</Text>
+        <Text testID="text-intent-success" intent="success">Success</Text>
+        <Text testID="text-intent-warning" intent="warning">Warning</Text>
       </View>
     </ScrollView>
   );

@@ -27,19 +27,19 @@ export default function SwitchDemo() {
   const { override, setScheme, isDark } = useThemeMode();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-switch" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>States</Text>
         <HStack gap="lg" align="center">
-          <Switch value={on} onValueChange={setOn} />
+          <Switch testID="switch-on" value={on} onValueChange={setOn} />
           <Text style={styles.text}>On (controlled)</Text>
         </HStack>
         <HStack gap="lg" align="center">
-          <Switch value={off} onValueChange={setOff} />
+          <Switch testID="switch-off" value={off} onValueChange={setOff} />
           <Text style={styles.text}>Off (controlled)</Text>
         </HStack>
         <HStack gap="lg" align="center">
-          <Switch value disabled />
+          <Switch testID="switch-disabled" value disabled />
           <Text style={styles.text}>Disabled</Text>
         </HStack>
       </View>
@@ -50,6 +50,7 @@ export default function SwitchDemo() {
         </Text>
         <HStack gap="lg" align="center">
           <Switch
+            testID="switch-theme-override"
             value={isDark}
             onValueChange={(v) => setScheme(v ? "dark" : "light")}
           />

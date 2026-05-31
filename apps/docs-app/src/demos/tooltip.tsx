@@ -23,16 +23,16 @@ const useStyles = createStyles((t) => ({
 export default function TooltipDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-tooltip">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Long-press to open</Text>
         <Text style={styles.hint}>RN has no hover. Press and hold the buttons below.</Text>
         <View style={styles.row}>
-          <Tooltip label="This permanently deletes the account">
-            <Button variant="destructive">Delete</Button>
+          <Tooltip label="This permanently deletes the account" testID="tooltip-delete-bubble">
+            <Button variant="destructive" testID="tooltip-delete-target">Delete</Button>
           </Tooltip>
-          <Tooltip label="Saves and closes the editor">
-            <Button>Save</Button>
+          <Tooltip label="Saves and closes the editor" testID="tooltip-save-bubble">
+            <Button testID="tooltip-save-target">Save</Button>
           </Tooltip>
         </View>
       </View>
@@ -40,8 +40,8 @@ export default function TooltipDemo() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Bottom placement</Text>
         <View style={styles.row}>
-          <Tooltip placement="bottom" label="Drops the tooltip below the trigger">
-            <Button variant="secondary">Bottom</Button>
+          <Tooltip placement="bottom" label="Drops the tooltip below the trigger" testID="tooltip-bottom-bubble">
+            <Button variant="secondary" testID="tooltip-bottom-target">Bottom</Button>
           </Tooltip>
         </View>
       </View>

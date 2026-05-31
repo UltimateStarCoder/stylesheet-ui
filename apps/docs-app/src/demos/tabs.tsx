@@ -43,26 +43,26 @@ export default function TabsDemo() {
   const [value, setValue] = useState("preview");
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-tabs">
       <View style={styles.section}>
         <Text style={styles.label}>Uncontrolled</Text>
-        <Tabs defaultValue="account">
-          <TabsList>
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="password">Password</TabsTrigger>
-            <TabsTrigger value="api">API</TabsTrigger>
+        <Tabs defaultValue="account" testID="tabs-uncontrolled">
+          <TabsList testID="tabs-list-uncontrolled">
+            <TabsTrigger value="account" testID="tabs-trigger-account">Account</TabsTrigger>
+            <TabsTrigger value="password" testID="tabs-trigger-password">Password</TabsTrigger>
+            <TabsTrigger value="api" testID="tabs-trigger-api">API</TabsTrigger>
           </TabsList>
-          <TabsContent value="account">
+          <TabsContent value="account" testID="tabs-content-account">
             <View style={styles.panel}>
               <Text style={styles.body}>Manage your account settings and preferences.</Text>
             </View>
           </TabsContent>
-          <TabsContent value="password">
+          <TabsContent value="password" testID="tabs-content-password">
             <View style={styles.panel}>
               <Text style={styles.body}>Change your password and security options here.</Text>
             </View>
           </TabsContent>
-          <TabsContent value="api">
+          <TabsContent value="api" testID="tabs-content-api">
             <View style={styles.panel}>
               <Text style={styles.body}>Rotate API keys and configure rate limits.</Text>
             </View>
@@ -72,17 +72,17 @@ export default function TabsDemo() {
 
       <View style={styles.section}>
         <Text style={styles.label}>Controlled (value: {value})</Text>
-        <Tabs value={value} onValueChange={setValue}>
-          <TabsList>
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-            <TabsTrigger value="code">Code</TabsTrigger>
+        <Tabs value={value} onValueChange={setValue} testID="tabs-controlled">
+          <TabsList testID="tabs-list-controlled">
+            <TabsTrigger value="preview" testID="tabs-trigger-preview">Preview</TabsTrigger>
+            <TabsTrigger value="code" testID="tabs-trigger-code">Code</TabsTrigger>
           </TabsList>
-          <TabsContent value="preview">
+          <TabsContent value="preview" testID="tabs-content-preview">
             <View style={styles.panel}>
               <Text style={styles.body}>The rendered preview goes here.</Text>
             </View>
           </TabsContent>
-          <TabsContent value="code">
+          <TabsContent value="code" testID="tabs-content-code">
             <View style={styles.panel}>
               <Text style={styles.body}>{`<Button>Click me</Button>`}</Text>
             </View>

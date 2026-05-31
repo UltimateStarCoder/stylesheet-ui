@@ -1,9 +1,14 @@
 import { forwardRef } from "react";
-import { View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { useTheme } from "../../theme/use-theme";
 import type { SpacingKey } from "../../theme/spacing";
 
-export type DividerProps = {
+export type DividerProps = Omit<ViewProps, "style"> & {
   orientation?: "horizontal" | "vertical";
   // Horizontal margin to inset from one or both edges (e.g. for left-padded
   // list rows so the divider lines up with the content, not the icon).
@@ -15,7 +20,7 @@ export type DividerProps = {
 // Divider style values are all prop-derived (thickness, inset, orientation),
 // so the layout is built inline. Only the border color comes from the theme.
 export const Divider = forwardRef<View, DividerProps>(function Divider(
-  { orientation = "horizontal", inset = "none", thickness = 1, style },
+  { orientation = "horizontal", inset = "none", thickness = 1, style, ...rest },
   ref,
 ) {
   const theme = useTheme();
@@ -31,5 +36,7 @@ export const Divider = forwardRef<View, DividerProps>(function Divider(
           backgroundColor: theme.colors.border,
           alignSelf: "stretch",
         };
-  return <View ref={ref} accessibilityRole="none" style={[layout, style]} />;
+  return (
+    <View ref={ref} accessibilityRole="none" style={[layout, style]} {...rest} />
+  );
 });

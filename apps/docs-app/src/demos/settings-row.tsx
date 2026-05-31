@@ -36,22 +36,24 @@ export default function SettingsRowDemo() {
   const [dark, setDark] = useState(false);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-settings-row" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>Notifications</Text>
         <Card padding="none">
           <SettingsRow
+            testID="settings-row-push"
             title="Push notifications"
             description="Get notified about activity on your account"
             icon={<Bell color={theme.colors.primary} size={18} />}
-            right={<Switch value={push} onValueChange={setPush} />}
+            right={<Switch testID="settings-row-push-switch" value={push} onValueChange={setPush} />}
           />
           <View style={styles.sep} />
           <SettingsRow
+            testID="settings-row-dark"
             title="Dark mode"
             description="Override the system theme"
             icon={<Moon color={theme.colors.primary} size={18} />}
-            right={<Switch value={dark} onValueChange={setDark} />}
+            right={<Switch testID="settings-row-dark-switch" value={dark} onValueChange={setDark} />}
           />
         </Card>
       </View>
@@ -60,6 +62,7 @@ export default function SettingsRowDemo() {
         <Text style={styles.label}>Account</Text>
         <Card padding="none">
           <SettingsRow
+            testID="settings-row-language"
             title="Language"
             icon={<Globe color={theme.colors.primary} size={18} />}
             right={
@@ -72,6 +75,7 @@ export default function SettingsRowDemo() {
           />
           <View style={styles.sep} />
           <SettingsRow
+            testID="settings-row-privacy"
             title="Privacy & security"
             icon={<Shield color={theme.colors.primary} size={18} />}
             right={<ChevronRight color={theme.colors.foregroundSubtle} size={18} />}
@@ -84,6 +88,7 @@ export default function SettingsRowDemo() {
         <Text style={styles.label}>Danger zone</Text>
         <Card padding="none">
           <SettingsRow
+            testID="settings-row-sign-out"
             title="Sign out"
             icon={<LogOut color={theme.colors.destructive} size={18} />}
             destructive

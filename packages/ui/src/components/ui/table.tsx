@@ -1,5 +1,11 @@
 import { Fragment, type ReactNode } from "react";
-import { Text, View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Text,
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type TableColumn<T> = {
@@ -9,7 +15,7 @@ export type TableColumn<T> = {
   render?: (row: T, index: number) => ReactNode;
 };
 
-export type TableProps<T> = {
+export type TableProps<T> = Omit<ViewProps, "children" | "style"> & {
   columns: TableColumn<T>[];
   data: T[];
   keyExtractor?: (row: T, index: number) => string;
@@ -49,11 +55,17 @@ const useStyles = createStyles((t) => ({
   divider: { height: 1, backgroundColor: t.colors.border },
 }));
 
-export function Table<T>({ columns, data, keyExtractor, style }: TableProps<T>) {
+export function Table<T>({
+  columns,
+  data,
+  keyExtractor,
+  style,
+  ...rest
+}: TableProps<T>) {
   const styles = useStyles();
 
   return (
-    <View style={[styles.base, style]}>
+    <View style={[styles.base, style]} {...rest}>
       <View style={[styles.row, styles.header]}>
         {columns.map((col) => (
           <View key={col.key} style={{ flex: col.flex ?? 1 }}>

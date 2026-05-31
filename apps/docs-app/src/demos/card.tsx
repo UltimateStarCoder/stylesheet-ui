@@ -31,18 +31,18 @@ const useStyles = createStyles((t) => ({
 export default function CardDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-card">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Surfaces</Text>
-        <Card>
+        <Card testID="card-default">
           <Text style={styles.cardTitle}>Default</Text>
           <Text style={styles.cardBody}>Surface background with a subtle shadow.</Text>
         </Card>
-        <Card surface="muted">
+        <Card surface="muted" testID="card-muted">
           <Text style={styles.cardTitle}>Muted</Text>
           <Text style={styles.cardBody}>Tinted background, no shadow.</Text>
         </Card>
-        <Card surface="outline">
+        <Card surface="outline" testID="card-outline">
           <Text style={styles.cardTitle}>Outline</Text>
           <Text style={styles.cardBody}>Transparent background, strong border.</Text>
         </Card>
@@ -50,20 +50,20 @@ export default function CardDemo() {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Padding</Text>
-        <Card padding="sm">
+        <Card padding="sm" testID="card-padding-sm">
           <Text style={styles.cardTitle}>Small padding</Text>
         </Card>
-        <Card padding="md">
+        <Card padding="md" testID="card-padding-md">
           <Text style={styles.cardTitle}>Medium padding</Text>
         </Card>
-        <Card padding="lg">
+        <Card padding="lg" testID="card-padding-lg">
           <Text style={styles.cardTitle}>Large padding</Text>
         </Card>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Pressable</Text>
-        <Card pressable onPress={() => {}}>
+        <Card pressable onPress={() => {}} testID="card-pressable">
           <Text style={styles.cardTitle}>Tap me</Text>
           <Text style={styles.cardBody}>Opacity dims on press.</Text>
         </Card>

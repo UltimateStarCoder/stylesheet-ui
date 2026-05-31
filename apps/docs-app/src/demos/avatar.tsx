@@ -24,32 +24,32 @@ const useStyles = createStyles((t) => ({
 export default function AvatarDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-avatar">
       <View style={styles.section}>
         <Text style={styles.label}>Sizes (with image)</Text>
         <View style={styles.row}>
-          <Avatar size="sm" source={REMOTE} name="Sample User" />
-          <Avatar size="md" source={REMOTE} name="Sample User" />
-          <Avatar size="lg" source={REMOTE} name="Sample User" />
-          <Avatar size="xl" source={REMOTE} name="Sample User" />
+          <Avatar size="sm" source={REMOTE} name="Sample User" testID="avatar-image-sm" />
+          <Avatar size="md" source={REMOTE} name="Sample User" testID="avatar-image-md" />
+          <Avatar size="lg" source={REMOTE} name="Sample User" testID="avatar-image-lg" />
+          <Avatar size="xl" source={REMOTE} name="Sample User" testID="avatar-image-xl" />
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Initials fallback</Text>
         <View style={styles.row}>
-          <Avatar size="sm" name="Ada Lovelace" />
-          <Avatar size="md" name="Grace Hopper" />
-          <Avatar size="lg" name="Margaret Hamilton" />
-          <Avatar size="xl" name="Katherine Johnson" />
+          <Avatar size="sm" name="Ada Lovelace" testID="avatar-initials-sm" />
+          <Avatar size="md" name="Grace Hopper" testID="avatar-initials-md" />
+          <Avatar size="lg" name="Margaret Hamilton" testID="avatar-initials-lg" />
+          <Avatar size="xl" name="Katherine Johnson" testID="avatar-initials-xl" />
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Shapes</Text>
         <View style={styles.row}>
-          <Avatar size="lg" name="Round Shape" shape="circle" />
-          <Avatar size="lg" name="Sharp Shape" shape="square" />
+          <Avatar size="lg" name="Round Shape" shape="circle" testID="avatar-shape-circle" />
+          <Avatar size="lg" name="Sharp Shape" shape="square" testID="avatar-shape-square" />
         </View>
       </View>
     </ScrollView>

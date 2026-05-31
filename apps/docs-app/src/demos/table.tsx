@@ -48,8 +48,8 @@ const useStyles = createStyles((t) => ({
 export default function TableDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Table columns={columns} data={USERS} keyExtractor={(u) => u.id} />
+    <ScrollView contentContainerStyle={styles.container} testID="screen-table">
+      <Table columns={columns} data={USERS} keyExtractor={(u) => u.id} testID="table-default" />
     </ScrollView>
   );
 }

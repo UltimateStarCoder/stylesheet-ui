@@ -26,10 +26,11 @@ export default function InputDemo() {
   const [withError, setWithError] = useState("not-an-email");
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-input" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Default</Text>
         <Input
+          testID="input-default"
           placeholder="Type something"
           value={value}
           onChangeText={setValue}
@@ -39,6 +40,7 @@ export default function InputDemo() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>With label</Text>
         <Input
+          testID="input-full-name"
           label="Full name"
           placeholder="Ada Lovelace"
           autoCapitalize="words"
@@ -48,6 +50,7 @@ export default function InputDemo() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>With left icon</Text>
         <Input
+          testID="input-search"
           placeholder="Search"
           leftIcon={<Text style={styles.iconText}>🔍</Text>}
         />
@@ -56,6 +59,7 @@ export default function InputDemo() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>With error</Text>
         <Input
+          testID="input-email"
           label="Email"
           placeholder="you@example.com"
           value={withError}
@@ -68,7 +72,7 @@ export default function InputDemo() {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Disabled</Text>
-        <Input placeholder="Disabled" editable={false} value="Read-only" />
+        <Input testID="input-disabled" placeholder="Disabled" editable={false} value="Read-only" />
       </View>
     </ScrollView>
   );

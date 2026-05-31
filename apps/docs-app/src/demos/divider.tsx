@@ -28,14 +28,14 @@ const useStyles = createStyles((t) => ({
 export default function DividerDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-divider">
       <View style={styles.section}>
         <Text style={styles.label}>Default horizontal</Text>
         <Card padding="none">
           <ListItem title="First" subtitle="Above the divider" />
-          <Divider />
+          <Divider testID="divider-default-1" />
           <ListItem title="Second" subtitle="Below the divider" />
-          <Divider />
+          <Divider testID="divider-default-2" />
           <ListItem title="Third" subtitle="Standard 1px line" />
         </Card>
       </View>
@@ -44,9 +44,9 @@ export default function DividerDemo() {
         <Text style={styles.label}>Inset (aligns under content)</Text>
         <Card padding="none">
           <ListItem title="Account" subtitle="The divider insets past the icon area" />
-          <Divider inset="2xl" />
+          <Divider inset="2xl" testID="divider-inset-1" />
           <ListItem title="Profile" subtitle="Inset = 2xl (32px)" />
-          <Divider inset="2xl" />
+          <Divider inset="2xl" testID="divider-inset-2" />
           <ListItem title="Privacy" subtitle="iOS-style settings divider" />
         </Card>
       </View>
@@ -55,9 +55,9 @@ export default function DividerDemo() {
         <Text style={styles.label}>Vertical</Text>
         <View style={styles.vertRow}>
           <Text style={styles.text}>Left</Text>
-          <Divider orientation="vertical" />
+          <Divider orientation="vertical" testID="divider-vertical-1" />
           <Text style={styles.text}>Middle</Text>
-          <Divider orientation="vertical" />
+          <Divider orientation="vertical" testID="divider-vertical-2" />
           <Text style={styles.text}>Right</Text>
         </View>
       </View>

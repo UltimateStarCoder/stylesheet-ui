@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type ListItemProps = {
+export type ListItemProps = Omit<PressableProps, "children" | "style"> & {
   title: string;
   subtitle?: string;
   left?: ReactNode;
@@ -45,7 +45,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
-  { title, subtitle, left, right, onPress, disabled, style },
+  { title, subtitle, left, right, onPress, disabled, style, ...rest },
   ref,
 ) {
   const styles = useStyles();
@@ -73,6 +73,7 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
           disabled && styles.disabled,
           style,
         ]}
+        {...rest}
       >
         {content}
       </Pressable>
@@ -80,7 +81,7 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   }
 
   return (
-    <View ref={ref} style={[styles.base, disabled && styles.disabled, style]}>
+    <View ref={ref} style={[styles.base, disabled && styles.disabled, style]} {...rest}>
       {content}
     </View>
   );

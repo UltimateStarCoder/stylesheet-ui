@@ -23,10 +23,10 @@ const useStyles = createStyles((t) => ({
 export default function ScreenDemo() {
   const styles = useStyles();
   return (
-    <Screen edges={null} padding={16}>
-      <VStack gap="xl">
+    <Screen testID="screen-screen" edges={null} padding={16}>
+      <VStack testID="screen-content" gap="xl">
         <Text style={styles.label}>What you're looking at</Text>
-        <Card>
+        <Card testID="screen-card-overview">
           <Text style={styles.title}>Screen</Text>
           <Text style={styles.body}>
             This whole route is wrapped in {`<Screen padding={16}>`}. The Screen
@@ -34,7 +34,7 @@ export default function ScreenDemo() {
             in one call — every screen will repeat this otherwise.
           </Text>
         </Card>
-        <Card surface="muted">
+        <Card testID="screen-card-edges" surface="muted">
           <Text style={styles.body}>
             {`<Screen edges={["top"]}>`} for stack-pushed routes (header
             covers top inset on iOS), {`<Screen edges={null}>`} when a
@@ -42,7 +42,7 @@ export default function ScreenDemo() {
             {` <Screen scroll={false}>`} when you want a fixed-height layout.
           </Text>
         </Card>
-        <Card surface="outline">
+        <Card testID="screen-card-compose" surface="outline">
           <Text style={styles.body}>
             Inside Screen you can compose with {`<Stack>`}, {`<VStack>`},
             {` <HStack>`}, or pass any children. Background and padding

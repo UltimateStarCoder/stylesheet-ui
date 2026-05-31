@@ -8,7 +8,9 @@ import {
   Pressable,
   Text,
   View,
+  type PressableProps,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
@@ -59,7 +61,7 @@ const useRadioStyles = createStyles((t) => ({
   },
 }));
 
-export type RadioGroupProps = {
+export type RadioGroupProps = Omit<ViewProps, "children"> & {
   value: string | null;
   onValueChange: (next: string) => void;
   disabled?: boolean;
@@ -73,18 +75,19 @@ export function RadioGroup({
   disabled,
   children,
   style,
+  ...rest
 }: RadioGroupProps) {
   const styles = useGroupStyles();
   return (
     <RadioGroupContext value={{ value, onValueChange, disabled }}>
-      <View accessibilityRole="radiogroup" style={[styles.group, style]}>
+      <View accessibilityRole="radiogroup" style={[styles.group, style]} {...rest}>
         {children}
       </View>
     </RadioGroupContext>
   );
 }
 
-export type RadioProps = {
+export type RadioProps = Omit<PressableProps, "children" | "style" | "onPress"> & {
   value: string;
   label?: ReactNode;
   size?: RadioSize;
@@ -95,7 +98,7 @@ export type RadioProps = {
 const SIZE_PX: Record<RadioSize, number> = { sm: 16, md: 20, lg: 24 };
 
 export const Radio = forwardRef<View, RadioProps>(function Radio(
-  { value, label, size = "md", disabled, style },
+  { value, label, size = "md", disabled, style, ...rest },
   ref,
 ) {
   const styles = useRadioStyles();
@@ -112,6 +115,7 @@ export const Radio = forwardRef<View, RadioProps>(function Radio(
       accessibilityRole="radio"
       accessibilityState={{ checked: isChecked, disabled: isDisabled }}
       style={[styles.row, isDisabled && styles.disabled, style]}
+      {...rest}
     >
       <View
         style={[

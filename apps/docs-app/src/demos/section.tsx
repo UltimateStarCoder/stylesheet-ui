@@ -27,24 +27,24 @@ export default function SectionDemo() {
   const chevron = <ChevronRight color={theme.colors.foregroundSubtle} size={18} />;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Section title="Account" description="Manage how others see you.">
-        <List>
-          <SettingsRow title="Profile" icon={<User color={theme.colors.foreground} size={18} />} right={chevron} onPress={() => {}} />
-          <SettingsRow title="Privacy" icon={<Lock color={theme.colors.foreground} size={18} />} right={chevron} onPress={() => {}} />
+    <ScrollView contentContainerStyle={styles.container} testID="screen-section">
+      <Section title="Account" description="Manage how others see you." testID="section-account">
+        <List testID="section-account-list">
+          <SettingsRow testID="section-row-profile" title="Profile" icon={<User color={theme.colors.foreground} size={18} />} right={chevron} onPress={() => {}} />
+          <SettingsRow testID="section-row-privacy" title="Privacy" icon={<Lock color={theme.colors.foreground} size={18} />} right={chevron} onPress={() => {}} />
         </List>
       </Section>
 
-      <Section title="Preferences">
-        <List>
-          <SettingsRow title="Dark mode" icon={<Moon color={theme.colors.foreground} size={18} />} right={<Switch value={dark} onValueChange={setDark} />} />
-          <SettingsRow title="Notifications" icon={<Bell color={theme.colors.foreground} size={18} />} right={<Switch value={notify} onValueChange={setNotify} />} />
+      <Section title="Preferences" testID="section-preferences">
+        <List testID="section-preferences-list">
+          <SettingsRow testID="section-row-dark-mode" title="Dark mode" icon={<Moon color={theme.colors.foreground} size={18} />} right={<Switch value={dark} onValueChange={setDark} />} />
+          <SettingsRow testID="section-row-notifications" title="Notifications" icon={<Bell color={theme.colors.foreground} size={18} />} right={<Switch value={notify} onValueChange={setNotify} />} />
         </List>
       </Section>
 
-      <Section title="Danger zone" description="These actions can't be undone.">
-        <List>
-          <SettingsRow title="Delete account" destructive onPress={() => {}} />
+      <Section title="Danger zone" description="These actions can't be undone." testID="section-danger-zone">
+        <List testID="section-danger-zone-list">
+          <SettingsRow testID="section-row-delete-account" title="Delete account" destructive onPress={() => {}} />
         </List>
       </Section>
     </ScrollView>

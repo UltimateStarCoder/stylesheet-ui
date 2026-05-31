@@ -26,11 +26,11 @@ export default function AlertDialogDemo() {
   const [destructiveOpen, setDestructiveOpen] = useState(false);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-alert-dialog">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Confirm</Text>
         <View style={styles.row}>
-          <Button variant="secondary" onPress={() => setConfirmOpen(true)}>
+          <Button variant="secondary" onPress={() => setConfirmOpen(true)} testID="alert-dialog-confirm-trigger">
             Open confirm
           </Button>
         </View>
@@ -41,13 +41,14 @@ export default function AlertDialogDemo() {
           confirmLabel="Publish"
           onCancel={() => setConfirmOpen(false)}
           onConfirm={() => setConfirmOpen(false)}
+          testID="alert-dialog-confirm-panel"
         />
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Destructive</Text>
         <View style={styles.row}>
-          <Button variant="destructive" onPress={() => setDestructiveOpen(true)}>
+          <Button variant="destructive" onPress={() => setDestructiveOpen(true)} testID="alert-dialog-destructive-trigger">
             Delete account
           </Button>
         </View>
@@ -59,6 +60,7 @@ export default function AlertDialogDemo() {
           destructive
           onCancel={() => setDestructiveOpen(false)}
           onConfirm={() => setDestructiveOpen(false)}
+          testID="alert-dialog-destructive-panel"
         />
       </View>
     </ScrollView>

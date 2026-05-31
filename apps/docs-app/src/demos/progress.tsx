@@ -33,25 +33,25 @@ export default function ProgressDemo() {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-progress">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Determinate</Text>
         <Text style={styles.value}>{value}%</Text>
-        <Progress value={value} />
+        <Progress value={value} testID="progress-determinate" />
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sizes</Text>
         <View style={styles.stack}>
-          <Progress value={40} height={4} />
-          <Progress value={60} height={8} />
-          <Progress value={80} height={12} />
+          <Progress value={40} height={4} testID="progress-height-4" />
+          <Progress value={60} height={8} testID="progress-height-8" />
+          <Progress value={80} height={12} testID="progress-height-12" />
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Indeterminate</Text>
-        <Progress indeterminate />
+        <Progress indeterminate testID="progress-indeterminate" />
       </View>
     </ScrollView>
   );

@@ -32,29 +32,29 @@ const useStyles = createStyles((t) => ({
 export default function AccordionDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-accordion">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Single</Text>
-        <Accordion type="single" defaultValue="shipping">
-          <AccordionItem value="shipping" first>
-            <AccordionTrigger>Shipping</AccordionTrigger>
-            <AccordionContent>
+        <Accordion type="single" defaultValue="shipping" testID="accordion-single">
+          <AccordionItem value="shipping" first testID="accordion-item-shipping">
+            <AccordionTrigger testID="accordion-trigger-shipping">Shipping</AccordionTrigger>
+            <AccordionContent testID="accordion-content-shipping">
               <Text style={styles.body}>
                 Orders ship within 1–2 business days. Carbon-neutral courier.
               </Text>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="returns">
-            <AccordionTrigger>Returns</AccordionTrigger>
-            <AccordionContent>
+          <AccordionItem value="returns" testID="accordion-item-returns">
+            <AccordionTrigger testID="accordion-trigger-returns">Returns</AccordionTrigger>
+            <AccordionContent testID="accordion-content-returns">
               <Text style={styles.body}>
                 30-day money-back guarantee — no questions asked.
               </Text>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="warranty">
-            <AccordionTrigger>Warranty</AccordionTrigger>
-            <AccordionContent>
+          <AccordionItem value="warranty" testID="accordion-item-warranty">
+            <AccordionTrigger testID="accordion-trigger-warranty">Warranty</AccordionTrigger>
+            <AccordionContent testID="accordion-content-warranty">
               <Text style={styles.body}>
                 Two-year limited warranty against manufacturer defects.
               </Text>
@@ -65,16 +65,16 @@ export default function AccordionDemo() {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Multiple</Text>
-        <Accordion type="multiple" defaultValue={["a"]}>
-          <AccordionItem value="a" first>
-            <AccordionTrigger>Section A</AccordionTrigger>
-            <AccordionContent>
+        <Accordion type="multiple" defaultValue={["a"]} testID="accordion-multiple">
+          <AccordionItem value="a" first testID="accordion-item-a">
+            <AccordionTrigger testID="accordion-trigger-a">Section A</AccordionTrigger>
+            <AccordionContent testID="accordion-content-a">
               <Text style={styles.body}>Multiple panels can be open at once.</Text>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="b">
-            <AccordionTrigger>Section B</AccordionTrigger>
-            <AccordionContent>
+          <AccordionItem value="b" testID="accordion-item-b">
+            <AccordionTrigger testID="accordion-trigger-b">Section B</AccordionTrigger>
+            <AccordionContent testID="accordion-content-b">
               <Text style={styles.body}>Try opening this without closing A.</Text>
             </AccordionContent>
           </AccordionItem>

@@ -29,10 +29,10 @@ const useStyles = createStyles((t) => ({
 export default function StackDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-stack" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.label}>VStack (default)</Text>
-        <VStack gap="sm">
+        <VStack testID="stack-vstack" gap="sm">
           <View style={styles.box}><Text style={styles.boxText}>One</Text></View>
           <View style={styles.box}><Text style={styles.boxText}>Two</Text></View>
           <View style={styles.box}><Text style={styles.boxText}>Three</Text></View>
@@ -41,7 +41,7 @@ export default function StackDemo() {
 
       <View style={styles.section}>
         <Text style={styles.label}>HStack with gap="md"</Text>
-        <HStack gap="md">
+        <HStack testID="stack-hstack" gap="md">
           <Badge>One</Badge>
           <Badge variant="success">Two</Badge>
           <Badge variant="outline">Three</Badge>
@@ -50,7 +50,7 @@ export default function StackDemo() {
 
       <View style={styles.section}>
         <Text style={styles.label}>HStack with wrap + justify="between"</Text>
-        <Stack direction="row" gap="sm" wrap justify="between">
+        <Stack testID="stack-wrap" direction="row" gap="sm" wrap justify="between">
           <Badge>Wrap</Badge>
           <Badge variant="success">Across</Badge>
           <Badge variant="warning">Multiple</Badge>

@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Pressable, Text, View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Pressable,
+  Text,
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import Animated, {
   Easing,
   SlideInDown,
@@ -83,7 +90,7 @@ function subscribe(l: Listener): () => void {
 }
 
 export type ToasterPosition = "top" | "bottom";
-export type ToasterProps = {
+export type ToasterProps = Omit<ViewProps, "children" | "style"> & {
   position?: ToasterPosition;
   // Max simultaneous toasts. Older ones evict.
   max?: number;
@@ -137,7 +144,7 @@ const useStyles = createStyles((t) => ({
   },
 }));
 
-export function Toaster({ position = "top", max = 3, style }: ToasterProps) {
+export function Toaster({ position = "top", max = 3, style, ...rest }: ToasterProps) {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   const [items, setItems] = useState<ToastItem[]>([]);
@@ -199,7 +206,11 @@ export function Toaster({ position = "top", max = 3, style }: ToasterProps) {
     : { bottom: insets.bottom + 8 };
 
   return (
-    <View style={[styles.container, containerPosition, style]} pointerEvents="box-none">
+    <View
+      style={[styles.container, containerPosition, style]}
+      pointerEvents="box-none"
+      {...rest}
+    >
       {items.map((item) => (
         <Animated.View
           key={item.id}

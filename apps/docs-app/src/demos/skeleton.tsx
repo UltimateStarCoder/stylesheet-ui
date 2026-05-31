@@ -31,28 +31,28 @@ const useStyles = createStyles((t) => ({
 export default function SkeletonDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-skeleton">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Shapes</Text>
-        <Skeleton width="100%" height={16} />
-        <Skeleton width="80%" height={16} />
-        <Skeleton width="60%" height={16} />
+        <Skeleton width="100%" height={16} testID="skeleton-line-1" />
+        <Skeleton width="80%" height={16} testID="skeleton-line-2" />
+        <Skeleton width="60%" height={16} testID="skeleton-line-3" />
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Card placeholder</Text>
         <View style={styles.card}>
-          <Skeleton width={48} height={48} radius={24} />
+          <Skeleton width={48} height={48} radius={24} testID="skeleton-card-avatar" />
           <View style={styles.cardBody}>
-            <Skeleton width="60%" height={14} />
-            <Skeleton width="90%" height={12} />
+            <Skeleton width="60%" height={14} testID="skeleton-card-title" />
+            <Skeleton width="90%" height={12} testID="skeleton-card-subtitle" />
           </View>
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Image placeholder</Text>
-        <Skeleton width="100%" height={180} radius={12} />
+        <Skeleton width="100%" height={180} radius={12} testID="skeleton-image" />
       </View>
     </ScrollView>
   );

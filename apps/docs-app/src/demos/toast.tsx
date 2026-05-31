@@ -25,17 +25,18 @@ const useStyles = createStyles((t) => ({
 export default function ToastDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-toast">
       <View style={styles.section}>
         <Text style={styles.label}>Variants</Text>
         <VStack gap="sm">
-          <Button fullWidth onPress={() => toast.show("Saved to drafts")}>
+          <Button fullWidth onPress={() => toast.show("Saved to drafts")} testID="toast-show-default">
             Default toast
           </Button>
           <Button
             fullWidth
             variant="secondary"
             onPress={() => toast.success("Payment confirmed")}
+            testID="toast-show-success"
           >
             Success toast
           </Button>
@@ -45,6 +46,7 @@ export default function ToastDemo() {
             onPress={() =>
               toast.warning({ title: "Slow connection", description: "We'll keep trying." })
             }
+            testID="toast-show-warning"
           >
             Warning toast
           </Button>
@@ -57,6 +59,7 @@ export default function ToastDemo() {
                 description: "Check your network and try again.",
               })
             }
+            testID="toast-show-error"
           >
             Destructive toast
           </Button>
@@ -74,6 +77,7 @@ export default function ToastDemo() {
             setTimeout(() => toast.warning("Third"), 300);
             setTimeout(() => toast.error("Fourth (older evicts)"), 450);
           }}
+          testID="toast-show-rapid-fire"
         >
           Fire four in a row
         </Button>

@@ -30,17 +30,17 @@ export default function ModalDemo() {
   const [infoOpen, setInfoOpen] = useState(false);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-modal">
       <View style={styles.section}>
         <Text style={styles.label}>Confirmation</Text>
-        <Button fullWidth variant="destructive" onPress={() => setConfirmOpen(true)}>
+        <Button fullWidth variant="destructive" onPress={() => setConfirmOpen(true)} testID="modal-open-confirm">
           Delete account
         </Button>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.label}>Informational</Text>
-        <Button fullWidth variant="secondary" onPress={() => setInfoOpen(true)}>
+        <Button fullWidth variant="secondary" onPress={() => setInfoOpen(true)} testID="modal-open-info">
           Show details
         </Button>
       </View>
@@ -50,10 +50,11 @@ export default function ModalDemo() {
         onClose={() => setConfirmOpen(false)}
         title="Delete account?"
         description="This will permanently remove your account and all associated data. This action can't be undone."
+        testID="modal-confirm-panel"
         footer={
           <>
-            <Button variant="ghost" onPress={() => setConfirmOpen(false)}>Cancel</Button>
-            <Button variant="destructive" onPress={() => setConfirmOpen(false)}>Delete</Button>
+            <Button variant="ghost" onPress={() => setConfirmOpen(false)} testID="modal-confirm-cancel">Cancel</Button>
+            <Button variant="destructive" onPress={() => setConfirmOpen(false)} testID="modal-confirm-delete">Delete</Button>
           </>
         }
       />
@@ -63,6 +64,7 @@ export default function ModalDemo() {
         onClose={() => setInfoOpen(false)}
         title="What's new"
         description="Version 0.0.3 adds BottomSheet, Toast, createStyles, cn(), and CLI --dry-run/--diff."
+        testID="modal-info-panel"
       >
         <Text style={styles.bodyText}>
           19 components, plain StyleSheet, you own the source.

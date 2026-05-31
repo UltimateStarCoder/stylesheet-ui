@@ -24,40 +24,40 @@ const useStyles = createStyles((t) => ({
 export default function ButtonDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView testID="screen-button" contentContainerStyle={styles.container}>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Variants</Text>
         <View style={styles.row}>
-          <Button>Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Destructive</Button>
+          <Button testID="button-variant-primary">Primary</Button>
+          <Button testID="button-variant-secondary" variant="secondary">Secondary</Button>
+          <Button testID="button-variant-ghost" variant="ghost">Ghost</Button>
+          <Button testID="button-variant-destructive" variant="destructive">Destructive</Button>
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sizes</Text>
         <View style={styles.row}>
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
+          <Button testID="button-size-sm" size="sm">Small</Button>
+          <Button testID="button-size-md" size="md">Medium</Button>
+          <Button testID="button-size-lg" size="lg">Large</Button>
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>States</Text>
         <View style={styles.row}>
-          <Button loading>Loading</Button>
-          <Button disabled>Disabled</Button>
-          <Button variant="destructive" loading>Loading</Button>
+          <Button testID="button-loading" loading>Loading</Button>
+          <Button testID="button-disabled" disabled>Disabled</Button>
+          <Button testID="button-destructive-loading" variant="destructive" loading>Loading</Button>
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>With icons</Text>
         <View style={styles.row}>
-          <Button leftIcon={<Text style={styles.iconLight}>›</Text>}>Left icon</Button>
-          <Button variant="secondary" rightIcon={<Text style={styles.iconDark}>→</Text>}>
+          <Button testID="button-left-icon" leftIcon={<Text style={styles.iconLight}>›</Text>}>Left icon</Button>
+          <Button testID="button-right-icon" variant="secondary" rightIcon={<Text style={styles.iconDark}>→</Text>}>
             Right icon
           </Button>
         </View>
@@ -65,8 +65,8 @@ export default function ButtonDemo() {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Full width</Text>
-        <Button fullWidth>Stretches to parent</Button>
-        <Button fullWidth variant="secondary">Useful for primary CTAs</Button>
+        <Button testID="button-full-width" fullWidth>Stretches to parent</Button>
+        <Button testID="button-full-width-secondary" fullWidth variant="secondary">Useful for primary CTAs</Button>
       </View>
     </ScrollView>
   );

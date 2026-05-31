@@ -5,8 +5,7 @@ import {
   Pressable,
   Text,
   View,
-  type StyleProp,
-  type ViewStyle,
+  type ViewProps,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
@@ -20,12 +19,11 @@ export type MenuItem = {
 
 export type MenuPlacement = "bottom-start" | "bottom-end";
 
-export type MenuProps = {
+export type MenuProps = Omit<ViewProps, "children"> & {
   trigger: ReactElement;
   items: MenuItem[];
   placement?: MenuPlacement;
   minWidth?: number;
-  style?: StyleProp<ViewStyle>;
 };
 
 const MENU_OFFSET = 4;
@@ -62,7 +60,7 @@ const useStyles = createStyles((t) => ({
 
 type AnchorRect = { x: number; y: number; width: number; height: number };
 
-export function Menu({ trigger, items, placement = "bottom-start", minWidth, style }: MenuProps) {
+export function Menu({ trigger, items, placement = "bottom-start", minWidth, style, ...rest }: MenuProps) {
   const styles = useStyles();
   const anchorRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
@@ -110,6 +108,7 @@ export function Menu({ trigger, items, placement = "bottom-start", minWidth, sty
           <View
             accessibilityRole="menu"
             style={[styles.card, { left, top, minWidth: cardMinWidth }, style]}
+            {...rest}
           >
             {items.map((item, idx) => (
               <Pressable

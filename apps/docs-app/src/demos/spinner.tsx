@@ -22,22 +22,22 @@ const useStyles = createStyles((t) => ({
 export default function SpinnerDemo() {
   const styles = useStyles();
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-spinner">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Sizes</Text>
         <View style={styles.row}>
-          <Spinner size="sm" />
-          <Spinner size="md" />
-          <Spinner size="lg" />
+          <Spinner size="sm" testID="spinner-size-sm" />
+          <Spinner size="md" testID="spinner-size-md" />
+          <Spinner size="lg" testID="spinner-size-lg" />
         </View>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Custom color</Text>
         <View style={styles.row}>
-          <Spinner color="#EF4444" />
-          <Spinner color="#10B981" />
-          <Spinner color="#F59E0B" />
+          <Spinner color="#EF4444" testID="spinner-color-red" />
+          <Spinner color="#10B981" testID="spinner-color-green" />
+          <Spinner color="#F59E0B" testID="spinner-color-amber" />
         </View>
       </View>
     </ScrollView>

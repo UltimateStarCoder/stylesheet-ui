@@ -23,12 +23,12 @@ export default function MenuDemo() {
   const styles = useStyles();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} testID="screen-menu">
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Bottom-start</Text>
         <View style={styles.row}>
           <Menu
-            trigger={<Button variant="secondary">Actions</Button>}
+            trigger={<Button variant="secondary" testID="menu-trigger-start">Actions</Button>}
             items={[
               { label: "Rename",    onPress: () => toast.show("Rename pressed") },
               { label: "Duplicate", onPress: () => toast.show("Duplicate pressed") },
@@ -44,7 +44,7 @@ export default function MenuDemo() {
         <View style={[styles.row, { justifyContent: "flex-end" }]}>
           <Menu
             placement="bottom-end"
-            trigger={<Button variant="ghost">⋯</Button>}
+            trigger={<Button variant="ghost" testID="menu-trigger-end">⋯</Button>}
             items={[
               { label: "Share",   onPress: () => toast.show("Share pressed") },
               { label: "Export",  onPress: () => toast.show("Export pressed") },

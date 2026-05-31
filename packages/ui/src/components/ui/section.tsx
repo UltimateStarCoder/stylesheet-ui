@@ -1,8 +1,14 @@
 import { forwardRef, type ReactNode } from "react";
-import { Text, View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Text,
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type SectionProps = {
+export type SectionProps = Omit<ViewProps, "children" | "style"> & {
   children: ReactNode;
   title?: string;
   description?: string;
@@ -29,12 +35,12 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const Section = forwardRef<View, SectionProps>(function Section(
-  { children, title, description, style },
+  { children, title, description, style, ...rest },
   ref,
 ) {
   const styles = useStyles();
   return (
-    <View ref={ref} style={[styles.base, style]}>
+    <View ref={ref} style={[styles.base, style]} {...rest}>
       {!!title && <Text style={styles.title}>{title}</Text>}
       {children}
       {!!description && <Text style={styles.description}>{description}</Text>}
