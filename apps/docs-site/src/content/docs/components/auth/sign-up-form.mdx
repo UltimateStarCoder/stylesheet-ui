@@ -50,20 +50,44 @@ export default function SignUpScreen() {
 
 ## Fields
 
-By default the form collects email + password. Two opt-in props add more:
+By default the form collects email + password. Opt-in props add more, and each value reaches `onSubmit` only when its prop is set:
 
-- **`nameFields`** — adds First/Last name inputs (side by side). When set, `onSubmit` receives `firstName` and `lastName` alongside `emailAddress` and `password`.
-- **`requireConfirm`** — adds a confirm-password field and blocks submit until it matches.
+- **`nameFields`** — First/Last name inputs, side by side → `firstName`, `lastName`.
+- **`usernameField`** — a username input → `username`.
+- **`phoneField`** — a phone input with a `phone-pad` keyboard → `phoneNumber`.
+- **`requireConfirm`** — a confirm-password field; blocks submit until it matches.
+- **`requireTerms`** — a terms-acceptance checkbox that gates submit → `acceptedTerms`.
 
 ```tsx
 <SignUpForm
   nameFields
+  usernameField
+  phoneField
   requireConfirm
-  onSubmit={({ emailAddress, password, firstName, lastName }) => {
-    // create the account with whatever fields you collected
+  requireTerms
+  onSubmit={(values) => {
+    // values: emailAddress, password, firstName, lastName,
+    //         username, phoneNumber, acceptedTerms
   }}
 />
 ```
 
-Need other fields (username, phone, terms checkbox)? The form is yours — add inputs and include them in the `onSubmit` payload.
+## Terms & Privacy links
+
+With `requireTerms`, the checkbox label reads "I agree to the Terms of Service and Privacy Policy", with both names as tappable links. Choose how they open:
+
+- **`termsUrl` / `privacyUrl`** — open the page in an in-app browser via [`expo-web-browser`](https://docs.expo.dev/versions/latest/sdk/webbrowser/). `add sign-up-form` prompts you to install it.
+- **`onTermsPress` / `onPrivacyPress`** — handle the tap yourself, e.g. navigate to an in-app route. A handler takes precedence over its URL.
+- **`termsLabel`** — replace the whole label with your own node (then `termsUrl`/`onTermsPress` are ignored).
+
+```tsx
+<SignUpForm
+  requireTerms
+  termsUrl="https://yourapp.com/terms"
+  privacyUrl="https://yourapp.com/privacy"
+  onSubmit={(values) => createAccount(values)}
+/>
+```
+
+Need a field that isn't built in? The form is yours — add inputs and include them in the `onSubmit` payload.
 

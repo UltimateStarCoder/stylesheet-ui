@@ -2,7 +2,7 @@
   "name": "sign-up-form",
   "type": "component",
   "category": "auth",
-  "description": "Email + password sign-up form. Hands values to onSubmit; you wire your auth provider.",
+  "description": "Sign-up form: email + password, with optional name, username, phone, confirm, and a terms checkbox. Hands values to onSubmit; you wire your auth provider.",
   "registryDependencies": ["button", "checkbox", "input", "theme", "utils"],
   "peerDependencies": {
     "expo-web-browser": "*"
