@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "npm run start --workspace docs-app",
-    "dev:mcp": "EXPO_UNSTABLE_MCP_SERVER=1 npm run start --workspace docs-app",
+    "dev:mcp": "cross-env EXPO_UNSTABLE_MCP_SERVER=1 npm run start --workspace docs-app",
     "ios": "npm run ios --workspace docs-app",
     "web": "npm run web --workspace docs-app",
     "cli:build": "npm run build --workspace stylesheet-ui",
@@ -21,6 +21,7 @@
     "postcss": "8.5.14"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "typescript": "~5.9.2"
   }
 }
