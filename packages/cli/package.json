@@ -1,6 +1,6 @@
 {
   "name": "stylesheet-ui",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Copy-paste React Native components for Expo. Plain StyleSheet, no DSL — you own the source. Run `npx stylesheet-ui init`, then `add <name>` to drop a component into your project.",
   "keywords": [
     "expo",
