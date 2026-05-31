@@ -10,10 +10,14 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-svg": "*"
+    "react-native-svg": "*",
+    "expo-web-browser": "*"
   },
   "peerDependenciesMeta": {
     "react-native-svg": {
+      "optional": true
+    },
+    "expo-web-browser": {
       "optional": true
     }
   },

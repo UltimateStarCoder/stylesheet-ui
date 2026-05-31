@@ -3,7 +3,10 @@
   "type": "component",
   "category": "auth",
   "description": "Email + password sign-up form. Hands values to onSubmit; you wire your auth provider.",
-  "registryDependencies": ["button", "input", "theme", "utils"],
+  "registryDependencies": ["button", "checkbox", "input", "theme", "utils"],
+  "peerDependencies": {
+    "expo-web-browser": "*"
+  },
   "files": [
     { "from": "components/ui/sign-up-form.tsx", "to": "sign-up-form.tsx" }
   ]

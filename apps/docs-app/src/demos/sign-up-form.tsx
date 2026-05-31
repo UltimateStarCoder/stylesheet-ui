@@ -35,6 +35,19 @@ export default function SignUpFormDemo() {
       </View>
 
       <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Username, phone & terms</Text>
+        <SignUpForm
+          testID="sign-up-form-extras"
+          usernameField
+          phoneField
+          requireTerms
+          termsUrl="https://example.com/terms"
+          privacyUrl="https://example.com/privacy"
+          onSubmit={() => {}}
+        />
+      </View>
+
+      <View style={styles.section}>
         <Text style={styles.sectionTitle}>Field error</Text>
         <SignUpForm
           testID="sign-up-form-error"
