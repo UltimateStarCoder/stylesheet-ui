@@ -30,10 +30,10 @@ export default function MenuDemo() {
           <Menu
             trigger={<Button variant="secondary" testID="menu-trigger-start">Actions</Button>}
             items={[
-              { label: "Rename",    onPress: () => toast.show("Rename pressed") },
-              { label: "Duplicate", onPress: () => toast.show("Duplicate pressed") },
-              { label: "Archive",   onPress: () => toast.show("Archive pressed") },
-              { label: "Delete",    onPress: () => toast.error("Delete pressed"), destructive: true },
+              { label: "Rename",    onPress: () => toast.show("Rename pressed"),    testID: "menu-item-rename" },
+              { label: "Duplicate", onPress: () => toast.show("Duplicate pressed"), testID: "menu-item-duplicate" },
+              { label: "Archive",   onPress: () => toast.show("Archive pressed"),   testID: "menu-item-archive" },
+              { label: "Delete",    onPress: () => toast.error("Delete pressed"), destructive: true, testID: "menu-item-delete" },
             ]}
           />
         </View>
@@ -46,9 +46,9 @@ export default function MenuDemo() {
             placement="bottom-end"
             trigger={<Button variant="ghost" testID="menu-trigger-end">⋯</Button>}
             items={[
-              { label: "Share",   onPress: () => toast.show("Share pressed") },
-              { label: "Export",  onPress: () => toast.show("Export pressed") },
-              { label: "Disable", onPress: () => toast.show("Disable pressed"), disabled: true },
+              { label: "Share",   onPress: () => toast.show("Share pressed"),   testID: "menu-item-share" },
+              { label: "Export",  onPress: () => toast.show("Export pressed"),  testID: "menu-item-export" },
+              { label: "Disable", onPress: () => toast.show("Disable pressed"), disabled: true, testID: "menu-item-disable" },
             ]}
           />
         </View>

@@ -42,6 +42,8 @@ export default function AlertDialogDemo() {
           onCancel={() => setConfirmOpen(false)}
           onConfirm={() => setConfirmOpen(false)}
           testID="alert-dialog-confirm-panel"
+          confirmTestID="alert-dialog-confirm-confirm"
+          cancelTestID="alert-dialog-confirm-cancel"
         />
       </View>
 
@@ -61,6 +63,8 @@ export default function AlertDialogDemo() {
           onCancel={() => setDestructiveOpen(false)}
           onConfirm={() => setDestructiveOpen(false)}
           testID="alert-dialog-destructive-panel"
+          confirmTestID="alert-dialog-destructive-confirm"
+          cancelTestID="alert-dialog-destructive-cancel"
         />
       </View>
     </ScrollView>

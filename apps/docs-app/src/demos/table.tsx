@@ -27,12 +27,13 @@ const statusVariant: Record<User["status"], "success" | "secondary" | "outline">
 };
 
 const columns: TableColumn<User>[] = [
-  { key: "name", header: "Name", flex: 2 },
-  { key: "role", header: "Role", flex: 1 },
+  { key: "name", header: "Name", flex: 2, testID: "table-col-name" },
+  { key: "role", header: "Role", flex: 1, testID: "table-col-role" },
   {
     key: "status",
     header: "Status",
     flex: 1,
+    testID: "table-col-status",
     render: (row) => <Badge size="sm" variant={statusVariant[row.status]}>{row.status}</Badge>,
   },
 ];
@@ -49,7 +50,13 @@ export default function TableDemo() {
   const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container} testID="screen-table">
-      <Table columns={columns} data={USERS} keyExtractor={(u) => u.id} testID="table-default" />
+      <Table
+        columns={columns}
+        data={USERS}
+        keyExtractor={(u) => u.id}
+        rowTestID={(u) => `table-row-${u.id}`}
+        testID="table-default"
+      />
     </ScrollView>
   );
 }

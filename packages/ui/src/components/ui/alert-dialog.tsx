@@ -18,6 +18,8 @@ export type AlertDialogProps = Omit<ViewProps, "children" | "style"> & {
   description?: string;
   confirmLabel?: string;
   cancelLabel?: string;
+  confirmTestID?: string;
+  cancelTestID?: string;
   destructive?: boolean;
   style?: StyleProp<ViewStyle>;
 };
@@ -59,6 +61,8 @@ export const AlertDialog = forwardRef<View, AlertDialogProps>(function AlertDial
     description,
     confirmLabel = "Confirm",
     cancelLabel = "Cancel",
+    confirmTestID,
+    cancelTestID,
     destructive = false,
     style,
     ...rest
@@ -81,6 +85,7 @@ export const AlertDialog = forwardRef<View, AlertDialogProps>(function AlertDial
     >
       <View style={styles.actions}>
         <Pressable
+          testID={cancelTestID}
           onPress={onCancel}
           accessibilityRole="button"
           style={({ pressed }) => [styles.btn, styles.cancel, pressed && styles.btnPressed]}
@@ -88,6 +93,7 @@ export const AlertDialog = forwardRef<View, AlertDialogProps>(function AlertDial
           <Text style={[styles.labelText, styles.cancelLabel]}>{cancelLabel}</Text>
         </Pressable>
         <Pressable
+          testID={confirmTestID}
           onPress={onConfirm}
           accessibilityRole="button"
           style={({ pressed }) => [

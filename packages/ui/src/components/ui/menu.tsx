@@ -15,6 +15,7 @@ export type MenuItem = {
   destructive?: boolean;
   disabled?: boolean;
   icon?: ReactNode;
+  testID?: string;
 };
 
 export type MenuPlacement = "bottom-start" | "bottom-end";
@@ -113,6 +114,7 @@ export function Menu({ trigger, items, placement = "bottom-start", minWidth, sty
             {items.map((item, idx) => (
               <Pressable
                 key={`${item.label}-${idx}`}
+                testID={item.testID}
                 disabled={item.disabled}
                 onPress={() => {
                   setOpen(false);

@@ -21,17 +21,17 @@ const useStyles = createStyles((t) => ({
 }));
 
 const PLAN_OPTIONS = [
-  { value: "free", label: "Free", description: "For personal projects" },
-  { value: "pro",  label: "Pro",  description: "For small teams" },
-  { value: "team", label: "Team", description: "For growing organizations" },
-  { value: "ent",  label: "Enterprise", description: "Coming soon", disabled: true },
+  { value: "free", label: "Free", description: "For personal projects", testID: "select-option-free" },
+  { value: "pro",  label: "Pro",  description: "For small teams", testID: "select-option-pro" },
+  { value: "team", label: "Team", description: "For growing organizations", testID: "select-option-team" },
+  { value: "ent",  label: "Enterprise", description: "Coming soon", disabled: true, testID: "select-option-ent" },
 ];
 
 const REGION_OPTIONS = [
-  { value: "us-east", label: "US East (N. Virginia)" },
-  { value: "us-west", label: "US West (Oregon)" },
-  { value: "eu",      label: "Europe (Frankfurt)" },
-  { value: "ap",      label: "Asia Pacific (Tokyo)" },
+  { value: "us-east", label: "US East (N. Virginia)", testID: "select-option-us-east" },
+  { value: "us-west", label: "US West (Oregon)", testID: "select-option-us-west" },
+  { value: "eu",      label: "Europe (Frankfurt)", testID: "select-option-eu" },
+  { value: "ap",      label: "Asia Pacific (Tokyo)", testID: "select-option-ap" },
 ];
 
 export default function SelectDemo() {

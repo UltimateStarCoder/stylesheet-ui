@@ -25,6 +25,7 @@ export type ToastItem = {
   description?: string;
   variant: ToastVariant;
   duration: number;
+  testID?: string;
 };
 
 export type ToastInput =
@@ -34,6 +35,7 @@ export type ToastInput =
       description?: string;
       variant?: ToastVariant;
       duration?: number;
+      testID?: string;
     };
 
 type Listener = (event:
@@ -55,6 +57,7 @@ function normalize(input: ToastInput, fallbackVariant: ToastVariant = "default")
     description: input.description,
     variant: input.variant ?? fallbackVariant,
     duration: input.duration ?? 3000,
+    testID: input.testID,
   };
 }
 
@@ -214,6 +217,7 @@ export function Toaster({ position = "top", max = 3, style, ...rest }: ToasterPr
       {items.map((item) => (
         <Animated.View
           key={item.id}
+          testID={item.testID}
           entering={enter.easing(Easing.out(Easing.cubic))}
           exiting={exit.easing(Easing.in(Easing.cubic))}
           style={[styles.item, variantStyle(item.variant, styles)]}
@@ -223,6 +227,7 @@ export function Toaster({ position = "top", max = 3, style, ...rest }: ToasterPr
             {!!item.description && <Text style={styles.description}>{item.description}</Text>}
           </View>
           <Pressable
+            testID={item.testID ? `${item.testID}-close` : undefined}
             onPress={() => dismiss(item.id)}
             accessibilityRole="button"
             accessibilityLabel="Dismiss"

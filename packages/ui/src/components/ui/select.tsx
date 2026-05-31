@@ -16,6 +16,7 @@ export type SelectOption = {
   label: string;
   description?: string;
   disabled?: boolean;
+  testID?: string;
 };
 
 export type SelectProps = Omit<PressableProps, "children" | "style" | "onPress"> & {
@@ -119,6 +120,7 @@ export const Select = forwardRef<View, SelectProps>(function Select(
         {options.map((opt) => (
           <ListItem
             key={opt.value}
+            testID={opt.testID}
             title={opt.label}
             subtitle={opt.description}
             disabled={opt.disabled}

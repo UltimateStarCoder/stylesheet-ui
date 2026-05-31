@@ -29,13 +29,17 @@ export default function ToastDemo() {
       <View style={styles.section}>
         <Text style={styles.label}>Variants</Text>
         <VStack gap="sm">
-          <Button fullWidth onPress={() => toast.show("Saved to drafts")} testID="toast-show-default">
+          <Button
+            fullWidth
+            onPress={() => toast.show({ description: "Saved to drafts", testID: "toast-item-default" })}
+            testID="toast-show-default"
+          >
             Default toast
           </Button>
           <Button
             fullWidth
             variant="secondary"
-            onPress={() => toast.success("Payment confirmed")}
+            onPress={() => toast.success({ description: "Payment confirmed", testID: "toast-item-success" })}
             testID="toast-show-success"
           >
             Success toast
@@ -44,7 +48,7 @@ export default function ToastDemo() {
             fullWidth
             variant="secondary"
             onPress={() =>
-              toast.warning({ title: "Slow connection", description: "We'll keep trying." })
+              toast.warning({ title: "Slow connection", description: "We'll keep trying.", testID: "toast-item-warning" })
             }
             testID="toast-show-warning"
           >
@@ -57,6 +61,7 @@ export default function ToastDemo() {
               toast.error({
                 title: "Couldn't sync",
                 description: "Check your network and try again.",
+                testID: "toast-item-error",
               })
             }
             testID="toast-show-error"
