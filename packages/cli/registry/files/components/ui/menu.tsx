@@ -5,8 +5,7 @@ import {
   Pressable,
   Text,
   View,
-  type StyleProp,
-  type ViewStyle,
+  type ViewProps,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
@@ -16,19 +15,21 @@ export type MenuItem = {
   destructive?: boolean;
   disabled?: boolean;
   icon?: ReactNode;
+  testID?: string;
 };
 
 export type MenuPlacement = "bottom-start" | "bottom-end";
 
-export type MenuProps = {
+export type MenuProps = Omit<ViewProps, "children"> & {
   trigger: ReactElement;
   items: MenuItem[];
   placement?: MenuPlacement;
+  // Optional minimum width. Omit to let the card size to its content.
   minWidth?: number;
-  style?: StyleProp<ViewStyle>;
 };
 
 const MENU_OFFSET = 4;
+const EDGE_MARGIN = 8;
 
 const useStyles = createStyles((t) => ({
   backdrop: { flex: 1 },
@@ -39,7 +40,6 @@ const useStyles = createStyles((t) => ({
     borderWidth: 1,
     borderColor: t.colors.border,
     paddingVertical: t.spacing.xs,
-    minWidth: 180,
     ...t.shadows.lg,
   },
   item: {
@@ -55,14 +55,13 @@ const useStyles = createStyles((t) => ({
     fontSize: t.typography.fontSize.md,
     lineHeight: t.typography.lineHeight.md,
     color: t.colors.foreground,
-    flex: 1,
   },
   labelDestructive: { color: t.colors.destructive },
 }));
 
 type AnchorRect = { x: number; y: number; width: number; height: number };
 
-export function Menu({ trigger, items, placement = "bottom-start", minWidth, style }: MenuProps) {
+export function Menu({ trigger, items, placement = "bottom-start", minWidth, style, ...rest }: MenuProps) {
   const styles = useStyles();
   const anchorRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
@@ -86,16 +85,18 @@ export function Menu({ trigger, items, placement = "bottom-start", minWidth, sty
     : trigger;
 
   const screen = Dimensions.get("window");
-  const cardMinWidth = minWidth ?? 180;
 
-  // Position the card under the anchor. For bottom-end placement, align the
-  // card's right edge to the anchor's right edge so it doesn't overflow.
-  const left = anchor
-    ? placement === "bottom-end"
-      ? Math.max(8, Math.min(screen.width - cardMinWidth - 8, anchor.x + anchor.width - cardMinWidth))
-      : Math.max(8, Math.min(screen.width - cardMinWidth - 8, anchor.x))
-    : 0;
-  const top = anchor ? anchor.y + anchor.height + MENU_OFFSET : 0;
+  // Anchor the card by the edge nearest the trigger so it can size to its
+  // content: bottom-start pins the left edge and grows right; bottom-end pins
+  // the right edge and grows left. Neither needs the card's measured width.
+  const position = anchor
+    ? {
+        top: anchor.y + anchor.height + MENU_OFFSET,
+        ...(placement === "bottom-end"
+          ? { right: Math.max(EDGE_MARGIN, screen.width - (anchor.x + anchor.width)) }
+          : { left: Math.max(EDGE_MARGIN, anchor.x) }),
+      }
+    : { top: 0, left: 0 };
 
   return (
     <>
@@ -109,11 +110,19 @@ export function Menu({ trigger, items, placement = "bottom-start", minWidth, sty
         {!!anchor && (
           <View
             accessibilityRole="menu"
-            style={[styles.card, { left, top, minWidth: cardMinWidth }, style]}
+            style={[
+              styles.card,
+              position,
+              { maxWidth: screen.width - EDGE_MARGIN * 2 },
+              minWidth != null && { minWidth },
+              style,
+            ]}
+            {...rest}
           >
             {items.map((item, idx) => (
               <Pressable
                 key={`${item.label}-${idx}`}
+                testID={item.testID}
                 disabled={item.disabled}
                 onPress={() => {
                   setOpen(false);

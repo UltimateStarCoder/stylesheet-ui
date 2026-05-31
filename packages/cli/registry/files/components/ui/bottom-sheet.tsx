@@ -14,6 +14,7 @@ import {
   View,
   type LayoutChangeEvent,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -30,7 +31,7 @@ import { createStyles } from "../../utils/use-styles";
 
 export type SnapPoint = number | `${number}%`;
 
-export type BottomSheetProps = {
+export type BottomSheetProps = Omit<ViewProps, "children" | "style"> & {
   visible: boolean;
   onClose: () => void;
   // Multiple snap points the user can drag between. Sorted ascending by the
@@ -115,6 +116,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
     children,
     style,
     contentStyle,
+    ...rest
   },
   ref,
 ) {
@@ -283,6 +285,7 @@ export const BottomSheet = forwardRef<View, BottomSheetProps>(function BottomShe
               sheetAnimatedStyle,
               style,
             ]}
+            {...rest}
           >
             {showHandle && <View style={styles.handle} accessibilityRole="none" />}
             <View

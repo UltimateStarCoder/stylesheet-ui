@@ -12,8 +12,8 @@ import {
   Text,
   UIManager,
   View,
-  type StyleProp,
-  type ViewStyle,
+  type PressableProps,
+  type ViewProps,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
@@ -92,13 +92,12 @@ const useContentStyles = createStyles((t) => ({
   },
 }));
 
-export type AccordionProps = {
+export type AccordionProps = Omit<ViewProps, "children"> & {
   type?: AccordionType;
   value?: string | string[];
   defaultValue?: string | string[];
   onValueChange?: (next: string | string[]) => void;
   children: ReactNode;
-  style?: StyleProp<ViewStyle>;
 };
 
 function toSet(value: string | string[] | undefined): Set<string> {
@@ -113,6 +112,7 @@ export function Accordion({
   onValueChange,
   children,
   style,
+  ...rest
 }: AccordionProps) {
   const styles = useRootStyles();
   const [internal, setInternal] = useState<Set<string>>(() => toSet(defaultValue));
@@ -141,34 +141,34 @@ export function Accordion({
 
   return (
     <AccordionContext value={ctx}>
-      <View style={[styles.root, style]}>{children}</View>
+      <View style={[styles.root, style]} {...rest}>{children}</View>
     </AccordionContext>
   );
 }
 
-export type AccordionItemProps = {
+export type AccordionItemProps = Omit<ViewProps, "children"> & {
   value: string;
   children: ReactNode;
   first?: boolean;
 };
 
-export function AccordionItem({ value, children, first }: AccordionItemProps) {
+export function AccordionItem({ value, children, first, style, ...rest }: AccordionItemProps) {
   const styles = useItemStyles();
   const ctx = useAccordion("AccordionItem");
   const isOpen = ctx.openValues.has(value);
   return (
     <ItemContext value={{ value, isOpen }}>
-      <View style={[styles.item, first && styles.itemFirst]}>{children}</View>
+      <View style={[styles.item, first && styles.itemFirst, style]} {...rest}>{children}</View>
     </ItemContext>
   );
 }
 
-export type AccordionTriggerProps = {
+export type AccordionTriggerProps = Omit<PressableProps, "children"> & {
   children: ReactNode;
   disabled?: boolean;
 };
 
-export function AccordionTrigger({ children, disabled }: AccordionTriggerProps) {
+export function AccordionTrigger({ children, disabled, ...rest }: AccordionTriggerProps) {
   const styles = useTriggerStyles();
   const ctx = useAccordion("AccordionTrigger");
   const item = useItem("AccordionTrigger");
@@ -184,6 +184,7 @@ export function AccordionTrigger({ children, disabled }: AccordionTriggerProps) 
         pressed && !disabled && styles.pressed,
         disabled && styles.disabled,
       ]}
+      {...rest}
     >
       <Text style={styles.label}>{children}</Text>
       <Text style={styles.chevron}>{item.isOpen ? "▴" : "▾"}</Text>
@@ -191,14 +192,13 @@ export function AccordionTrigger({ children, disabled }: AccordionTriggerProps) 
   );
 }
 
-export type AccordionContentProps = {
+export type AccordionContentProps = Omit<ViewProps, "children"> & {
   children: ReactNode;
-  style?: StyleProp<ViewStyle>;
 };
 
-export function AccordionContent({ children, style }: AccordionContentProps) {
+export function AccordionContent({ children, style, ...rest }: AccordionContentProps) {
   const styles = useContentStyles();
   const item = useItem("AccordionContent");
   if (!item.isOpen) return null;
-  return <View style={[styles.content, style]}>{children}</View>;
+  return <View style={[styles.content, style]} {...rest}>{children}</View>;
 }

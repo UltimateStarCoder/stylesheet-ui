@@ -1,12 +1,17 @@
 import { Children, forwardRef, isValidElement, type ReactNode } from "react";
-import { View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { Divider } from "./divider";
 import type { SpacingKey } from "../../theme/spacing";
 import { createStyles } from "../../utils/use-styles";
 
 export type ListSurface = "default" | "muted" | "outline";
 
-export type ListProps = {
+export type ListProps = Omit<ViewProps, "children" | "style"> & {
   children: ReactNode;
   surface?: ListSurface;
   divided?: boolean;
@@ -36,14 +41,14 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const List = forwardRef<View, ListProps>(function List(
-  { children, surface = "default", divided = true, inset = "lg", style },
+  { children, surface = "default", divided = true, inset = "lg", style, ...rest },
   ref,
 ) {
   const styles = useStyles();
   const items = Children.toArray(children).filter(isValidElement);
 
   return (
-    <View ref={ref} style={[styles.base, styles[surface], style]}>
+    <View ref={ref} style={[styles.base, styles[surface], style]} {...rest}>
       {items.map((child, i) => (
         <View key={child.key ?? i}>
           {child}

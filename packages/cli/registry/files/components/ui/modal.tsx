@@ -5,11 +5,12 @@ import {
   Text,
   View,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type ModalProps = {
+export type ModalProps = Omit<ViewProps, "children" | "style"> & {
   visible: boolean;
   onClose: () => void;
   title?: string;
@@ -79,6 +80,7 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
     accessibilityLabel,
     style,
     contentStyle,
+    ...rest
   },
   ref,
 ) {
@@ -104,6 +106,7 @@ export const Modal = forwardRef<View, ModalProps>(function Modal(
           onPress={(e) => e.stopPropagation()}
           accessibilityViewIsModal
           accessibilityLabel={dialogLabel}
+          {...rest}
         >
           {(title || description) && (
             <View style={styles.header}>

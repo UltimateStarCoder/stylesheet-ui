@@ -3,6 +3,7 @@ import {
   Pressable,
   Text,
   View,
+  type PressableProps,
   type StyleProp,
   type ViewStyle,
 } from "react-native";
@@ -15,9 +16,10 @@ export type SelectOption = {
   label: string;
   description?: string;
   disabled?: boolean;
+  testID?: string;
 };
 
-export type SelectProps = {
+export type SelectProps = Omit<PressableProps, "children" | "style" | "onPress"> & {
   value?: string;
   defaultValue?: string;
   onValueChange?: (next: string) => void;
@@ -71,6 +73,7 @@ export const Select = forwardRef<View, SelectProps>(function Select(
     title,
     disabled,
     style,
+    ...rest
   },
   ref,
 ) {
@@ -102,6 +105,7 @@ export const Select = forwardRef<View, SelectProps>(function Select(
           disabled && styles.disabled,
           style,
         ]}
+        {...rest}
       >
         <Text
           numberOfLines={1}
@@ -116,6 +120,7 @@ export const Select = forwardRef<View, SelectProps>(function Select(
         {options.map((opt) => (
           <ListItem
             key={opt.value}
+            testID={opt.testID}
             title={opt.label}
             subtitle={opt.description}
             disabled={opt.disabled}

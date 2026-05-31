@@ -5,11 +5,12 @@ import {
   View,
   type DimensionValue,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type SkeletonProps = {
+export type SkeletonProps = Omit<ViewProps, "children" | "style"> & {
   width?: DimensionValue;
   height?: DimensionValue;
   radius?: number;
@@ -23,7 +24,7 @@ const useStyles = createStyles((t) => ({
 const PULSE_DURATION = 900;
 
 export const Skeleton = forwardRef<View, SkeletonProps>(function Skeleton(
-  { width = "100%", height = 16, radius, style },
+  { width = "100%", height = 16, radius, style, ...rest },
   ref,
 ) {
   const styles = useStyles();
@@ -61,6 +62,7 @@ export const Skeleton = forwardRef<View, SkeletonProps>(function Skeleton(
         { width, height, borderRadius: radius ?? 6, opacity },
         style,
       ]}
+      {...rest}
     >
       <View />
     </Animated.View>

@@ -1,5 +1,11 @@
 import { forwardRef, type ReactNode } from "react";
-import { Text, View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Text,
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type BadgeVariant =
@@ -11,7 +17,7 @@ export type BadgeVariant =
   | "outline";
 export type BadgeSize = "sm" | "md";
 
-export type BadgeProps = {
+export type BadgeProps = Omit<ViewProps, "children" | "style"> & {
   children: ReactNode;
   variant?: BadgeVariant;
   size?: BadgeSize;
@@ -50,7 +56,7 @@ const useStyles = createStyles((t) => ({
 }));
 
 export const Badge = forwardRef<View, BadgeProps>(function Badge(
-  { children, variant = "primary", size = "md", style },
+  { children, variant = "primary", size = "md", style, ...rest },
   ref,
 ) {
   const styles = useStyles();
@@ -63,6 +69,7 @@ export const Badge = forwardRef<View, BadgeProps>(function Badge(
         styles[variant],
         style,
       ]}
+      {...rest}
     >
       <Text
         style={[

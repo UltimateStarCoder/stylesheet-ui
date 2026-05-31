@@ -1,5 +1,11 @@
 import { Fragment, type ReactNode } from "react";
-import { Text, View, type StyleProp, type ViewStyle } from "react-native";
+import {
+  Text,
+  View,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type TableColumn<T> = {
@@ -7,12 +13,16 @@ export type TableColumn<T> = {
   header: ReactNode;
   flex?: number;
   render?: (row: T, index: number) => ReactNode;
+  // Applied to this column's header cell so it can be found in tests.
+  testID?: string;
 };
 
-export type TableProps<T> = {
+export type TableProps<T> = Omit<ViewProps, "children" | "style"> & {
   columns: TableColumn<T>[];
   data: T[];
   keyExtractor?: (row: T, index: number) => string;
+  // Returns a testID for each body row so individual rows can be found in tests.
+  rowTestID?: (row: T, index: number) => string;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -49,14 +59,21 @@ const useStyles = createStyles((t) => ({
   divider: { height: 1, backgroundColor: t.colors.border },
 }));
 
-export function Table<T>({ columns, data, keyExtractor, style }: TableProps<T>) {
+export function Table<T>({
+  columns,
+  data,
+  keyExtractor,
+  rowTestID,
+  style,
+  ...rest
+}: TableProps<T>) {
   const styles = useStyles();
 
   return (
-    <View style={[styles.base, style]}>
+    <View style={[styles.base, style]} {...rest}>
       <View style={[styles.row, styles.header]}>
         {columns.map((col) => (
-          <View key={col.key} style={{ flex: col.flex ?? 1 }}>
+          <View key={col.key} testID={col.testID} style={{ flex: col.flex ?? 1 }}>
             {typeof col.header === "string" ? (
               <Text style={styles.headerText}>{col.header}</Text>
             ) : (
@@ -68,7 +85,7 @@ export function Table<T>({ columns, data, keyExtractor, style }: TableProps<T>) 
       {data.map((row, i) => (
         <Fragment key={keyExtractor ? keyExtractor(row, i) : i}>
           <View style={styles.divider} />
-          <View style={styles.row}>
+          <View style={styles.row} testID={rowTestID?.(row, i)}>
             {columns.map((col) => (
               <View key={col.key} style={{ flex: col.flex ?? 1 }}>
                 {col.render ? (

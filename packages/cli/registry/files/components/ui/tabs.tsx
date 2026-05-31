@@ -10,7 +10,9 @@ import {
   Pressable,
   Text,
   View,
+  type PressableProps,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
@@ -64,7 +66,7 @@ const useTriggerStyles = createStyles((t) => ({
   labelActive: { color: t.colors.foreground },
 }));
 
-export type TabsProps = {
+export type TabsProps = Omit<ViewProps, "children"> & {
   children: ReactNode;
   value?: string;
   defaultValue?: string;
@@ -73,7 +75,7 @@ export type TabsProps = {
 };
 
 export const Tabs = forwardRef<View, TabsProps>(function Tabs(
-  { children, value, defaultValue, onValueChange, style },
+  { children, value, defaultValue, onValueChange, style, ...rest },
   ref,
 ) {
   const styles = useRootStyles();
@@ -94,31 +96,34 @@ export const Tabs = forwardRef<View, TabsProps>(function Tabs(
 
   return (
     <TabsContext value={ctx}>
-      <View ref={ref} style={[styles.root, style]}>
+      <View ref={ref} style={[styles.root, style]} {...rest}>
         {children}
       </View>
     </TabsContext>
   );
 });
 
-export type TabsListProps = { children: ReactNode; style?: StyleProp<ViewStyle> };
+export type TabsListProps = Omit<ViewProps, "children"> & {
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
+};
 
-export function TabsList({ children, style }: TabsListProps) {
+export function TabsList({ children, style, ...rest }: TabsListProps) {
   const styles = useListStyles();
   return (
-    <View accessibilityRole="tablist" style={[styles.list, style]}>
+    <View accessibilityRole="tablist" style={[styles.list, style]} {...rest}>
       {children}
     </View>
   );
 }
 
-export type TabsTriggerProps = {
+export type TabsTriggerProps = Omit<PressableProps, "children" | "style" | "onPress"> & {
   value: string;
   children: ReactNode;
   disabled?: boolean;
 };
 
-export function TabsTrigger({ value, children, disabled }: TabsTriggerProps) {
+export function TabsTrigger({ value, children, disabled, ...rest }: TabsTriggerProps) {
   const ctx = useTabs("TabsTrigger");
   const styles = useTriggerStyles();
   const active = ctx.value === value;
@@ -130,20 +135,21 @@ export function TabsTrigger({ value, children, disabled }: TabsTriggerProps) {
       disabled={disabled}
       onPress={() => ctx.setValue(value)}
       style={[styles.base, active && styles.active, disabled && styles.disabled]}
+      {...rest}
     >
       <Text style={[styles.label, active && styles.labelActive]}>{children}</Text>
     </Pressable>
   );
 }
 
-export type TabsContentProps = {
+export type TabsContentProps = Omit<ViewProps, "children"> & {
   value: string;
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 
-export function TabsContent({ value, children, style }: TabsContentProps) {
+export function TabsContent({ value, children, style, ...rest }: TabsContentProps) {
   const ctx = useTabs("TabsContent");
   if (ctx.value !== value) return null;
-  return <View style={style}>{children}</View>;
+  return <View style={style} {...rest}>{children}</View>;
 }

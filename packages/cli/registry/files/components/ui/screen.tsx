@@ -4,12 +4,13 @@ import {
   View,
   type ScrollViewProps,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { SafeAreaView, type Edge } from "react-native-safe-area-context";
 import { useTheme } from "../../theme/use-theme";
 
-export type ScreenProps = {
+export type ScreenProps = Omit<ViewProps, "children" | "style"> & {
   children: ReactNode;
   // Defaults to scrollable since most screens have more content than fits.
   // Set to false to render a fixed-height View instead.
@@ -38,6 +39,7 @@ export const Screen = forwardRef<View, ScreenProps>(function Screen(
     padding,
     contentStyle,
     scrollProps,
+    ...rest
   },
   ref,
 ) {
@@ -68,10 +70,14 @@ export const Screen = forwardRef<View, ScreenProps>(function Screen(
 
   if (edges) {
     return (
-      <SafeAreaView style={rootStyle} edges={edges}>
+      <SafeAreaView style={rootStyle} edges={edges} {...rest}>
         {inner}
       </SafeAreaView>
     );
   }
-  return <View style={rootStyle}>{inner}</View>;
+  return (
+    <View style={rootStyle} {...rest}>
+      {inner}
+    </View>
+  );
 });

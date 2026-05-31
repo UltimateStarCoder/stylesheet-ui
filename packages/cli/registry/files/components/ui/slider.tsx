@@ -10,11 +10,12 @@ import {
   View,
   type LayoutChangeEvent,
   type StyleProp,
+  type ViewProps,
   type ViewStyle,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-export type SliderProps = {
+export type SliderProps = Omit<ViewProps, "children" | "style" | "onLayout"> & {
   value: number;
   onValueChange: (next: number) => void;
   // Fires when the user finishes a drag (good for committing to state/network).
@@ -72,6 +73,7 @@ export const Slider = forwardRef<View, SliderProps>(function Slider(
     step,
     disabled,
     style,
+    ...rest
   },
   ref,
 ) {
@@ -133,6 +135,7 @@ export const Slider = forwardRef<View, SliderProps>(function Slider(
       style={[styles.root, disabled && styles.disabled, style]}
       accessibilityRole="adjustable"
       accessibilityValue={{ min, max, now: value }}
+      {...rest}
       {...responder.panHandlers}
     >
       <View pointerEvents="none" style={styles.track} />

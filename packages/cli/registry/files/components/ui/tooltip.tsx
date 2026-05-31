@@ -5,21 +5,19 @@ import {
   Pressable,
   Text,
   View,
-  type StyleProp,
-  type ViewStyle,
+  type ViewProps,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type TooltipPlacement = "top" | "bottom";
 
-export type TooltipProps = {
+export type TooltipProps = Omit<ViewProps, "children"> & {
   // Any pressable element. We attach ref + onLongPress to it.
   children: ReactElement;
   label: string;
   placement?: TooltipPlacement;
   // Auto-dismiss after N ms. Defaults to 2000. Set 0 to keep open until tap-outside.
   duration?: number;
-  style?: StyleProp<ViewStyle>;
 };
 
 const TOOLTIP_OFFSET = 6;
@@ -45,7 +43,7 @@ const useStyles = createStyles((t) => ({
 
 type AnchorRect = { x: number; y: number; width: number; height: number };
 
-export function Tooltip({ children, label, placement = "top", duration = 2000, style }: TooltipProps) {
+export function Tooltip({ children, label, placement = "top", duration = 2000, style, ...rest }: TooltipProps) {
   const styles = useStyles();
   const anchorRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
@@ -105,7 +103,7 @@ export function Tooltip({ children, label, placement = "top", duration = 2000, s
       <RNModal visible={open} transparent animationType="fade" onRequestClose={closeTooltip}>
         <Pressable style={styles.backdrop} onPress={closeTooltip} accessibilityLabel="Dismiss tooltip" />
         {!!anchor && (
-          <View accessibilityRole="text" style={[styles.bubble, { left, top }, style]}>
+          <View accessibilityRole="text" style={[styles.bubble, { left, top }, style]} {...rest}>
             <Text style={styles.label}>{label}</Text>
           </View>
         )}

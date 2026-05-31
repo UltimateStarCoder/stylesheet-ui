@@ -1,5 +1,5 @@
 import { forwardRef, type ReactNode } from "react";
-import { View, type StyleProp, type ViewStyle } from "react-native";
+import { View, type ViewProps, type ViewStyle } from "react-native";
 import { useTheme } from "../../theme/use-theme";
 import type { SpacingKey } from "../../theme/spacing";
 
@@ -7,14 +7,13 @@ export type StackDirection = "column" | "row" | "column-reverse" | "row-reverse"
 export type StackAlign = "stretch" | "start" | "center" | "end" | "baseline";
 export type StackJustify = "start" | "center" | "end" | "between" | "around" | "evenly";
 
-export type StackProps = {
+export type StackProps = Omit<ViewProps, "children"> & {
   children: ReactNode;
   direction?: StackDirection;
   gap?: SpacingKey;
   align?: StackAlign;
   justify?: StackJustify;
   wrap?: boolean;
-  style?: StyleProp<ViewStyle>;
 };
 
 const ALIGN_MAP: Record<StackAlign, ViewStyle["alignItems"]> = {
@@ -38,7 +37,7 @@ const JUSTIFY_MAP: Record<StackJustify, ViewStyle["justifyContent"]> = {
 // createStyles, so the layout object is built inline. Light/dark doesn't
 // affect any of these values; only props do.
 export const Stack = forwardRef<View, StackProps>(function Stack(
-  { children, direction = "column", gap = "none", align, justify, wrap, style },
+  { children, direction = "column", gap = "none", align, justify, wrap, style, ...rest },
   ref,
 ) {
   const theme = useTheme();
@@ -50,7 +49,7 @@ export const Stack = forwardRef<View, StackProps>(function Stack(
     ...(wrap && { flexWrap: "wrap" as const }),
   };
   return (
-    <View ref={ref} style={[layout, style]}>
+    <View ref={ref} style={[layout, style]} {...rest}>
       {children}
     </View>
   );
