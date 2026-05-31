@@ -29,3 +29,17 @@ const [code, setCode] = useState("");
   autoFocus
 />
 ```
+
+## Resend
+
+Pass `onResend` to show a "Resend code" action. It starts disabled with a countdown (`resendSeconds`, default 30) and becomes tappable when the timer hits zero; tapping it calls `onResend` and restarts the countdown.
+
+```tsx
+<OtpInput
+  value={code}
+  onChange={setCode}
+  onResend={() => resendCode()} // your auth provider
+  resendSeconds={30}
+/>
+```
+

@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -22,8 +22,13 @@ export type OtpInputProps = Omit<ViewProps, "style"> & {
   error?: string;
   autoFocus?: boolean;
   editable?: boolean;
+  // When set, renders a "Resend code" action gated by a countdown.
+  onResend?: () => void;
+  resendSeconds?: number;
   style?: StyleProp<ViewStyle>;
 };
+
+const formatCountdown = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
 const useStyles = createStyles((t) => ({
   wrap: { position: "relative" },
@@ -54,20 +59,58 @@ const useStyles = createStyles((t) => ({
     fontSize: t.typography.fontSize.sm,
     lineHeight: t.typography.lineHeight.sm,
   },
+  resend: { marginTop: t.spacing.md, alignItems: "center" },
+  resendMuted: {
+    color: t.colors.foregroundMuted,
+    fontSize: t.typography.fontSize.sm,
+    lineHeight: t.typography.lineHeight.sm,
+  },
+  resendLink: {
+    color: t.colors.primary,
+    fontWeight: "600",
+    fontSize: t.typography.fontSize.sm,
+  },
 }));
 
 export const OtpInput = forwardRef<TextInput, OtpInputProps>(function OtpInput(
-  { value, onChange, length = 6, onComplete, error, autoFocus, editable = true, style, ...rest },
+  {
+    value,
+    onChange,
+    length = 6,
+    onComplete,
+    error,
+    autoFocus,
+    editable = true,
+    onResend,
+    resendSeconds = 30,
+    style,
+    ...rest
+  },
   ref,
 ) {
   const styles = useStyles();
   const inputRef = useRef<TextInput | null>(null);
   const [focused, setFocused] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(resendSeconds);
+
+  // `counting` flips only when the cooldown starts or reaches zero, so the
+  // interval is created once per cooldown rather than recreated each tick.
+  const counting = !!onResend && secondsLeft > 0;
+  useEffect(() => {
+    if (!counting) return;
+    const id = setInterval(() => setSecondsLeft((s) => (s <= 1 ? 0 : s - 1)), 1000);
+    return () => clearInterval(id);
+  }, [counting]);
 
   const handleChange = (text: string) => {
     const next = text.replace(/[^0-9]/g, "").slice(0, length);
     onChange(next);
     if (next.length === length) onComplete?.(next);
+  };
+
+  const handleResend = () => {
+    onResend?.();
+    setSecondsLeft(resendSeconds);
   };
 
   const cells = Array.from({ length }, (_, i) => i);
@@ -94,7 +137,6 @@ export const OtpInput = forwardRef<TextInput, OtpInputProps>(function OtpInput(
             );
           })}
         </View>
-        {/* Transparent overlay owns the value, caret, and taps. */}
         <TextInput
           ref={(node) => {
             inputRef.current = node;
@@ -116,7 +158,20 @@ export const OtpInput = forwardRef<TextInput, OtpInputProps>(function OtpInput(
           onBlur={() => setFocused(false)}
         />
       </View>
+
       {!!error && <Text style={styles.error}>{error}</Text>}
+
+      {!!onResend && (
+        <View style={styles.resend}>
+          {secondsLeft > 0 ? (
+            <Text style={styles.resendMuted}>Resend code in {formatCountdown(secondsLeft)}</Text>
+          ) : (
+            <Pressable onPress={handleResend} accessibilityRole="button">
+              <Text style={styles.resendLink}>Resend code</Text>
+            </Pressable>
+          )}
+        </View>
+      )}
     </View>
   );
 });

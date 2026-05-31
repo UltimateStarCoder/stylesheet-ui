@@ -22,8 +22,14 @@ export default function OtpInputDemo() {
   return (
     <ScrollView contentContainerStyle={styles.container} testID="screen-otp-input">
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Six digits</Text>
-        <OtpInput testID="otp-input-default" value={code} onChange={setCode} />
+        <Text style={styles.sectionTitle}>Six digits, with resend</Text>
+        <OtpInput
+          testID="otp-input-default"
+          value={code}
+          onChange={setCode}
+          onResend={() => {}}
+          resendSeconds={10}
+        />
         <Text style={styles.hint}>Entered: {code || "—"}</Text>
       </View>
 

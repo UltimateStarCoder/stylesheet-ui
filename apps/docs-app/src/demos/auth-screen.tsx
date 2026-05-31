@@ -71,7 +71,7 @@ export default function AuthScreenDemo() {
       {step === "sign-up" && <SignUpForm nameFields requireConfirm onSubmit={() => {}} />}
       {step === "forgot" && <ForgotPasswordForm onSubmit={() => go("verify")} />}
       {step === "verify" && (
-        <OtpInput value={code} onChange={setCode} onComplete={() => go("reset")} autoFocus />
+        <OtpInput value={code} onChange={setCode} onComplete={() => go("reset")} onResend={() => {}} autoFocus />
       )}
       {step === "reset" && (
         <NewPasswordForm requireConfirm submitLabel="Reset password" onSubmit={() => go("sign-in")} />
