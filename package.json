@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "dev": "npm run start --workspace docs-app",
+    "dev:mcp": "EXPO_UNSTABLE_MCP_SERVER=1 npm run start --workspace docs-app",
     "ios": "npm run ios --workspace docs-app",
     "web": "npm run web --workspace docs-app",
     "cli:build": "npm run build --workspace stylesheet-ui",
