@@ -3,21 +3,19 @@ import {
   Pressable,
   View,
   type PressableProps,
-  type StyleProp,
-  type ViewStyle,
+  type ViewProps,
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
 export type CardSurface = "default" | "muted" | "outline";
 export type CardPadding = "none" | "sm" | "md" | "lg";
 
-export type CardProps = {
+export type CardProps = Omit<ViewProps, "children"> & {
   children: ReactNode;
   surface?: CardSurface;
   padding?: CardPadding;
   pressable?: boolean;
   onPress?: PressableProps["onPress"];
-  style?: StyleProp<ViewStyle>;
 };
 
 const useStyles = createStyles((t) => ({
@@ -50,6 +48,7 @@ export const Card = forwardRef<View, CardProps>(function Card(
     pressable = false,
     onPress,
     style,
+    ...rest
   },
   ref,
 ) {
@@ -75,6 +74,7 @@ export const Card = forwardRef<View, CardProps>(function Card(
           pressed && styles.pressed,
           style,
         ]}
+        {...rest}
       >
         {children}
       </Pressable>
@@ -82,7 +82,7 @@ export const Card = forwardRef<View, CardProps>(function Card(
   }
 
   return (
-    <View ref={ref} style={[styles.base, surfaceStyle, padStyle, style]}>
+    <View ref={ref} style={[styles.base, surfaceStyle, padStyle, style]} {...rest}>
       {children}
     </View>
   );

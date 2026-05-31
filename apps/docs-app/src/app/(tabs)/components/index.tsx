@@ -61,7 +61,7 @@ export default function ComponentsIndex() {
     <ScrollView contentContainerStyle={styles.container}>
       {ENTRIES.map((e) => (
         <Link key={e.href} href={e.href} asChild>
-          <Card pressable>
+          <Card pressable testID={`component-card-${e.href.split("/").pop()}`}>
             <Text style={styles.title}>{e.name}</Text>
             <Text style={styles.blurb}>{e.blurb}</Text>
           </Card>

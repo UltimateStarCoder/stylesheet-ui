@@ -17,9 +17,9 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: theme.colors.foregroundMuted,
       }}
     >
-      <Tabs.Screen name="components" options={{ title: "Components", headerShown: false }} />
-      <Tabs.Screen name="theme"      options={{ title: "Theme" }} />
-      <Tabs.Screen name="about"      options={{ title: "About" }} />
+      <Tabs.Screen name="components" options={{ title: "Components", headerShown: false, tabBarButtonTestID: "tab-components" }} />
+      <Tabs.Screen name="theme"      options={{ title: "Theme", tabBarButtonTestID: "tab-theme" }} />
+      <Tabs.Screen name="about"      options={{ title: "About", tabBarButtonTestID: "tab-about" }} />
     </Tabs>
   );
 }
