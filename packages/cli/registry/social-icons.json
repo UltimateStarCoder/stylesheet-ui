@@ -1,0 +1,13 @@
+{
+  "name": "social-icons",
+  "type": "component",
+  "category": "auth",
+  "description": "Monochrome brand SVG marks (Google, Apple, GitHub, Microsoft, Facebook, X, Discord, GitLab, LinkedIn, Slack, Twitch) for social/SSO buttons. Theme-colored.",
+  "registryDependencies": ["theme"],
+  "peerDependencies": {
+    "react-native-svg": ">=13.0.0"
+  },
+  "files": [
+    { "from": "components/ui/social-icons.tsx", "to": "social-icons.tsx" }
+  ]
+}

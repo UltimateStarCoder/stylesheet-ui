@@ -47,6 +47,7 @@ const AUTH = [
   { name: "SocialAuthButtons", href: "/components/social-auth-buttons" as const, blurb: "OAuth / SSO provider buttons" },
   { name: "NewPasswordForm",   href: "/components/new-password-form"   as const, blurb: "Set a new password, optional confirm" },
   { name: "UserCard",        href: "/components/user-card"         as const, blurb: "Signed-in identity + sign out" },
+  { name: "SocialIcons",     href: "/components/social-icons"      as const, blurb: "Brand SVG marks for social auth" },
 ];
 
 const GROUPS = [

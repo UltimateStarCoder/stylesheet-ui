@@ -73,7 +73,7 @@ Run `npx stylesheet-ui list` to see every entry in your terminal. Pass `--json` 
 
 **Overlays:** Modal, BottomSheet, AlertDialog, Menu, Accordion, Tabs.
 
-**Auth:** AuthScreen, SignInForm, SignUpForm, OtpInput, SocialAuthButtons, NewPasswordForm, UserCard — copy-paste authentication UI that works with any backend. The components own the UI/UX; you wire each `onSubmit` to your auth provider. See [Authentication](#authentication).
+**Auth:** AuthScreen, SignInForm, SignUpForm, OtpInput, SocialAuthButtons, SocialIcons, NewPasswordForm, UserCard — copy-paste authentication UI that works with any backend. The components own the UI/UX; you wire each `onSubmit` to your auth provider. See [Authentication](#authentication).
 
 **Foundation:** colors (light + dark, 5 presets), spacing, radius, typography, shadows, `ThemeProvider`, `useTheme`, `useThemeMode`.
 

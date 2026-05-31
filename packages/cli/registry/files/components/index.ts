@@ -39,3 +39,4 @@ export * from "./ui/otp-input";
 export * from "./ui/social-auth-buttons";
 export * from "./ui/new-password-form";
 export * from "./ui/user-card";
+export * from "./ui/social-icons";

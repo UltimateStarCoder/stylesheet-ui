@@ -1,0 +1,39 @@
+---
+title: SocialIcons
+description: Monochrome brand SVG marks for social/SSO auth buttons.
+sidebar:
+  order: 9
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add social-icons
+npx expo install react-native-svg
+```
+
+## Usage
+
+A set of single-color brand marks — `GoogleIcon`, `AppleIcon`, `GitHubIcon`, `MicrosoftIcon`, `FacebookIcon`, `XIcon`, `DiscordIcon`, `GitLabIcon`, `LinkedInIcon`, `SlackIcon`, `TwitchIcon`. Each defaults to your theme's foreground color; pass `color` to override and `size` to scale. They're built with [`react-native-svg`](https://github.com/software-mansion/react-native-svg), so they render crisply at any size.
+
+```tsx
+import { GoogleIcon, AppleIcon, GitHubIcon } from "@/components/ui/social-icons";
+
+<GoogleIcon />                      // themed foreground, size 20
+<AppleIcon size={28} />
+<GitHubIcon color="#fff" />
+```
+
+Drop them straight into [SocialAuthButtons](/components/auth/social-auth-buttons/) via each provider's `icon`:
+
+```tsx
+const providers = [
+  { key: "google", label: "Continue with Google", icon: <GoogleIcon /> },
+  { key: "apple", label: "Continue with Apple", icon: <AppleIcon /> },
+  { key: "github", label: "Continue with GitHub", icon: <GitHubIcon /> },
+];
+
+<SocialAuthButtons layout="row" providers={providers} onSelect={startOAuth} />
+```
+
+Need another provider? The file is yours — copy an existing icon, swap in the brand's SVG path (e.g. from [Simple Icons](https://simpleicons.org)), and export it.

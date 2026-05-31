@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { SocialAuthButtons, createStyles, useTheme } from "@stylesheet-ui/ui";
-import { GoogleIcon, AppleIcon, GitHubIcon } from "./social-icons";
+import {
+  SocialAuthButtons,
+  GoogleIcon,
+  AppleIcon,
+  GitHubIcon,
+  createStyles,
+} from "@stylesheet-ui/ui";
 
 const useStyles = createStyles((t) => ({
   container: { padding: t.spacing.lg, gap: t.spacing.xl, backgroundColor: t.colors.background, flexGrow: 1 },
@@ -15,21 +20,20 @@ const useStyles = createStyles((t) => ({
   },
 }));
 
+const PROVIDERS = [
+  { key: "google", label: "Continue with Google", icon: <GoogleIcon /> },
+  { key: "apple", label: "Continue with Apple", icon: <AppleIcon /> },
+  { key: "github", label: "Continue with GitHub", icon: <GitHubIcon /> },
+];
+
 export default function SocialAuthButtonsDemo() {
   const styles = useStyles();
-  const fg = useTheme().colors.foreground;
   const [loadingKey, setLoadingKey] = useState<string | null>(null);
 
   const select = (key: string) => {
     setLoadingKey(key);
     setTimeout(() => setLoadingKey(null), 1200);
   };
-
-  const providers = [
-    { key: "google", label: "Continue with Google", icon: <GoogleIcon color={fg} /> },
-    { key: "apple", label: "Continue with Apple", icon: <AppleIcon color={fg} /> },
-    { key: "github", label: "Continue with GitHub", icon: <GitHubIcon color={fg} /> },
-  ];
 
   return (
     <ScrollView contentContainerStyle={styles.container} testID="screen-social-auth-buttons">
@@ -38,7 +42,7 @@ export default function SocialAuthButtonsDemo() {
         <SocialAuthButtons
           testID="social-auth-buttons-divider"
           dividerLabel="or continue with"
-          providers={providers}
+          providers={PROVIDERS}
           loadingKey={loadingKey}
           onSelect={select}
         />
@@ -48,7 +52,7 @@ export default function SocialAuthButtonsDemo() {
         <Text style={styles.sectionTitle}>No divider</Text>
         <SocialAuthButtons
           testID="social-auth-buttons-plain"
-          providers={providers}
+          providers={PROVIDERS}
           loadingKey={loadingKey}
           onSelect={select}
         />
@@ -60,7 +64,7 @@ export default function SocialAuthButtonsDemo() {
           testID="social-auth-buttons-row"
           layout="row"
           dividerLabel="or continue with"
-          providers={providers}
+          providers={PROVIDERS}
           loadingKey={loadingKey}
           onSelect={select}
         />
