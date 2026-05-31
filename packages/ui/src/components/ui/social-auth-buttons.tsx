@@ -4,15 +4,21 @@ import { Button } from "./button";
 import { createStyles } from "../../utils/use-styles";
 
 export type SocialProvider = {
-  // Stable identifier passed back to `onSelect` — e.g. "oauth_google".
+  // Stable identifier passed back to `onSelect` — e.g. "google".
   key: string;
   label: string;
   icon?: ReactNode;
 };
 
-// Row of social / SSO provider buttons with an optional "or" divider. The
-// consumer wires `onSelect` to their auth provider's OAuth/SSO flow, using the
+export type SocialAuthLayout = "list" | "row";
+
+// Social / SSO provider buttons with an optional "or" divider. The consumer
+// wires `onSelect` to their auth provider's OAuth/SSO flow, using the
 // provider's `key` to choose which one to start.
+//
+// `layout="list"` (default) stacks full-width labelled buttons.
+// `layout="row"` lays out compact icon-only buttons on a single line; the
+// label becomes each button's accessibility label.
 export type SocialAuthButtonsProps = Omit<ViewProps, "children" | "style"> & {
   providers: SocialProvider[];
   onSelect: (key: string) => void;
@@ -21,6 +27,7 @@ export type SocialAuthButtonsProps = Omit<ViewProps, "children" | "style"> & {
   disabled?: boolean;
   // Divider caption (e.g. "or continue with"). Omit to hide the divider.
   dividerLabel?: string;
+  layout?: SocialAuthLayout;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -33,14 +40,20 @@ const useStyles = createStyles((t) => ({
     fontSize: t.typography.fontSize.sm,
     lineHeight: t.typography.lineHeight.sm,
   },
+  list: { gap: t.spacing.sm },
+  row: { flexDirection: "row", gap: t.spacing.sm },
+  rowItem: { flex: 1 },
+  // Override Button's content gap so a lone icon (empty label) stays centered.
+  iconOnly: { gap: 0 },
 }));
 
 export const SocialAuthButtons = forwardRef<View, SocialAuthButtonsProps>(function SocialAuthButtons(
-  { providers, onSelect, loadingKey, disabled = false, dividerLabel, style, ...rest },
+  { providers, onSelect, loadingKey, disabled = false, dividerLabel, layout = "list", style, ...rest },
   ref,
 ) {
   const styles = useStyles();
   const busy = loadingKey != null;
+  const isRow = layout === "row";
 
   return (
     <View ref={ref} style={[styles.root, style]} {...rest}>
@@ -51,19 +64,43 @@ export const SocialAuthButtons = forwardRef<View, SocialAuthButtonsProps>(functi
           <View style={styles.line} />
         </View>
       )}
-      {providers.map((p) => (
-        <Button
-          key={p.key}
-          variant="secondary"
-          fullWidth
-          leftIcon={p.icon}
-          loading={loadingKey === p.key}
-          disabled={disabled || (busy && loadingKey !== p.key)}
-          onPress={() => onSelect(p.key)}
-        >
-          {p.label}
-        </Button>
-      ))}
+      <View style={isRow ? styles.row : styles.list}>
+        {providers.map((p) => {
+          const loading = loadingKey === p.key;
+          const isDisabled = disabled || (busy && !loading);
+          if (isRow) {
+            return (
+              <View key={p.key} style={styles.rowItem}>
+                <Button
+                  variant="secondary"
+                  fullWidth
+                  leftIcon={p.icon}
+                  style={styles.iconOnly}
+                  accessibilityLabel={p.label}
+                  loading={loading}
+                  disabled={isDisabled}
+                  onPress={() => onSelect(p.key)}
+                >
+                  {null}
+                </Button>
+              </View>
+            );
+          }
+          return (
+            <Button
+              key={p.key}
+              variant="secondary"
+              fullWidth
+              leftIcon={p.icon}
+              loading={loading}
+              disabled={isDisabled}
+              onPress={() => onSelect(p.key)}
+            >
+              {p.label}
+            </Button>
+          );
+        })}
+      </View>
     </View>
   );
 });

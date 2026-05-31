@@ -42,3 +42,12 @@ const onSelect = async (provider: string) => {
   onSelect={onSelect}
 />
 ```
+
+## Layouts
+
+`layout="list"` (default) stacks full-width labelled buttons. `layout="row"` lays out compact, icon-only buttons that flex to fill the row — each provider's `label` becomes its accessibility label.
+
+```tsx
+<SocialAuthButtons layout="row" providers={providers} onSelect={onSelect} />
+```
+
