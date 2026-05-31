@@ -13,13 +13,14 @@ See the [CLI README](packages/cli/README.md) for usage details.
 
 ## What's included
 
-31 components grouped by purpose:
+40 components grouped by purpose:
 
 - **Layout:** Screen, Stack (+ HStack / VStack), Divider
 - **Display:** Text, Avatar, Badge, Card, ListItem, List, Section, SettingsRow, Skeleton, Table
 - **Inputs:** Button, Input, Switch, Checkbox, Radio, Slider, Select
 - **Feedback:** Spinner, Progress, Alert, Toast
 - **Overlays:** Modal, AlertDialog, Tabs, Accordion, BottomSheet, Menu, Tooltip
+- **Auth:** AuthScreen, SignInForm, SignUpForm, ForgotPasswordForm, OtpInput, SocialAuthButtons, SocialIcons, NewPasswordForm, UserCard — backend-agnostic; wire each to your auth provider
 
 Plus theme tokens (colors light + dark, spacing, radius, typography, shadows) and a `useThemeMode()` hook for in-app Light / Dark / System toggles.
 
