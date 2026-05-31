@@ -20,6 +20,7 @@
     "postcss": "8.5.14"
   },
   "devDependencies": {
+    "expo-mcp": "~0.2.1",
     "typescript": "~5.9.2"
   }
 }
