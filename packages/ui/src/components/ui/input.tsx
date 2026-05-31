@@ -48,7 +48,10 @@ const useStyles = createStyles((t) => ({
   input: {
     flex: 1,
     fontSize: t.typography.fontSize.md,
-    lineHeight: t.typography.lineHeight.md,
+    // No lineHeight: on a single-line TextInput it shifts the text vertically
+    // (low on iOS). textAlignVertical centers it on Android; the wrap centers it
+    // on iOS via alignItems.
+    textAlignVertical: "center",
     color: t.colors.foreground,
     paddingVertical: t.spacing.sm,
   },
