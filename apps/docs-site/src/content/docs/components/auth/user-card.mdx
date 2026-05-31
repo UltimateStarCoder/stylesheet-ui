@@ -1,0 +1,31 @@
+---
+title: UserCard
+description: Signed-in identity row with a sign-out action.
+sidebar:
+  order: 8
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add user-card
+```
+
+## Usage
+
+Feed in the current user's details and wire `onSignOut` to your auth provider's sign-out.
+
+```tsx
+import { UserCard } from "@/components/ui/user-card";
+
+export function Account({ user, signOut }) {
+  return (
+    <UserCard
+      name={user.name}
+      email={user.email}
+      imageUrl={user.imageUrl}
+      onSignOut={() => signOut()} // your auth provider
+    />
+  );
+}
+```

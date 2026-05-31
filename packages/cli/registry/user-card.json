@@ -1,0 +1,10 @@
+{
+  "name": "user-card",
+  "type": "component",
+  "category": "auth",
+  "description": "Signed-in identity row: avatar + name/email + sign-out action.",
+  "registryDependencies": ["avatar", "button", "theme", "utils"],
+  "files": [
+    { "from": "components/ui/user-card.tsx", "to": "user-card.tsx" }
+  ]
+}

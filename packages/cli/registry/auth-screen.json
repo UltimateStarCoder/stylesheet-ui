@@ -1,0 +1,13 @@
+{
+  "name": "auth-screen",
+  "type": "component",
+  "category": "auth",
+  "description": "Centered, keyboard-avoiding auth layout: header (logo/title/subtitle), card body, footer slot.",
+  "registryDependencies": ["card", "theme", "utils"],
+  "peerDependencies": {
+    "react-native-safe-area-context": ">=4.0.0"
+  },
+  "files": [
+    { "from": "components/ui/auth-screen.tsx", "to": "auth-screen.tsx" }
+  ]
+}

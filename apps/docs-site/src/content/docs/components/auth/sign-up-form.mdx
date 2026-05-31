@@ -1,0 +1,49 @@
+---
+title: SignUpForm
+description: Email + password sign-up form for any auth backend.
+sidebar:
+  order: 4
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add sign-up-form otp-input
+```
+
+## Usage
+
+Sign-up is usually two steps: create the account, then verify the emailed code with [OtpInput](/components/auth/otp-input/).
+
+```tsx
+import { useState } from "react";
+import { SignUpForm } from "@/components/ui/sign-up-form";
+import { OtpInput } from "@/components/ui/otp-input";
+
+export default function SignUpScreen() {
+  const [pending, setPending] = useState(false);
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const onSubmit = async ({ emailAddress, password }) => {
+    setLoading(true);
+    try {
+      await createAccount(emailAddress, password); // your auth provider
+      await sendVerificationCode();                // your auth provider
+      setPending(true);
+    } catch (e) {
+      setError("Couldn't sign up.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verify = async (value: string) => {
+    await confirmVerificationCode(value); // your auth provider
+  };
+
+  if (pending) return <OtpInput value={code} onChange={setCode} onComplete={verify} error={error} autoFocus />;
+  return <SignUpForm onSubmit={onSubmit} loading={loading} error={error} />;
+}
+```

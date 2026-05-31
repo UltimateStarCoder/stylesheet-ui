@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { ScrollView, Text } from "react-native";
 import { Link } from "expo-router";
 import { Card, createStyles } from "@stylesheet-ui/ui";
@@ -36,6 +37,23 @@ const ENTRIES = [
   { name: "Tooltip",      href: "/components/tooltip"       as const, blurb: "Long-press hint bubble" },
 ];
 
+// Copy-paste authentication UI. Pure StyleSheet, backend-agnostic — wire each
+// piece's onSubmit to whatever auth provider you use (see the docs).
+const AUTH = [
+  { name: "AuthScreen",        href: "/components/auth-screen"         as const, blurb: "Keyboard-aware centered auth layout" },
+  { name: "SignInForm",        href: "/components/sign-in-form"        as const, blurb: "Email + password sign-in" },
+  { name: "SignUpForm",        href: "/components/sign-up-form"        as const, blurb: "Email + password sign-up" },
+  { name: "OtpInput",          href: "/components/otp-input"           as const, blurb: "Segmented verification code" },
+  { name: "SocialAuthButtons", href: "/components/social-auth-buttons" as const, blurb: "OAuth / SSO provider buttons" },
+  { name: "NewPasswordForm",   href: "/components/new-password-form"   as const, blurb: "Set a new password, optional confirm" },
+  { name: "UserCard",        href: "/components/user-card"         as const, blurb: "Signed-in identity + sign out" },
+];
+
+const GROUPS = [
+  { label: "Components", entries: ENTRIES },
+  { label: "Auth",       entries: AUTH },
+];
+
 const useStyles = createStyles((t) => ({
   container: {
     padding: t.spacing.lg,
@@ -53,19 +71,32 @@ const useStyles = createStyles((t) => ({
     color: t.colors.foregroundMuted,
     fontSize: t.typography.fontSize.sm,
   },
+  groupHeader: {
+    marginTop: t.spacing.sm,
+    fontSize: t.typography.fontSize.sm,
+    fontWeight: "700",
+    color: t.colors.foregroundMuted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
 }));
 
 export default function ComponentsIndex() {
   const styles = useStyles();
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {ENTRIES.map((e) => (
-        <Link key={e.href} href={e.href} asChild>
-          <Card pressable testID={`component-card-${e.href.split("/").pop()}`}>
-            <Text style={styles.title}>{e.name}</Text>
-            <Text style={styles.blurb}>{e.blurb}</Text>
-          </Card>
-        </Link>
+      {GROUPS.map((group) => (
+        <Fragment key={group.label}>
+          <Text style={styles.groupHeader}>{group.label}</Text>
+          {group.entries.map((e) => (
+            <Link key={e.href} href={e.href} asChild>
+              <Card pressable testID={`component-card-${e.href.split("/").pop()}`}>
+                <Text style={styles.title}>{e.name}</Text>
+                <Text style={styles.blurb}>{e.blurb}</Text>
+              </Card>
+            </Link>
+          ))}
+        </Fragment>
       ))}
     </ScrollView>
   );

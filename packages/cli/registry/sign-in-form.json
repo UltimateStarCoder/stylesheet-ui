@@ -1,0 +1,10 @@
+{
+  "name": "sign-in-form",
+  "type": "component",
+  "category": "auth",
+  "description": "Email + password sign-in form. Hands values to onSubmit; you wire your auth provider.",
+  "registryDependencies": ["button", "input", "theme", "utils"],
+  "files": [
+    { "from": "components/ui/sign-in-form.tsx", "to": "sign-in-form.tsx" }
+  ]
+}

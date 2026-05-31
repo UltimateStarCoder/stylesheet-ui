@@ -1,0 +1,44 @@
+---
+title: SocialAuthButtons
+description: OAuth / SSO provider buttons for any auth backend.
+sidebar:
+  order: 6
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add social-auth-buttons
+```
+
+## Usage
+
+Each provider's `key` is passed back to `onSelect` — use it to start that provider's OAuth/SSO flow with your auth backend.
+
+```tsx
+import { useState } from "react";
+import { SocialAuthButtons } from "@/components/ui/social-auth-buttons";
+
+const [loadingKey, setLoadingKey] = useState<string | null>(null);
+
+const providers = [
+  { key: "google", label: "Continue with Google", icon: <GoogleIcon /> },
+  { key: "apple", label: "Continue with Apple", icon: <AppleIcon /> },
+];
+
+const onSelect = async (provider: string) => {
+  setLoadingKey(provider);
+  try {
+    await startOAuth(provider); // your auth provider's OAuth/SSO flow
+  } finally {
+    setLoadingKey(null);
+  }
+};
+
+<SocialAuthButtons
+  dividerLabel="or continue with"
+  providers={providers}
+  loadingKey={loadingKey}
+  onSelect={onSelect}
+/>
+```

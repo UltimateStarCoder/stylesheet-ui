@@ -30,6 +30,7 @@ export default defineConfig({
         { label: "Inputs", items: [{ autogenerate: { directory: "components/inputs" } }] },
         { label: "Feedback", items: [{ autogenerate: { directory: "components/feedback" } }] },
         { label: "Overlays", items: [{ autogenerate: { directory: "components/overlays" } }] },
+        { label: "Auth", items: [{ autogenerate: { directory: "components/auth" } }] },
       ],
       customCss: ["./src/styles/custom.css"],
       components: {

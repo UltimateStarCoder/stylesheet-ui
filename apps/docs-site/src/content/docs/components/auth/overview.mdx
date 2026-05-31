@@ -1,0 +1,49 @@
+---
+title: Authentication
+description: Copy-paste auth screens that work with any backend — you own the UI, your provider owns the policy.
+sidebar:
+  order: 1
+---
+
+Copy-paste authentication UI that works with any backend. The components carry **no** auth dependency: they own the visual steps (form → code → done) and expose `onSubmit` / `loading` / `error`. You own the calls to your auth provider.
+
+## The contract
+
+Every form is the same shape — the only thing that changes between providers is what you do inside `onSubmit`:
+
+```tsx
+<SignInForm
+  loading={loading}
+  error={error}
+  onSubmit={async ({ emailAddress, password }) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      await signIn(emailAddress, password); // your auth provider
+    } catch (e) {
+      setError("Couldn't sign in.");
+    } finally {
+      setLoading(false);
+    }
+  }}
+/>
+```
+
+## Setup
+
+```sh
+npx stylesheet-ui add auth-screen sign-in-form sign-up-form otp-input social-auth-buttons new-password-form user-card
+```
+
+Install your auth provider's SDK separately, then call it inside each `onSubmit`.
+
+## The pieces
+
+- **[SignInForm](/components/auth/sign-in-form/)** — email + password sign-in
+- **[SignUpForm](/components/auth/sign-up-form/)** + **[OtpInput](/components/auth/otp-input/)** — sign-up with emailed-code verification
+- **[SocialAuthButtons](/components/auth/social-auth-buttons/)** — OAuth / SSO provider buttons
+- **[NewPasswordForm](/components/auth/new-password-form/)** — set a new password (reset flows)
+- **[UserCard](/components/auth/user-card/)** — signed-in identity + sign out
+- **[AuthScreen](/components/auth/auth-screen/)** — centered, keyboard-aware layout for any of the above
+
+> Every piece is backend-agnostic — wire `onSubmit` (and the social `onSelect`) to whatever provider you use.

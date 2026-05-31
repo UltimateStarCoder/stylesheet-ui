@@ -1,0 +1,10 @@
+{
+  "name": "social-auth-buttons",
+  "type": "component",
+  "category": "auth",
+  "description": "Social/SSO provider buttons with optional divider. Wire onSelect to your provider's OAuth/SSO flow.",
+  "registryDependencies": ["button", "theme", "utils"],
+  "files": [
+    { "from": "components/ui/social-auth-buttons.tsx", "to": "social-auth-buttons.tsx" }
+  ]
+}

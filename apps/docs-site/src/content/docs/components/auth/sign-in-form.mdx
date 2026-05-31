@@ -1,0 +1,40 @@
+---
+title: SignInForm
+description: Email + password sign-in form for any auth backend.
+sidebar:
+  order: 3
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add sign-in-form
+```
+
+## Usage
+
+The form holds its own field state and hands `{ emailAddress, password }` to `onSubmit`. You call your auth provider and feed `loading` / `error` back in.
+
+```tsx
+import { useState } from "react";
+import { SignInForm } from "@/components/ui/sign-in-form";
+
+export default function SignInScreen() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const onSubmit = async ({ emailAddress, password }) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      await signIn(emailAddress, password); // your auth provider
+    } catch (e) {
+      setError("Couldn't sign in.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return <SignInForm onSubmit={onSubmit} loading={loading} error={error} />;
+}
+```

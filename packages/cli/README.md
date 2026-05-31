@@ -73,6 +73,8 @@ Run `npx stylesheet-ui list` to see every entry in your terminal. Pass `--json` 
 
 **Overlays:** Modal, BottomSheet, AlertDialog, Menu, Accordion, Tabs.
 
+**Auth:** AuthScreen, SignInForm, SignUpForm, OtpInput, SocialAuthButtons, NewPasswordForm, UserCard — copy-paste authentication UI that works with any backend. The components own the UI/UX; you wire each `onSubmit` to your auth provider. See [Authentication](#authentication).
+
 **Foundation:** colors (light + dark, 5 presets), spacing, radius, typography, shadows, `ThemeProvider`, `useTheme`, `useThemeMode`.
 
 ## Icons
@@ -89,6 +91,45 @@ import { SettingsRow } from "@/components/ui/settings-row";
 
 <SettingsRow title="Notifications" icon={<Bell size={18} />} />
 ```
+
+## Authentication
+
+The auth components are plain StyleSheet — they own the UI and work with **any** backend (or your own API). Each form holds its field state and hands the values to `onSubmit`; you call your provider and feed `loading` / `error` back in.
+
+```sh
+npx stylesheet-ui add auth-screen sign-in-form sign-up-form otp-input social-auth-buttons new-password-form user-card
+```
+
+```tsx
+import { useState } from "react";
+import { SignInForm } from "@/components/ui/sign-in-form";
+
+export default function SignInScreen() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const onSubmit = async ({ emailAddress, password }) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      await signIn(emailAddress, password); // your auth provider
+    } catch (e) {
+      setError("Couldn't sign in.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return <SignInForm onSubmit={onSubmit} loading={loading} error={error} />;
+}
+```
+
+- **Sign up** — `SignUpForm` collects the account, then render `<OtpInput>` for the emailed verification code.
+- **Social / SSO** — wire `SocialAuthButtons` `onSelect` to your provider's OAuth flow, using each provider's `key`.
+- **Reset password** — request a code, verify with `<OtpInput>`, then `<NewPasswordForm>`.
+- **Signed in** — pass the current user to `UserCard` and wire `onSignOut` to your provider's sign-out.
+
+> The components carry **no** auth dependency — they're plain StyleSheet and work with any backend. The provider wiring lives entirely in your screens.
 
 ## Configuration
 

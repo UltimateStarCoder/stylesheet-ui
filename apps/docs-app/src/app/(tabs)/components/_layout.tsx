@@ -32,6 +32,13 @@ export default function ComponentsLayout() {
       <Stack.Screen name="slider"       options={{ title: "Slider" }} />
       <Stack.Screen name="bottom-sheet" options={{ title: "BottomSheet" }} />
       <Stack.Screen name="toast"        options={{ title: "Toast" }} />
+      <Stack.Screen name="auth-screen"         options={{ title: "AuthScreen" }} />
+      <Stack.Screen name="sign-in-form"        options={{ title: "SignInForm" }} />
+      <Stack.Screen name="sign-up-form"        options={{ title: "SignUpForm" }} />
+      <Stack.Screen name="otp-input"           options={{ title: "OtpInput" }} />
+      <Stack.Screen name="social-auth-buttons" options={{ title: "SocialAuthButtons" }} />
+      <Stack.Screen name="new-password-form"   options={{ title: "NewPasswordForm" }} />
+      <Stack.Screen name="user-card"         options={{ title: "UserCard" }} />
     </Stack>
   );
 }

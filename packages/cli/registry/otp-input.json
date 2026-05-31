@@ -1,0 +1,10 @@
+{
+  "name": "otp-input",
+  "type": "component",
+  "category": "auth",
+  "description": "Segmented verification-code input. Controlled value/onChange with onComplete; for email + reset codes.",
+  "registryDependencies": ["theme", "utils"],
+  "files": [
+    { "from": "components/ui/otp-input.tsx", "to": "otp-input.tsx" }
+  ]
+}

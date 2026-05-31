@@ -1,0 +1,31 @@
+---
+title: OtpInput
+description: Segmented verification-code input for email and reset codes.
+sidebar:
+  order: 5
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add otp-input
+```
+
+## Usage
+
+Controlled segmented input. `onComplete` fires once `length` digits are entered — use it to trigger verification automatically. Shared by email verification ([SignUpForm](/components/auth/sign-up-form/)) and password reset ([NewPasswordForm](/components/auth/new-password-form/)).
+
+```tsx
+import { useState } from "react";
+import { OtpInput } from "@/components/ui/otp-input";
+
+const [code, setCode] = useState("");
+
+<OtpInput
+  value={code}
+  onChange={setCode}
+  length={6}
+  onComplete={(value) => verify(value)}
+  autoFocus
+/>
+```

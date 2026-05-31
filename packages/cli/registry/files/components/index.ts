@@ -29,3 +29,13 @@ export * from "./ui/select";
 export * from "./ui/menu";
 export * from "./ui/accordion";
 export * from "./ui/tooltip";
+
+// Auth — copy-paste auth UI. Pure StyleSheet, backend-agnostic; wire onSubmit
+// to whatever auth provider you use.
+export * from "./ui/auth-screen";
+export * from "./ui/sign-in-form";
+export * from "./ui/sign-up-form";
+export * from "./ui/otp-input";
+export * from "./ui/social-auth-buttons";
+export * from "./ui/new-password-form";
+export * from "./ui/user-card";

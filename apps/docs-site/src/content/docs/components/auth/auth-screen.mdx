@@ -1,0 +1,29 @@
+---
+title: AuthScreen
+description: Centered, keyboard-avoiding layout shell for auth pages.
+sidebar:
+  order: 2
+---
+
+## Install
+
+```sh
+npx stylesheet-ui add auth-screen
+```
+
+## Usage
+
+Pure layout — a keyboard-aware, centered card with header (logo / title / subtitle) and a footer slot. Drop any auth form inside.
+
+```tsx
+import { AuthScreen } from "@/components/ui/auth-screen";
+import { SignInForm } from "@/components/ui/sign-in-form";
+
+<AuthScreen
+  title="Welcome back"
+  subtitle="Sign in to continue"
+  footer={<Link href="/sign-up">Create an account</Link>}
+>
+  <SignInForm onSubmit={handleSignIn} loading={loading} error={error} />
+</AuthScreen>
+```
