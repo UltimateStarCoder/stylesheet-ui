@@ -30,10 +30,10 @@ export type ButtonProps = Omit<PressableProps, "children" | "style"> & {
 
 const useStyles = createStyles((t) => ({
   base: {
-    // Shrink to content by default. RN's flex default would stretch the button
-    // to fill any column-flex parent, which is surprising and rarely what you
-    // want. `fullWidth` opts back into stretching.
-    alignSelf: "flex-start",
+    // `center`, not `flex-start`: shrinks to content in a column parent, and
+    // also vertically centers when placed in a row (e.g. UserCard). `flex-start`
+    // would pin the button to the top of a row. `fullWidth` overrides to stretch.
+    alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

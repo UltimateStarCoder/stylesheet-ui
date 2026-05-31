@@ -28,7 +28,9 @@ const useStyles = createStyles((t) => ({
   base: {
     flexDirection: "row",
     alignItems: "center",
-    alignSelf: "flex-start",
+    // `center`, not `flex-start`: shrinks to content in a column yet stays
+    // vertically centered inside a row (e.g. ListItem's right slot).
+    alignSelf: "center",
     borderRadius: t.radius.full,
     borderWidth: 1,
     borderColor: "transparent",
