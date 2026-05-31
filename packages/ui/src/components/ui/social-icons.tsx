@@ -1,10 +1,8 @@
 import Svg, { Path } from "react-native-svg";
 import { useTheme } from "../../theme/use-theme";
 
-// Monochrome brand marks (Simple Icons paths) for social / SSO auth buttons.
-// Each is a single-color SVG: `color` defaults to the theme foreground, so the
-// set stays consistent in light and dark and matches your accent when you pass
-// one. Pair them with <SocialAuthButtons /> via each provider's `icon`.
+// Single-color brand marks (paths from Simple Icons); `color` defaults to the
+// theme foreground.
 export type SocialIconProps = {
   size?: number;
   color?: string;

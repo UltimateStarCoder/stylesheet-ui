@@ -11,10 +11,9 @@ import {
 } from "react-native";
 import { createStyles } from "../../utils/use-styles";
 
-// Segmented verification-code input. A single hidden TextInput sits on top of
-// the rendered cells and owns the real value/caret; tapping anywhere focuses
-// it. Controlled via `value`/`onChange`; fires `onComplete` once `length`
-// digits are entered. Used for both email-verification and password-reset.
+// A single transparent TextInput overlays the rendered cells and owns the
+// value and caret, so the cells stay display-only and a tap anywhere focuses
+// the field.
 export type OtpInputProps = Omit<ViewProps, "style"> & {
   value: string;
   onChange: (next: string) => void;
@@ -42,7 +41,6 @@ const useStyles = createStyles((t) => ({
   cellFilled: { borderColor: t.colors.borderStrong },
   cellActive: { borderColor: t.colors.ring },
   cellError: { borderColor: t.colors.destructive },
-  // Invisible but focusable: it captures taps and the keyboard over the cells.
   hiddenInput: { opacity: 0 },
   digit: {
     fontSize: t.typography.fontSize.lg,

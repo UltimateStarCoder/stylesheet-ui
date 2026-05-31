@@ -11,17 +11,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Card } from "./card";
 import { createStyles } from "../../utils/use-styles";
 
-// Centered, keyboard-avoiding shell for auth screens (sign in / sign up /
-// reset). Wraps content in a Card with an optional header (logo + title +
-// subtitle) and a footer slot for the "switch flow" link. Pure layout — it
-// holds no auth logic.
 export type AuthScreenProps = Omit<ViewProps, "children" | "style"> & {
   children: ReactNode;
   title?: string;
   subtitle?: string;
-  // Brand mark / logo rendered above the title.
   header?: ReactNode;
-  // Rendered below the card — e.g. a "Don't have an account? Sign up" row.
   footer?: ReactNode;
 };
 

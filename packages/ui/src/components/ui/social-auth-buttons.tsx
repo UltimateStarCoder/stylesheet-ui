@@ -4,7 +4,6 @@ import { Button } from "./button";
 import { createStyles } from "../../utils/use-styles";
 
 export type SocialProvider = {
-  // Stable identifier passed back to `onSelect` — e.g. "google".
   key: string;
   label: string;
   icon?: ReactNode;
@@ -12,20 +11,13 @@ export type SocialProvider = {
 
 export type SocialAuthLayout = "list" | "row";
 
-// Social / SSO provider buttons with an optional "or" divider. The consumer
-// wires `onSelect` to their auth provider's OAuth/SSO flow, using the
-// provider's `key` to choose which one to start.
-//
-// `layout="list"` (default) stacks full-width labelled buttons.
-// `layout="row"` lays out compact icon-only buttons on a single line; the
-// label becomes each button's accessibility label.
+// layout="row" renders compact, icon-only buttons; each provider's label
+// becomes the button's accessibility label.
 export type SocialAuthButtonsProps = Omit<ViewProps, "children" | "style"> & {
   providers: SocialProvider[];
   onSelect: (key: string) => void;
-  // Key of the provider currently authenticating, if any.
   loadingKey?: string | null;
   disabled?: boolean;
-  // Divider caption (e.g. "or continue with"). Omit to hide the divider.
   dividerLabel?: string;
   layout?: SocialAuthLayout;
   style?: StyleProp<ViewStyle>;

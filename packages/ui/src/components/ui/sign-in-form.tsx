@@ -6,20 +6,14 @@ import { createStyles } from "../../utils/use-styles";
 
 export type SignInValues = { emailAddress: string; password: string };
 
-// Email + password sign-in UI. Holds its own field state and hands the values
-// to `onSubmit`; the consumer performs the actual sign-in against their auth
-// provider and feeds `loading` / `error` back in.
 export type SignInFormProps = Omit<ViewProps, "children" | "style" | "onSubmit"> & {
   onSubmit: (values: SignInValues) => void;
   loading?: boolean;
-  // Top-level error (e.g. "Couldn't sign in"). Field-level hints can be passed
-  // through `emailError` / `passwordError`.
   error?: string;
   emailError?: string;
   passwordError?: string;
   onForgotPassword?: () => void;
   submitLabel?: string;
-  // Rendered under the submit button — e.g. a "Sign up" link.
   footer?: ReactNode;
 };
 

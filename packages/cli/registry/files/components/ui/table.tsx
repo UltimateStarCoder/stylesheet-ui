@@ -13,7 +13,7 @@ export type TableColumn<T> = {
   header: ReactNode;
   flex?: number;
   render?: (row: T, index: number) => ReactNode;
-  // Applied to this column's header cell so it can be found in tests.
+  // Applied to the column's header cell, not its body cells.
   testID?: string;
 };
 
@@ -21,7 +21,6 @@ export type TableProps<T> = Omit<ViewProps, "children" | "style"> & {
   columns: TableColumn<T>[];
   data: T[];
   keyExtractor?: (row: T, index: number) => string;
-  // Returns a testID for each body row so individual rows can be found in tests.
   rowTestID?: (row: T, index: number) => string;
   style?: StyleProp<ViewStyle>;
 };

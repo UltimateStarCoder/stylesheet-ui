@@ -12,12 +12,6 @@ export type SignUpValues = {
   lastName?: string;
 };
 
-// Account-creation UI. Hands values to `onSubmit`; the consumer creates the
-// account with their auth provider, then typically renders an <OtpInput> next
-// to collect the emailed verification code.
-//
-// `nameFields` adds First/Last name inputs (included in the submitted values).
-// `requireConfirm` adds a confirm-password field with match validation.
 export type SignUpFormProps = Omit<ViewProps, "children" | "style" | "onSubmit"> & {
   onSubmit: (values: SignUpValues) => void;
   loading?: boolean;

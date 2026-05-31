@@ -6,10 +6,6 @@ import { createStyles } from "../../utils/use-styles";
 
 export type NewPasswordValues = { password: string };
 
-// "Set a new password" UI — the final step of a reset flow. When
-// `requireConfirm` is set it enforces a matching confirmation field before
-// calling `onSubmit`. The consumer submits the new password to their auth
-// provider.
 export type NewPasswordFormProps = Omit<ViewProps, "children" | "style" | "onSubmit"> & {
   onSubmit: (values: NewPasswordValues) => void;
   loading?: boolean;

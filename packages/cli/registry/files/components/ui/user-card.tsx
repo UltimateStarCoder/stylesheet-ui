@@ -4,9 +4,6 @@ import { Avatar } from "./avatar";
 import { Button } from "./button";
 import { createStyles } from "../../utils/use-styles";
 
-// Signed-in identity row: avatar + name/email + a sign-out action. The
-// consumer feeds in the current user's details and wires `onSignOut` to their
-// auth provider's sign-out.
 export type UserCardProps = Omit<ViewProps, "children" | "style"> & {
   name?: string;
   email?: string;

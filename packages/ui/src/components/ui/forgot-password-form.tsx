@@ -6,17 +6,12 @@ import { createStyles } from "../../utils/use-styles";
 
 export type ForgotPasswordValues = { emailAddress: string };
 
-// Email-entry step of a password reset — where the "Forgot password?" link in
-// <SignInForm> leads. Hands the email to `onSubmit`; the consumer asks their
-// auth provider to send a reset code, then renders <OtpInput> and
-// <NewPasswordForm> to finish.
 export type ForgotPasswordFormProps = Omit<ViewProps, "children" | "style" | "onSubmit"> & {
   onSubmit: (values: ForgotPasswordValues) => void;
   loading?: boolean;
   error?: string;
   emailError?: string;
   submitLabel?: string;
-  // Rendered under the submit button — e.g. a "Back to sign in" link.
   footer?: ReactNode;
 };
 

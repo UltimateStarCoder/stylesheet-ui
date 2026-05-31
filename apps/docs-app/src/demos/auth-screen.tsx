@@ -35,10 +35,8 @@ const PROVIDERS = [
   { key: "github", label: "Continue with GitHub", icon: <GitHubIcon /> },
 ];
 
-// AuthScreen is just the boxed, keyboard-aware shell. This demo walks the whole
-// auth flow through that one box — sign-in, sign-up, and the reset chain
-// (forgot -> verify code -> new password). Visual only; transitions fire on
-// submit so you can click through it.
+// Visual-only walkthrough: transitions fire on submit so the whole flow is
+// clickable without a backend.
 export default function AuthScreenDemo() {
   const styles = useStyles();
   const [step, setStep] = useState<Step>("sign-in");
