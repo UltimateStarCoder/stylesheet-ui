@@ -24,10 +24,12 @@ export type MenuProps = Omit<ViewProps, "children"> & {
   trigger: ReactElement;
   items: MenuItem[];
   placement?: MenuPlacement;
+  // Optional minimum width. Omit to let the card size to its content.
   minWidth?: number;
 };
 
 const MENU_OFFSET = 4;
+const EDGE_MARGIN = 8;
 
 const useStyles = createStyles((t) => ({
   backdrop: { flex: 1 },
@@ -38,7 +40,6 @@ const useStyles = createStyles((t) => ({
     borderWidth: 1,
     borderColor: t.colors.border,
     paddingVertical: t.spacing.xs,
-    minWidth: 180,
     ...t.shadows.lg,
   },
   item: {
@@ -54,7 +55,6 @@ const useStyles = createStyles((t) => ({
     fontSize: t.typography.fontSize.md,
     lineHeight: t.typography.lineHeight.md,
     color: t.colors.foreground,
-    flex: 1,
   },
   labelDestructive: { color: t.colors.destructive },
 }));
@@ -85,16 +85,18 @@ export function Menu({ trigger, items, placement = "bottom-start", minWidth, sty
     : trigger;
 
   const screen = Dimensions.get("window");
-  const cardMinWidth = minWidth ?? 180;
 
-  // Position the card under the anchor. For bottom-end placement, align the
-  // card's right edge to the anchor's right edge so it doesn't overflow.
-  const left = anchor
-    ? placement === "bottom-end"
-      ? Math.max(8, Math.min(screen.width - cardMinWidth - 8, anchor.x + anchor.width - cardMinWidth))
-      : Math.max(8, Math.min(screen.width - cardMinWidth - 8, anchor.x))
-    : 0;
-  const top = anchor ? anchor.y + anchor.height + MENU_OFFSET : 0;
+  // Anchor the card by the edge nearest the trigger so it can size to its
+  // content: bottom-start pins the left edge and grows right; bottom-end pins
+  // the right edge and grows left. Neither needs the card's measured width.
+  const position = anchor
+    ? {
+        top: anchor.y + anchor.height + MENU_OFFSET,
+        ...(placement === "bottom-end"
+          ? { right: Math.max(EDGE_MARGIN, screen.width - (anchor.x + anchor.width)) }
+          : { left: Math.max(EDGE_MARGIN, anchor.x) }),
+      }
+    : { top: 0, left: 0 };
 
   return (
     <>
@@ -108,7 +110,13 @@ export function Menu({ trigger, items, placement = "bottom-start", minWidth, sty
         {!!anchor && (
           <View
             accessibilityRole="menu"
-            style={[styles.card, { left, top, minWidth: cardMinWidth }, style]}
+            style={[
+              styles.card,
+              position,
+              { maxWidth: screen.width - EDGE_MARGIN * 2 },
+              minWidth != null && { minWidth },
+              style,
+            ]}
             {...rest}
           >
             {items.map((item, idx) => (
